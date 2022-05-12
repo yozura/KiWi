@@ -1,0 +1,25 @@
+- 기본 구조 -
+1. RatedMovieProgram 프로젝트 내부에 패키지, 클래스를 생성 및 사용
+2. Package List
+- kiwi.main : 메인 엔트리 함수가 위치한 패키지, 모든 코드를 응집해 실행함.
+- kiwi.gui : Swing, awt 등UI 처리를 하는 패키지, 모든 UI를 당당함.
+- kiwi.dao.* : Data Access Object 를 관리하는 패키지, mysql 과의 연동 부분을 담당함.
+- kiwi.dto.* : Data Transfer Object 를 관리하는 패키지, mysql 과의 연동 과정에서 데이터를 교환하는 부분을 담당함.
+- etc.. 추후 더 늘어날 수 있음.
+3. Resources Directory
+- 데이터베이스에 저장하거나 자바 프로젝트에 직접 넣을 수 있음. 고려 대상.
+- resources/images, audios 등프로젝트에 사용되는 자원을 관리하는 디렉토리
+
+- 구현 순서와 작업 사이클 -
+1. GUI -> UI를 먼저 의도에 맞게 배치한 뒤 기능은 후에 추가한다.
+2. Database -> 데이터베이스를 연동해 필요한 기능부터 우선적으로 추가한다.
+3. Image -> UI를 이쁘게 꾸민다.
+4. Implementation -> 기획했던 모든 기능을 추가한다.
+5. Debug & QA -> 모든 기능이 잘 작동하는지 확인하며 개선이 필요한 부분을 공략한다.
+6. Expansion -> 이후 더 추가할 기능이나 하고 싶은 기술 스택이 있다면 소소하게 추가한다.
+7. Release -> 프로젝트를 Release 한다.
+8. FeedBack -> 출시 후 문제점이 생기거나 피드백이 주어진다면 문제와 피드백에 대한 보고를 관리하고 처리한다.
+
+- GUI 구성 요소와 수치 - 
+// (윈도우 환경과 맥 OS 환경의 차이로 인해 GUI 크기가 달라질 수 있습니다. 사이즈 조정 시 수치를 저장합시다.)
+1. MainFrame - 메인 프레임의 전체 크기를 16:10 비율로 고정합니다. MacOS(1280, 800)
