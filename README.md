@@ -1,3 +1,6 @@
 # KiWi
-__영화 평점 관리 프로그램__   
-Java Swing + Mysql 응용 프로젝트입니다.
+__영화 평점 관리 응용 프로그램__   
+
+> Programming Language : Java    
+> GUI Toolkit          : Swing, awt    
+> Database             : Mysql
