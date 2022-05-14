@@ -14,12 +14,23 @@ public class MainFrame extends JFrame {
 		Container con = this.getContentPane();
 		
 		JPanel pWestBar = new JPanel();
-		pWestBar.setLayout(new BoxLayout(pWestBar, BoxLayout.PAGE_AXIS));
-		pWestBar.setBorder(BorderFactory.createLineBorder(Color.BLUE, 5));
+		pWestBar.setLayout(new BoxLayout(pWestBar, BoxLayout.Y_AXIS));
+		pWestBar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		pWestBar.setBackground(new Color(190, 148, 228));
 		for (int i = 0; i < 4; ++i) {
-			JButton btn = new JButton("btn" + i);
-			btn.setPreferredSize(new Dimension(100, 100));
-			btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+			JButton btn = new JButton();
+			btn.setPreferredSize(new Dimension(75, 75));
+			btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 75));
+			ImageIcon iconBtn;
+			switch (i) {
+			case 0 -> iconBtn = new ImageIcon("res/icons/home.png");
+			case 1 -> iconBtn = new ImageIcon("res/icons/menu.png");
+			case 2 -> iconBtn = new ImageIcon("res/icons/expand_more.png");
+			case 3 -> iconBtn = new ImageIcon("res/icons/settings.png");
+			default -> iconBtn = null;
+			}
+			btn.setBorder(BorderFactory.createEmptyBorder());
+			btn.setIcon(iconBtn);
 			pWestBar.add(btn);
 		}
 		
@@ -30,6 +41,7 @@ public class MainFrame extends JFrame {
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_SIZE.x, FRAME_SIZE.y);
+		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
 	}
