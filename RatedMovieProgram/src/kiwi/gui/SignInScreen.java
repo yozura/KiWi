@@ -56,7 +56,7 @@ public class SignInScreen extends JPanel {
 	
 	public SignInScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(12, 14, 18));
 		
 		// Logo Image Setting

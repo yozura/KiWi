@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class SideBar extends JPanel {	
@@ -16,8 +17,8 @@ public class SideBar extends JPanel {
 	
 	public SideBar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		this.setBackground(new Color(189, 198, 208));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
+		this.setBackground(new Color(200, 120, 130));
 		for (int i = 0; i < 4; ++i) {
 			JButton btn = new JButton();
 			btn.setPreferredSize(new Dimension(60, 60));
@@ -29,17 +30,40 @@ public class SideBar extends JPanel {
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.HOME);
+						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
+						rootFrame.revalidateScreen();
 					}
 				});
 				break;
 			case 1:
 				iconBtn = new ImageIcon("res/icons/menu.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_UP);
+						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
+						rootFrame.revalidateScreen();
+					}
+				});
 				break;
 			case 2:
 				iconBtn = new ImageIcon("res/icons/expand_more.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_IN);
+						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
+						rootFrame.revalidateScreen();
+					}
+				});
 				break;
 			case 3:
 				iconBtn = new ImageIcon("res/icons/settings.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.HOME);
+						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
+						rootFrame.revalidateScreen();
+					}
+				});
 				break;
 			default:
 				iconBtn = null;

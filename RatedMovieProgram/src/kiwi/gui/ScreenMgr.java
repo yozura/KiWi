@@ -5,22 +5,16 @@ import javax.swing.JPanel;
 enum Screen_Type {
 	HOME,
 	SIGN_IN,
-	SGIN_UP,
+	SIGN_UP,
 	END
 }
 
 public class ScreenMgr {
 	private static ScreenMgr instance = new ScreenMgr();
-	private JPanel pHomeScreen;
-	private JPanel pSignInScreen;
-	private JPanel pSignUpScreen;
 	private JPanel pCurScreen;
 
 	ScreenMgr() {
-		pHomeScreen = new HomeScreen();
-		pSignInScreen = new SignInScreen();
-		pSignUpScreen = new SignUpScreen();
-		pCurScreen = pSignInScreen;
+		pCurScreen = new SignInScreen();
 	}
 	
 	public static ScreenMgr getInstance() {
@@ -29,9 +23,9 @@ public class ScreenMgr {
 	
 	public void changeCurrentScreen(Screen_Type _eType) {
 		switch (_eType) {
-		case SGIN_UP -> pCurScreen = pSignUpScreen;
-		case SIGN_IN -> pCurScreen = pSignInScreen;
-		default -> pCurScreen = pHomeScreen;
+		case SIGN_IN -> pCurScreen = new SignInScreen();
+		case SIGN_UP -> pCurScreen = new SignUpScreen();
+		default -> pCurScreen = new HomeScreen();
 		}
 	}
 	
