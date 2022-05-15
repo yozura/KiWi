@@ -1,19 +1,17 @@
-package kiwi.dto.user;
+package kiwi.dto;
 
 public class User {
 	private String id;
 	private String password;
 	private String nickname;
-	private String name;
 	private String birthDate;
 	private String email; 
 	private String tel;
 	
-	public User(String id, String password, String nickname, String name, String birthDate, String email, String tel) {
+	public User(String id, String password, String nickname, String birthDate, String email, String tel) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
-		this.name = name;
 		this.birthDate = birthDate;
 		this.email = email;
 		this.tel = tel;
@@ -37,12 +35,7 @@ public class User {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
 	public String getBirthDate() {
 		return birthDate;
 	}

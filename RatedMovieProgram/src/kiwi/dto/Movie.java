@@ -1,27 +1,6 @@
-package kiwi.dto.movie;
+package kiwi.dto;
 
 public class Movie {
-	/*id
-int AI PK
-title
-varchar(100)
-director
-varchar(100)
-actors
-varchar(100)
-genre
-varchar(100)
-rate
-double
-releaseDate
-datetime
-runningTime
-int
-ageLimit
-int
-summary
-varchar(300)
-*/
 	private int id;
 	private String title;
 	private String director;
