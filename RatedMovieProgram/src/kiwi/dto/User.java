@@ -1,18 +1,20 @@
 package kiwi.dto;
 
+import java.sql.Date;
+
 public class User {
 	private String id;
 	private String password;
 	private String nickname;
-	private String birthDate;
+	private Date birthday;
 	private String email; 
 	private String tel;
 	
-	public User(String id, String password, String nickname, String birthDate, String email, String tel) {
+	public User(String id, String password, String nickname, Date birthday, String email, String tel) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
-		this.birthDate = birthDate;
+		this.birthday = birthday;
 		this.email = email;
 		this.tel = tel;
 	}
@@ -36,11 +38,11 @@ public class User {
 		this.nickname = nickname;
 	}
 
-	public String getBirthDate() {
-		return birthDate;
+	public Date getBirthDate() {
+		return birthday;
 	}
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+	public void setBirthDate(Date birthday) {
+		this.birthday = birthday;
 	}
 	public String getEmail() {
 		return email;

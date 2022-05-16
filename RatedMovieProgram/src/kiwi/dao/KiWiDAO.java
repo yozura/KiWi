@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class KiWiDAO {
-	public Connection makeConnection(String id, String password) {
+	protected Connection makeConnection() {
 		Connection connection = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			String url = "jdbc:mysql://localhost:3306/KiWiDB?serverTimezone=Asia/Seoul";
-			connection = DriverManager.getConnection(url, id, password);
+			connection = DriverManager.getConnection(url, "root", "1234");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

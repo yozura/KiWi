@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -136,21 +138,22 @@ public class SignInScreen extends JPanel {
 		});
 		tfPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		JLabel lBlank = new JLabel();
-		lBlank.setPreferredSize(new Dimension(280, 10));
-		lBlank.setMaximumSize(new Dimension(280, 10));
-		lBlank.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
 		btnLogin = new JButton("Sign in");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
 		btnLogin.setMaximumSize(new Dimension(280, 40));
 		btnLogin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO :: ID 대조해서 있으면 접속.
+				
+			}
+		});
 		
 		pBox.add(lID);
 		pBox.add(tfID);
 		pBox.add(lPassword);
 		pBox.add(tfPassword);
-		pBox.add(lBlank);
+		pBox.add(Box.createVerticalStrut(10));
 		pBox.add(btnLogin);
 		
 		pPaddingBox.add(pBox);
@@ -166,6 +169,13 @@ public class SignInScreen extends JPanel {
 		btnSignUp = new JButton("Sign Up");
 		btnSignUp.setForeground(new Color(71, 143, 250));
 		btnSignUp.setBorder(BorderFactory.createEmptyBorder());
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_UP);
+				MainFrame rootFrame = (MainFrame)btnSignUp.getTopLevelAncestor();
+				rootFrame.revalidateScreen(false);
+			}
+		});
 		
 		pFlowBtns.add(btnFindPassword);
 		pFlowBtns.add(btnSignUp);
