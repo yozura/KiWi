@@ -2,7 +2,9 @@ package kiwi.dto;
 
 import java.sql.Date;
 
-public class User {
+public class User implements java.io.Serializable {
+	private static final long serialVersionUID = -8470511811528248468L;
+	
 	private String id;
 	private String password;
 	private String nickname;

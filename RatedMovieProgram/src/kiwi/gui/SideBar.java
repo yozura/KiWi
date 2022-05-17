@@ -14,6 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
+
 public class SideBar extends JPanel {	
 	private JButton[] arrOfSideBtns = new JButton[4];
 	
@@ -31,7 +34,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/home.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.HOME);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME);
 						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
 						rootFrame.revalidateScreen(true);
 					}
@@ -41,7 +44,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/account_box.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_UP);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP);
 						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
 						rootFrame.revalidateScreen(true);
 					}
@@ -51,7 +54,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/collections.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_IN);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_IN);
 						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
 						rootFrame.revalidateScreen(true);
 					}
@@ -61,7 +64,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.ERROR);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR);
 						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
 						rootFrame.revalidateScreen(true);
 					}

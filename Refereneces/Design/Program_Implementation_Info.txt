@@ -23,3 +23,7 @@
 - GUI 구성 요소와 수치 - 
 // (윈도우 환경과 맥 OS 환경의 차이로 인해 GUI 크기가 달라질 수 있습니다. 사이즈 조정 시 수치를 저장합시다.)
 1. MainFrame - 메인 프레임의 전체 크기를 16:10 비율로 고정합니다. MacOS(1280, 800)
+2. Background Color - new Color(12, 14, 18)
+3. Panel Color - new Color(18, 21, 26)
+4. Text Color - new Color(189, 198, 208)
+5. Border Color - new Color(26, 30, 35)d

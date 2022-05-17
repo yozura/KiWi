@@ -1,7 +1,6 @@
 package kiwi.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,17 +34,31 @@ public class UserDAO extends KiWiDAO  {
 		}
 	}
 	
-	public void findAccountById(String id) {
+	public User getPersonalInfo(String id, String password) {
+		User rsUser = null;
 		try {
 			Connection con = makeConnection();
-			String sql = "select * from kiwidb.users where = ?";
+			String sql = "select nickname, birthday, email, tel from kiwidb.users where id = ?, password = md5(?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
+			pstmt.setString(2, password);
+			
 			ResultSet rs = pstmt.executeQuery();
-			// TODO :: Accout정보 싹다 긁어서 로그인할 때 전달하
+			if (rs.next()) {
+				rsUser = new User(id, password, rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4));
+			} else {
+				pstmt.close();
+				con.close();
+				return null;
+			}
+			
+			pstmt.close();
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return rsUser;
 	}
 	
 	public boolean findDuplicateById(String id) {

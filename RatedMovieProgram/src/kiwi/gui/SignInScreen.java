@@ -1,56 +1,33 @@
 package kiwi.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
 
 public class SignInScreen extends JPanel {
-	// Login Screen blueprint
-	// 라벨 흰색, 버튼 녹색, 배경 검은색
-	// ------------------------
-	// 				로고 이미지(라벨)
-	//   		Sign in to KiWi(라벨)
-	// ===================================(패널 보더)
-	// = Your ID(라벨)				     =
-	// =[   		ID입력(텍스트필드)		]=
-	// = Your Password(라벨)				 =
-	// =[			Password입력(텍스트필드)]=
-	// ={			(로그인버튼)			}=
-	// ===================================
-	// {아이디 찾기} 	{비밀번호 찾기}   {회원가입}
-	
-	// Color Table
-	// Background = new Color(12, 14, 18)
-	// Panel = new Color(18, 21, 26)
-	// Text = new Color(189, 198, 208)
-	
-	private JLabel lLogoImage;
+	private JLabel lLogoIcon;
 	private JLabel lWelcome;
 	
 	private JPanel pPaddingBox;
 	private JPanel pBox;
 	private JLabel lID;
-	private JTextField tfID;
 	private JLabel lPassword;
-	private JTextField tfPassword;
+	
 	private JButton btnLogin;
+
+	private JTextField tfPassword;
+	private JTextField tfID;
 	
 	private JPanel pFlowBtns;
 	private JButton btnFindPassword;
@@ -62,13 +39,13 @@ public class SignInScreen extends JPanel {
 		this.setBackground(new Color(12, 14, 18));
 		
 		// Logo Image Setting
-		ImageIcon iconLogo = new ImageIcon("res/images/login_logo.png");
+		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
 		Image img = iconLogo.getImage();
-		Image changeImg = img.getScaledInstance(80, 60, Image.SCALE_SMOOTH);
+		Image changeImg = img.getScaledInstance(160, 120, Image.SCALE_SMOOTH);
 		ImageIcon iconChangedLogo = new ImageIcon(changeImg);
-		lLogoImage = new JLabel();
-		lLogoImage.setIcon(iconChangedLogo);
-		lLogoImage.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		lLogoIcon = new JLabel();
+		lLogoIcon.setIcon(iconChangedLogo);
+		lLogoIcon.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		lWelcome = new JLabel("Sign in to KiWi");
 		lWelcome.setBorder(new EmptyBorder(15, 0, 15, 0));
@@ -132,7 +109,6 @@ public class SignInScreen extends JPanel {
 			public void keyTyped(KeyEvent e) {
 				JTextField tfSrc = (JTextField)e.getSource();
 				if (tfSrc.getText().length() >= 20) e.consume();
-				
 				// TODO :: 입력받은 값 따로 저장하고 출력 글자는 숨기기
 			}
 		});
@@ -171,7 +147,7 @@ public class SignInScreen extends JPanel {
 		btnSignUp.setBorder(BorderFactory.createEmptyBorder());
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.SIGN_UP);
+				ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP);
 				MainFrame rootFrame = (MainFrame)btnSignUp.getTopLevelAncestor();
 				rootFrame.revalidateScreen(false);
 			}
@@ -181,17 +157,10 @@ public class SignInScreen extends JPanel {
 		pFlowBtns.add(btnSignUp);
 		
 		this.add(Box.createVerticalGlue());
-		this.add(lLogoImage);
+		this.add(lLogoIcon);
 		this.add(lWelcome);
 		this.add(pPaddingBox);
 		this.add(pFlowBtns);
 		this.add(Box.createVerticalGlue());
-	}
-	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
-		// 백그라운드 그리기
-		// g.drawImage(background, 0, 0, this);
 	}
 }

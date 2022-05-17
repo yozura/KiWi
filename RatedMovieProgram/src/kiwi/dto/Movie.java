@@ -1,18 +1,22 @@
 package kiwi.dto;
 
-public class Movie {
+import java.sql.Date;
+
+public class Movie implements java.io.Serializable {
+	private static final long serialVersionUID = 7494491231032079451L;
+	
 	private int id;
 	private String title;
 	private String director;
 	private String actors;
 	private String genre;
 	private double rate;
-	private String releaseDate;
+	private Date releaseDate;
 	private int runningTime;
 	private int ageLimit;
 	private String summary;
 	
-	public Movie(String title, String director, String actors, String genre, double rate, String releaseDate,
+	public Movie(String title, String director, String actors, String genre, double rate, Date releaseDate,
 			int runningTime, int ageLimit, String summary) {
 		this.title = title;
 		this.director = director;
@@ -60,10 +64,10 @@ public class Movie {
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
-	public String getReleaseDate() {
+	public Date getReleaseDate() {
 		return releaseDate;
 	}
-	public void setReleaseDate(String releaseDate) {
+	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 	public int getRunningTime() {

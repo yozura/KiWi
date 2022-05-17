@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 
 import kiwi.dto.User;
 import kiwi.gui.process.SignUpProcess;
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
 
 public class SignUpScreen extends JPanel {
 	private JPanel pBoxWelcome;
@@ -246,7 +248,7 @@ public class SignUpScreen extends JPanel {
 					User newbie = new User(id, password, nickname, birthDate, email, tel);
 					sup.createAccount(newbie);
 					
-					ScreenMgr.getInstance().changeCurrentScreen(Screen_Type.HOME);
+					ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME);
 					MainFrame rootFrame = (MainFrame)btnConfirm.getTopLevelAncestor();
 					rootFrame.revalidateScreen(true);
 				}

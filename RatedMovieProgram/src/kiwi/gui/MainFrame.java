@@ -4,9 +4,14 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import kiwi.data.UserInfo;
+import kiwi.mgr.ScreenMgr;
+
 public class MainFrame extends JFrame {
 	private Point FRAME_SIZE = new Point(1280, 800);
+	
 	private Container con;
+	
 	private JPanel pSideBar = new SideBar();
 	
 	public MainFrame() {
@@ -32,4 +37,5 @@ public class MainFrame extends JFrame {
 	
 		con.revalidate();
 	}
+	
 }
