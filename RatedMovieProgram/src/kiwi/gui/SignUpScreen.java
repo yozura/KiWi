@@ -246,11 +246,7 @@ public class SignUpScreen extends JPanel {
 				if (isGood) {
 					Date birthDate = Date.valueOf(originBirth);			
 					User newbie = new User(id, password, nickname, birthDate, email, tel);
-					sup.createAccount(newbie);
-					
-					ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME);
-					MainFrame rootFrame = (MainFrame)btnConfirm.getTopLevelAncestor();
-					rootFrame.revalidateScreen(true);
+					sup.createAccount(newbie, btnConfirm);
 				}
 			}
 		});

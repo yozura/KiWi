@@ -2,20 +2,25 @@ package kiwi.gui.process;
 
 import java.util.regex.Pattern;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import kiwi.dao.UserDAO;
 import kiwi.dto.User;
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
 
 public class SignUpProcess {
-	public void createAccount(User user) {
+	public void createAccount(User user, JComponent comp) {
 		// 새로운 계정 생성하기
 		UserDAO dao = new UserDAO();
 		dao.insert(user);
+
+		ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME, true, comp);
 	}
 	
 	public boolean checkDuplicateId(String id) {
-		return new UserDAO().findDuplicateById(id);
+		return new UserDAO().checkDuplicateById(id);
 	}
 	
 	public boolean checkValidationUserInfo(boolean isDuplicated, String...strings) {

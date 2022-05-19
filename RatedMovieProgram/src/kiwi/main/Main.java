@@ -1,6 +1,6 @@
 package kiwi.main;
 
-import kiwi.gui.*;
+import kiwi.gui.MainFrame;
 
 public class Main {
 	public static void main(String[] args) {

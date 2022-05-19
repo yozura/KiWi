@@ -16,8 +16,9 @@ public class Movie implements java.io.Serializable {
 	private int ageLimit;
 	private String summary;
 	
-	public Movie(String title, String director, String actors, String genre, double rate, Date releaseDate,
+	public Movie(int id, String title, String director, String actors, String genre, double rate, Date releaseDate,
 			int runningTime, int ageLimit, String summary) {
+		this.id = id;
 		this.title = title;
 		this.director = director;
 		this.actors = actors;

@@ -15,7 +15,9 @@ import javax.swing.border.EmptyBorder;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.ScreenMgr;
 
-public class SignInScreen extends JPanel {
+import kiwi.gui.process.LoginProcess;
+
+public class LoginScreen extends JPanel {
 	private JLabel lLogoIcon;
 	private JLabel lWelcome;
 	
@@ -33,7 +35,9 @@ public class SignInScreen extends JPanel {
 	private JButton btnFindPassword;
 	private JButton btnSignUp;
 	
-	public SignInScreen() {
+	private String realPassword;
+	
+	public LoginScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(12, 14, 18));
@@ -47,7 +51,7 @@ public class SignInScreen extends JPanel {
 		lLogoIcon.setIcon(iconChangedLogo);
 		lLogoIcon.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		lWelcome = new JLabel("Sign in to KiWi");
+		lWelcome = new JLabel("Login to KiWi");
 		lWelcome.setBorder(new EmptyBorder(15, 0, 15, 0));
 		lWelcome.setForeground(new Color(189, 198, 208));
 		lWelcome.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -106,21 +110,42 @@ public class SignInScreen extends JPanel {
 		tfPassword.setCaretColor(new Color(189, 198, 208));
 		tfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfPassword.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				JTextField tfSrc = (JTextField)e.getSource();
-				if (tfSrc.getText().length() >= 20) e.consume();
+			public void keyPressed(KeyEvent e) {
 				// TODO :: 입력받은 값 따로 저장하고 출력 글자는 숨기기
+				// 입력 받고나서 여분의 스트링에 넣고 tfpassword는 *로 치환
+				JTextField tfSrc = (JTextField)e.getSource();
+				if (tfSrc.getText().length() >= 20) {
+					e.consume();
+					return;
+				}
+				
+				if (tfSrc.getText().length() == 0) {
+					realPassword = "";
+					System.out.println(realPassword);
+					return;
+				}
+			
+				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+					realPassword = realPassword.substring(0, realPassword.length() - 1);
+					System.out.println(realPassword);
+				} else {
+					realPassword +=	e.getKeyChar();
+					System.out.println(realPassword);
+				}
 			}
 		});
+		
 		tfPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		btnLogin = new JButton("Sign in");
+		btnLogin = new JButton("Login");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
 		btnLogin.setMaximumSize(new Dimension(280, 40));
 		btnLogin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO :: ID 대조해서 있으면 접속.
+				LoginProcess lp = new LoginProcess();
+				lp.loginUser(tfID.getText(), tfPassword.getText(), btnLogin);
 				
 			}
 		});
@@ -147,9 +172,7 @@ public class SignInScreen extends JPanel {
 		btnSignUp.setBorder(BorderFactory.createEmptyBorder());
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP);
-				MainFrame rootFrame = (MainFrame)btnSignUp.getTopLevelAncestor();
-				rootFrame.revalidateScreen(false);
+				ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP, false, btnSignUp);
 			}
 		});
 		

@@ -34,9 +34,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/home.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME);
-						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
-						rootFrame.revalidateScreen(true);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME, true, btn);
 					}
 				});
 				break;
@@ -44,19 +42,15 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/account_box.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP);
-						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
-						rootFrame.revalidateScreen(true);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR, true, btn);
 					}
 				});
 				break;
 			case 2:
-				iconBtn = new ImageIcon("res/icons/collections.png");
+				iconBtn = new ImageIcon("res/icons/bookmarks.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_IN);
-						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
-						rootFrame.revalidateScreen(true);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.BOOKMARK, true, btn);
 					}
 				});
 				break;
@@ -64,9 +58,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR);
-						MainFrame rootFrame = (MainFrame)btn.getTopLevelAncestor();
-						rootFrame.revalidateScreen(true);
+						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR, true, btn);
 					}
 				});
 				break;

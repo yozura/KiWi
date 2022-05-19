@@ -2,7 +2,12 @@ package kiwi.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
+
+import kiwi.dto.Movie;
 
 public class KiWiDAO {
 	protected Connection makeConnection() {

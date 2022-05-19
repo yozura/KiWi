@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import kiwi.data.UserInfo;
 import kiwi.mgr.ScreenMgr;
 
 public class MainFrame extends JFrame {
@@ -19,6 +18,7 @@ public class MainFrame extends JFrame {
 		this.setLayout(new BorderLayout(0, 0));
 		
 		con = this.getContentPane();
+		//con.add(pSideBar, BorderLayout.WEST);
 		con.add(ScreenMgr.getInstance().getCurrentScreen());
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

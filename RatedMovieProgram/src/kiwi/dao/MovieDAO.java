@@ -2,7 +2,9 @@ package kiwi.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import kiwi.dto.Movie;
 
@@ -32,4 +34,42 @@ public class MovieDAO extends KiWiDAO {
 			e.printStackTrace();
 		}
 	} 
+	
+	public Vector<Movie> selectAll() {
+		Vector<Movie> vecMovie = null;
+		try {
+			Connection con = makeConnection();
+			String sql = "select * from kiwidb.movies";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (vecMovie == null) {
+					vecMovie = new Vector<Movie>();
+				}
+				
+				vecMovie.add(new Movie(
+						rs.getInt(1)
+						, rs.getString(2)
+						, rs.getString(3)
+						, rs.getString(4)
+						, rs.getString(5)
+						, rs.getDouble(6)
+						, rs.getDate(7)
+						, rs.getInt(8)
+						, rs.getInt(9)
+						, rs.getString(10)));
+			}
+			
+			if (vecMovie != null) {
+				System.out.println("selectAll 성공");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return vecMovie;
+	}
 }

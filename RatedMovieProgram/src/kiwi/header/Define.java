@@ -11,14 +11,4 @@ public class Define {
 		
 		END
 	}
-	
-	public enum EVENT_TYPE {
-		ENTER_USER,
-		LOAD_MOVIE,
-		ADD_BOOKMARK,
-		DELETE_BOOKMARK,
-		EXIT,
-		
-		END
-	}
 }
