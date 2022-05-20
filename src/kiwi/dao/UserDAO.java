@@ -9,7 +9,7 @@ import java.util.Vector;
 import kiwi.dto.Movie;
 import kiwi.dto.User;
 
-public class UserDAO extends KiWiDAO  {
+public class UserDAO extends KiWiDAO {
 	public void insert(User user) {
 		try {
 			Connection con = makeConnection();
