@@ -9,8 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.ScreenMgr;
@@ -28,14 +43,12 @@ public class LoginScreen extends JPanel {
 	
 	private JButton btnLogin;
 
-	private JTextField tfPassword;
+	private JPasswordField pfPassword;
 	private JTextField tfID;
 	
 	private JPanel pFlowBtns;
 	private JButton btnFindPassword;
 	private JButton btnSignUp;
-	
-	private String realPassword;
 	
 	public LoginScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -101,41 +114,24 @@ public class LoginScreen extends JPanel {
 		lPassword.setBorder(new EmptyBorder(15, 5, 10, 0));
 		lPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		lPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
-		tfPassword = new JTextField();
-		tfPassword.setPreferredSize(new Dimension(280, 25));
-		tfPassword.setMaximumSize(new Dimension(280, 25));
-		tfPassword.setBackground(new Color(12, 14, 18));
-		tfPassword.setForeground(new Color(189, 198, 208));
-		tfPassword.setCaretColor(new Color(189, 198, 208));
-		tfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
-		tfPassword.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				// TODO :: 입력받은 값 따로 저장하고 출력 글자는 숨기기
-				// 입력 받고나서 여분의 스트링에 넣고 tfpassword는 *로 치환
-				JTextField tfSrc = (JTextField)e.getSource();
-				if (tfSrc.getText().length() >= 20) {
-					e.consume();
-					return;
-				}
 				
-				if (tfSrc.getText().length() == 0) {
-					realPassword = "";
-					System.out.println(realPassword);
-					return;
-				}
-			
-				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-					realPassword = realPassword.substring(0, realPassword.length() - 1);
-					System.out.println(realPassword);
-				} else {
-					realPassword +=	e.getKeyChar();
-					System.out.println(realPassword);
-				}
-			}
-		});
-		
-		tfPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		pfPassword = new JPasswordField();
+		// limit of letter
+		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
+		doc.setDocumentFilter(new DocumentFilter() {
+		        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+		            String string =fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+		            if(string.length() <= 20)
+		            super.replace(fb, offset, length, text, attrs); 
+		        }
+		    });
+		pfPassword.setPreferredSize(new Dimension(280, 25));
+		pfPassword.setMaximumSize(new Dimension(280, 25));
+		pfPassword.setBackground(new Color(12, 14, 18));
+		pfPassword.setForeground(new Color(189, 198, 208));
+		pfPassword.setCaretColor(new Color(189, 198, 208));
+		pfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
+		pfPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		btnLogin = new JButton("Login");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
@@ -145,15 +141,14 @@ public class LoginScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO :: ID 대조해서 있으면 접속.
 				LoginProcess lp = new LoginProcess();
-				lp.loginUser(tfID.getText(), tfPassword.getText(), btnLogin);
-				
+				lp.loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), btnLogin);
 			}
 		});
 		
 		pBox.add(lID);
 		pBox.add(tfID);
 		pBox.add(lPassword);
-		pBox.add(tfPassword);
+		pBox.add(pfPassword);
 		pBox.add(Box.createVerticalStrut(10));
 		pBox.add(btnLogin);
 		

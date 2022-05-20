@@ -17,7 +17,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 
 import kiwi.dto.User;
 import kiwi.gui.process.SignUpProcess;
@@ -39,7 +44,7 @@ public class SignUpScreen extends JPanel {
 	private JLabel lTel;
 	
 	private JTextField tfID;
-	private JTextField tfPassword;
+	private JPasswordField pfPassword;
 	private JTextField tfNickName;
 	private JTextField tfBirthDay;
 	private JTextField tfEmail;
@@ -133,22 +138,23 @@ public class SignUpScreen extends JPanel {
 			}
 		});
 		
-		tfPassword = new JTextField();
-		tfPassword.setPreferredSize(new Dimension(280, 25));
-		tfPassword.setMaximumSize(new Dimension(280, 25));
-		tfPassword.setBackground(new Color(12, 14, 18));
-		tfPassword.setForeground(new Color(189, 198, 208));
-		tfPassword.setCaretColor(new Color(189, 198, 209));
-		tfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
-		tfPassword.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				JTextField tfSrc = (JTextField)e.getSource();
-				if (tfSrc.getText().length() >= 20) e.consume();
-				
-				// TODO :: 입력받은 값 따로 저장하고 출력 글자는 숨기기
-				
-			}
+		pfPassword = new JPasswordField();
+		// limit of letter
+		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
+		doc.setDocumentFilter(new DocumentFilter() {
+		        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+		            String string =fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+		            if(string.length() <= 20)
+		            super.replace(fb, offset, length, text, attrs); 
+		        }
 		});
+		pfPassword.setPreferredSize(new Dimension(280, 25));
+		pfPassword.setMaximumSize(new Dimension(280, 25));
+		pfPassword.setBackground(new Color(12, 14, 18));
+		pfPassword.setForeground(new Color(189, 198, 208));
+		pfPassword.setCaretColor(new Color(189, 198, 209));
+		pfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
+		
 
 		tfNickName = new JTextField();
 		tfNickName.setPreferredSize(new Dimension(280, 25));
@@ -213,7 +219,7 @@ public class SignUpScreen extends JPanel {
 		pBoxTextField.add(Box.createVerticalStrut(10));
 		pBoxTextField.add(tfID);
 		pBoxTextField.add(Box.createVerticalStrut(5));
-		pBoxTextField.add(tfPassword);
+		pBoxTextField.add(pfPassword);
 		pBoxTextField.add(Box.createVerticalStrut(5));
 		pBoxTextField.add(tfNickName);
 		pBoxTextField.add(Box.createVerticalStrut(5));
@@ -233,7 +239,7 @@ public class SignUpScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				SignUpProcess sup = new SignUpProcess();
 				String id = tfID.getText();
-				String password = tfPassword.getText();
+				String password = String.valueOf(pfPassword.getPassword());
 				String nickname = tfNickName.getText();
 				String originBirth = tfBirthDay.getText();
 				String email = tfEmail.getText();

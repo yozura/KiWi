@@ -18,13 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class HomeScreen extends JPanel {
-	// 구글처럼 검색창 위에 로고 넣기
 	JLabel lLogoIcon;
 	
-	// 구글처럼 검색창 넣기
 	JTextField tfSearch;
 	
-	// 기부해줘!!
 	JLabel lDonate;
 	
 	public HomeScreen() {
