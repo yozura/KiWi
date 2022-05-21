@@ -36,7 +36,7 @@ public class UserDAO extends KiWiDAO  {
 		}
 	}
 	
-	public User selectId(String id, String password) {
+	public User findUser(String id, String password) {
 		User user = null;
 		try {
 			Connection con = makeConnection();
@@ -48,10 +48,6 @@ public class UserDAO extends KiWiDAO  {
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				user = new User(id, password, rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4));
-			} else {
-				pstmt.close();
-				con.close();
-				return null;
 			}
 			
 			pstmt.close();
@@ -103,7 +99,30 @@ public class UserDAO extends KiWiDAO  {
 		return vecBookmark;
 	}
 	
-	public boolean checkDuplicateById(String id) {
+	public boolean updatePassword(String email, String password) {
+		boolean isGood = true;
+		try {
+			Connection con = makeConnection();
+			String sql = "update kiwidb.users set password = md5(?) where email = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, password);
+			pstmt.setString(2, email);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt <= 0) {
+				isGood = false;
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isGood;
+	}
+	
+	public boolean checkExistById(String id) {
 		boolean exists = true;
 		try {
 			Connection con = makeConnection();
@@ -116,6 +135,28 @@ public class UserDAO extends KiWiDAO  {
 				exists = false;
 			}
 		
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return exists;
+	}
+	
+	public boolean checkExistByEmail(String email) {
+		boolean exists = true;
+		try {
+			Connection con = makeConnection();
+			String sql = "select email from kiwidb.users where email = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if (!rs.next() ) {
+				exists = false;
+			}
+			
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {

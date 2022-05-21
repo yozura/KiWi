@@ -143,7 +143,7 @@ public class SignUpScreen extends JPanel {
 		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
 		doc.setDocumentFilter(new DocumentFilter() {
 		        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-		            String string =fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
+		            String string = fb.getDocument().getText(0, fb.getDocument().getLength()) + text;
 		            if(string.length() <= 20)
 		            super.replace(fb, offset, length, text, attrs); 
 		        }
@@ -244,11 +244,11 @@ public class SignUpScreen extends JPanel {
 				String originBirth = tfBirthDay.getText();
 				String email = tfEmail.getText();
 				String tel = tfTel.getText();
-				
-				boolean isGood = sup.checkValidationUserInfo(
-						sup.checkDuplicateId(id)
-						, new String[] { id, password, nickname, originBirth, email, tel });
-			
+
+				// ID, Email 중복 확인 + 유효성 검사까지.
+				boolean isGood = sup.checkValidationUserInfo(new String[] { id, password, nickname, originBirth, email, tel })
+						&& sup.checkExistById(id) && sup.checkExistByEmail(email);
+		
 				if (isGood) {
 					Date birthDate = Date.valueOf(originBirth);			
 					User newbie = new User(id, password, nickname, birthDate, email, tel);

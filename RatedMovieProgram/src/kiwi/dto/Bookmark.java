@@ -6,6 +6,11 @@ public class Bookmark implements java.io.Serializable {
 	private String userId;
 	private int movieId;
 	
+	public Bookmark(String userId, int movieId) {
+		this.userId = userId;
+		this.movieId = movieId;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}

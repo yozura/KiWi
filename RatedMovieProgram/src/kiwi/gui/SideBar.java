@@ -11,20 +11,26 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.ScreenMgr;
 
+// btn func
+// 1. home
+// 2. my account
+// 3. bookmark
+// 4. movie list
+// 5. logout
+
 public class SideBar extends JPanel {	
-	private JButton[] arrOfSideBtns = new JButton[4];
+	private JButton[] arrOfSideBtns = new JButton[5];
 	
 	public SideBar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
-		this.setBackground(new Color(174, 182, 142));
-		for (int i = 0; i < 4; ++i) {
+		this.setBackground(new Color(210, 180, 140));
+		for (int i = 0; i < 5; ++i) {
 			JButton btn = new JButton();
 			btn.setPreferredSize(new Dimension(60, 60));
 			btn.setMaximumSize(new Dimension(60, 60));
@@ -34,7 +40,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/home.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME, true, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, btn);
 					}
 				});
 				break;
@@ -42,7 +48,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/account_box.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR, true, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ERROR, btn);
 					}
 				});
 				break;
@@ -50,15 +56,23 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/bookmarks.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.BOOKMARK, true, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.BOOKMARK, btn);
 					}
 				});
 				break;
 			case 3:
+				iconBtn = new ImageIcon("res/icons/collections.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.POP_MOVIES, btn);
+					}
+				});
+				break;
+			case 4:
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.ERROR, true, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.LOG_IN, btn);
 					}
 				});
 				break;
@@ -72,14 +86,14 @@ public class SideBar extends JPanel {
 				public void mouseEntered(MouseEvent e) {
 					// 마우스 들어오면 밝아지기
 					JButton srcBtn = (JButton)e.getSource();
-					srcBtn.setBackground(new Color(240, 255, 240));
+					srcBtn.setBackground(new Color(241, 249, 209));
 					srcBtn.setOpaque(true);
 				}
 				
 				public void mouseExited(MouseEvent e) {
 					// 마우스 나가면 원래 상태로
 					JButton srcBtn = (JButton)e.getSource();
-					srcBtn.setBackground(new Color(174, 182, 142));
+					srcBtn.setBackground(new Color(210, 180, 140));
 				}
 			});
 			arrOfSideBtns[i] = btn;

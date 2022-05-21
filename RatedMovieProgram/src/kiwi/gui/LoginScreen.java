@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -47,13 +49,13 @@ public class LoginScreen extends JPanel {
 	private JTextField tfID;
 	
 	private JPanel pFlowBtns;
-	private JButton btnFindPassword;
+	private JButton btnForgotPassword;
 	private JButton btnSignUp;
 	
 	public LoginScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
-		this.setBackground(new Color(12, 14, 18));
+		this.setBackground(new Color(18, 12, 14));
 		
 		// Logo Image Setting
 		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
@@ -140,8 +142,7 @@ public class LoginScreen extends JPanel {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO :: ID 대조해서 있으면 접속.
-				LoginProcess lp = new LoginProcess();
-				lp.loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), btnLogin);
+				new LoginProcess().loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), btnLogin);
 			}
 		});
 		
@@ -158,20 +159,51 @@ public class LoginScreen extends JPanel {
 		pFlowBtns.setLayout(new FlowLayout(FlowLayout.CENTER, 140, 10));
 		pFlowBtns.setBackground(new Color(12, 14, 18));
 
-		btnFindPassword = new JButton("Forgot Password?");
-		btnFindPassword.setForeground(new Color(71, 143, 250));
-		btnFindPassword.setBorder(BorderFactory.createEmptyBorder());
+		btnForgotPassword = new JButton("Forgot Password?");
+		btnForgotPassword.setForeground(new Color(71, 143, 250));
+		btnForgotPassword.setBorder(BorderFactory.createEmptyBorder());
+		btnForgotPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.FORGOT_PASSWORD, btnForgotPassword);
+			}
+		});
+		btnForgotPassword.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				// Brighting in focus
+				Color color = btnSignUp.getForeground();
+				btnForgotPassword.setForeground(color.brighter());
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				// Return default color out focus
+				Color color = btnSignUp.getForeground();
+				btnForgotPassword.setForeground(new Color(71, 143, 250));
+			}
+		});
 		
 		btnSignUp = new JButton("Sign Up");
 		btnSignUp.setForeground(new Color(71, 143, 250));
 		btnSignUp.setBorder(BorderFactory.createEmptyBorder());
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.SIGN_UP, false, btnSignUp);
+				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.SIGN_UP, btnSignUp);
+			}
+		});
+		btnSignUp.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				// Brighting in focus
+				Color color = btnSignUp.getForeground();
+				btnSignUp.setForeground(color.brighter());
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				// Return default color out focus
+				Color color = btnSignUp.getForeground();
+				btnSignUp.setForeground(new Color(71, 143, 250));
 			}
 		});
 		
-		pFlowBtns.add(btnFindPassword);
+		pFlowBtns.add(btnForgotPassword);
 		pFlowBtns.add(btnSignUp);
 		
 		this.add(Box.createVerticalGlue());

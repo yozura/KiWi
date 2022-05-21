@@ -10,28 +10,27 @@ import kiwi.dao.UserDAO;
 import kiwi.dto.Movie;
 import kiwi.dto.User;
 import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.header.Define.User_Type;
 import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
 public class LoginProcess {
 	public void loginUser(String id, String password, JComponent comp) {
-		// TODO :: password, id 대조해서 맞는 아이디의 정보 가져오기.
 		UserDAO uDAO = new UserDAO();
 		
 		if (!checkValidationUser(new String[] { id, password })) {
 			return;
 		}
 		
-		User user = uDAO.selectId(id, password);
+		User user = uDAO.findUser(id, password);
 		if (user == null) {
-			// SQLError
+			JOptionPane.showMessageDialog(null, "ID, Password의 정보가 잘못되었습니다. 다시 입력해주세요.");
 			return;
 		}
 		
 		Vector<Movie> vecBookmark = uDAO.findBookmarkByUserId(id);
-		
-		UserMgr.getInstance().enter(user, vecBookmark);
-		ScreenMgr.getInstance().changeCurrentScreen(SCREEN_TYPE.HOME, true, comp);
+		UserMgr.getInstance().enter(user, vecBookmark, (id.equals("administrator")) ? User_Type.ADMIN : User_Type.NORMAL);
+		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}
 	
 	public boolean checkValidationUser(String...strings) {

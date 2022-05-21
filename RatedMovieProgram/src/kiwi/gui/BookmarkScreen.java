@@ -8,6 +8,6 @@ public class BookmarkScreen extends JPanel {
 	public BookmarkScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		// 어떤식으로 보여줄지 고민...
+		//
 	}
 }
