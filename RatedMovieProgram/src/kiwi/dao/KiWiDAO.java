@@ -10,7 +10,7 @@ import java.util.Vector;
 import kiwi.dto.Movie;
 
 public class KiWiDAO {
-	protected Connection makeConnection() {
+	protected Connection getConnection() {
 		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

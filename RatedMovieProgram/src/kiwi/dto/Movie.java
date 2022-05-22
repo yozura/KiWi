@@ -1,5 +1,6 @@
 package kiwi.dto;
 
+import java.awt.image.BufferedImage;
 import java.sql.Date;
 
 public class Movie implements java.io.Serializable {
@@ -15,9 +16,10 @@ public class Movie implements java.io.Serializable {
 	private int runningTime;
 	private int ageLimit;
 	private String summary;
+	private BufferedImage poster;
 	
 	public Movie(int id, String title, String director, String actors, String genre, double rate, Date releaseDate,
-			int runningTime, int ageLimit, String summary) {
+			int runningTime, int ageLimit, String summary, BufferedImage poster) {
 		this.id = id;
 		this.title = title;
 		this.director = director;
@@ -28,6 +30,13 @@ public class Movie implements java.io.Serializable {
 		this.runningTime = runningTime;
 		this.ageLimit = ageLimit;
 		this.summary = summary;
+		this.poster = poster;
+	}
+	public BufferedImage getPoster() {
+		return poster;
+	}
+	public void setPoster(BufferedImage poster) {
+		this.poster = poster;
 	}
 	public int getId() {
 		return id;

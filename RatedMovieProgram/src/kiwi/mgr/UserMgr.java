@@ -4,20 +4,24 @@ import java.util.Vector;
 
 import kiwi.dto.Movie;
 import kiwi.dto.User;
-import kiwi.header.Define.User_Type;
+import kiwi.header.Define.USER_TYPE;
 
 public class UserMgr {
 	private static UserMgr instance = new UserMgr();
 	private User currentUser;
 	private Vector<Movie> vecBookmark;
-	private User_Type uType;
+	private USER_TYPE uType;
 	
 	public static UserMgr getInstance() {
 		return instance;
 	}
 	
+	public UserMgr() {
+		this.uType = USER_TYPE.ADMIN;
+	}
+	
 	// enter :: 로그인 시점
-	public void enter(User user, Vector<Movie> vecBookmark, User_Type uType) {
+	public void enter(User user, Vector<Movie> vecBookmark, USER_TYPE uType) {
 		this.currentUser = user;
 		this.vecBookmark = vecBookmark;
 		this.uType = uType;
@@ -39,5 +43,9 @@ public class UserMgr {
 	public void exit() {
 		currentUser = null;
 		vecBookmark.clear();
+	}
+	
+	public User getCurUser() {
+		return currentUser;
 	}
 }

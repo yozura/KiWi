@@ -52,8 +52,6 @@ public class SignUpScreen extends JPanel {
 	
 	private JButton btnConfirm;
 	
-	private String realPassword;
-	
 	public SignUpScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
@@ -70,37 +68,37 @@ public class SignUpScreen extends JPanel {
 		pBoxWelcome.setBackground(new Color(12, 14, 18));
 		pBoxWelcome.add(lWelcome);
 		
-		lID = new JLabel("ID");
+		lID = new JLabel("아이디");
 		lID.setForeground(new Color(189, 198, 208));
 		lID.setFont(new Font("Arial", Font.PLAIN, 15));
 		lID.setToolTipText("아이디는 최소 6자 이상 20자 이내 영문, 숫자로 구성되야 합니다.");
 		lID.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lPassword = new JLabel("Password");
+		lPassword = new JLabel("패스워드");
 		lPassword.setForeground(new Color(189, 198, 208));
 		lPassword.setFont(new Font("Arial", Font.PLAIN, 15));
 		lPassword.setToolTipText("패스워드는 최소 6자 이상 20자 이내 하나 이상의 영문, 숫자 및 특수문자로 구성되야 합니다.");
 		lPassword.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lNickName = new JLabel("NickName");
+		lNickName = new JLabel("닉네임");
 		lNickName.setForeground(new Color(189, 198, 208));
 		lNickName.setFont(new Font("Arial", Font.PLAIN, 15));
 		lNickName.setToolTipText("닉네임은 최소 6자 이상 20자 이내 영문, 숫자로 구성되야 합니다.");
 		lNickName.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lBirthDay = new JLabel("BirthDay");
+		lBirthDay = new JLabel("생년월일");
 		lBirthDay.setForeground(new Color(189, 198, 208));
 		lBirthDay.setFont(new Font("Arial", Font.PLAIN, 15));
-		lBirthDay.setToolTipText("생일은 yyyy-mm-dd 형식으로 구성되야 합니다.");
+		lBirthDay.setToolTipText("생년월일은 yyyy-mm-dd 형식으로 구성되야 합니다.");
 		lBirthDay.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lEmail = new JLabel("Email");
+		lEmail = new JLabel("이메일");
 		lEmail.setForeground(new Color(189, 198, 208));
 		lEmail.setFont(new Font("Arial", Font.PLAIN, 15));
 		lEmail.setToolTipText("이메일은 abcde@kiwi.com 등의 형식으로 구성되야 합니다.");
 		lEmail.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 		
-		lTel = new JLabel("Tel.");
+		lTel = new JLabel("전화번호");
 		lTel.setForeground(new Color(189, 198, 208));
 		lTel.setFont(new Font("Arial", Font.PLAIN, 15));
 		lTel.setToolTipText("전화번호는 '-'를 포함한 형식으로 구성되야 합니다.");
@@ -129,7 +127,7 @@ public class SignUpScreen extends JPanel {
 		tfID.setMaximumSize(new Dimension(280, 25));
 		tfID.setBackground(new Color(12, 14, 18));
 		tfID.setForeground(new Color(189, 198, 208));
-		tfID.setCaretColor(new Color(189, 198, 209));
+		tfID.setCaretColor(new Color(189, 198, 208));
 		tfID.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfID.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {

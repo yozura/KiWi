@@ -27,7 +27,6 @@ public class ForgotPasswordScreen extends JPanel {
 	
 	private JTextField tfEmail;
 	
-	
 	private JLabel lPassword;
 	private JPasswordField pfPassword;
 	

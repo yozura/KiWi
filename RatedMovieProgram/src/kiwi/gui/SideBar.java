@@ -19,18 +19,19 @@ import kiwi.mgr.ScreenMgr;
 // btn func
 // 1. home
 // 2. my account
-// 3. bookmark
-// 4. movie list
+// 3. bookmark (favorite movies)
+// 4. review (my review)
+// 5. movie list (pop movie)
 // 5. logout
 
 public class SideBar extends JPanel {	
-	private JButton[] arrOfSideBtns = new JButton[5];
+	private JButton[] arrOfSideBtns = new JButton[6];
 	
 	public SideBar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(210, 180, 140));
-		for (int i = 0; i < 5; ++i) {
+		for (int i = 0; i < 6; ++i) {
 			JButton btn = new JButton();
 			btn.setPreferredSize(new Dimension(60, 60));
 			btn.setMaximumSize(new Dimension(60, 60));
@@ -48,7 +49,7 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/account_box.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ERROR, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, btn);
 					}
 				});
 				break;
@@ -61,6 +62,14 @@ public class SideBar extends JPanel {
 				});
 				break;
 			case 3:
+				iconBtn = new ImageIcon("res/icons/review2.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.REVIEW, btn);
+					}
+				});
+				break;
+			case 4:
 				iconBtn = new ImageIcon("res/icons/collections.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -68,11 +77,11 @@ public class SideBar extends JPanel {
 					}
 				});
 				break;
-			case 4:
+			case 5:
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.LOG_IN, btn);
+						ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.LOG_IN, btn);
 					}
 				});
 				break;

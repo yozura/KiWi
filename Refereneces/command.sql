@@ -19,3 +19,4 @@ create table kiwidb.Bookmarks (
     foreign key (user_id) references Users (id),
     foreign key (movie_id) references Movies (id)
 );
+

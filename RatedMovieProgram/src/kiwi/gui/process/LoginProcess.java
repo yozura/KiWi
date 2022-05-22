@@ -10,7 +10,7 @@ import kiwi.dao.UserDAO;
 import kiwi.dto.Movie;
 import kiwi.dto.User;
 import kiwi.header.Define.SCREEN_TYPE;
-import kiwi.header.Define.User_Type;
+import kiwi.header.Define.USER_TYPE;
 import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
@@ -29,7 +29,7 @@ public class LoginProcess {
 		}
 		
 		Vector<Movie> vecBookmark = uDAO.findBookmarkByUserId(id);
-		UserMgr.getInstance().enter(user, vecBookmark, (id.equals("administrator")) ? User_Type.ADMIN : User_Type.NORMAL);
+		UserMgr.getInstance().enter(user, vecBookmark, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
 		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}
 	
