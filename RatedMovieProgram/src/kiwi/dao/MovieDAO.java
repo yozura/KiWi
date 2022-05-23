@@ -51,6 +51,12 @@ public class MovieDAO extends KiWiDAO {
 		}
 	} 
 	
+	public boolean checkExistByTitle(String title) {
+		
+		
+		return false;
+	}
+	
 	public Vector<Movie> selectAll() {
 		Vector<Movie> vecMovie = null;
 		try {

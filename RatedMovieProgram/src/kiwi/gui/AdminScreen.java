@@ -10,8 +10,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -30,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import kiwi.dto.Movie;
 import kiwi.gui.process.AdminProcess;
 
 // ADD MOVIE
@@ -42,10 +45,13 @@ public class AdminScreen extends JPanel {
 
 	private JLabel lGuide;
 	private JPanel pBoxLabel;
-	private JPanel pBoxAction;
+	private JPanel pBoxField;
 	private JPanel pFlowForm;
 	
 	private File poster;
+	
+	private JButton btnAddMovie;
+	private JButton btnResetMovie;
 	
 	public AdminScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -71,7 +77,9 @@ public class AdminScreen extends JPanel {
 					pFlowForm.removeAll();
 					
 					pFlowForm.add(getAddMovieLabel());
-					pFlowForm.add(getAddMovieAction());
+					pFlowForm.add(getAddMovieField());
+					pFlowForm.add(btnAddMovie);
+					pFlowForm.add(btnResetMovie);
 					
 					pFlowForm.setVisible(true);
 					break;
@@ -79,7 +87,7 @@ public class AdminScreen extends JPanel {
 			}
 		});
 		
-		lGuide = new JLabel("asdsadas");
+		lGuide = new JLabel("원하는 행동을 선택해주세요.");
 		lGuide.setForeground(new Color(189, 198, 208));
 		lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
 		lGuide.setHorizontalAlignment(SwingConstants.CENTER);
@@ -88,8 +96,8 @@ public class AdminScreen extends JPanel {
 		// Merge Boxes
 		pFlowForm = new JPanel();
 		pFlowForm.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
-		pFlowForm.setPreferredSize(new Dimension(800, 400));
-		pFlowForm.setMaximumSize(new Dimension(800, 400));
+		pFlowForm.setPreferredSize(new Dimension(600, 465));
+		pFlowForm.setMaximumSize(new Dimension(600, 465));
 		pFlowForm.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		pFlowForm.setBackground(new Color(18, 21, 26));
 		pFlowForm.setVisible(false);
@@ -103,7 +111,7 @@ public class AdminScreen extends JPanel {
 		this.add(Box.createVerticalGlue());
 	}
 	
-	public JPanel getAddMovieAction() {
+	public JPanel getAddMovieField() {
 		JTextField tfTitle = new JTextField();
 		tfTitle.setPreferredSize(new Dimension(280, 25));
 		tfTitle.setMaximumSize(new Dimension(280, 25));
@@ -205,53 +213,124 @@ public class AdminScreen extends JPanel {
 		JFileChooser fcPoster = new JFileChooser();
 		fcPoster.setFileFilter(new FileNameExtensionFilter("png", "jpeg", "jpg"));
 		fcPoster.setMultiSelectionEnabled(false);
-		
+
 		JLabel lPoster = new JLabel();
+		lPoster.setBackground(new Color(12, 14, 18));
+		lPoster.setOpaque(true);
+		lPoster.setForeground(new Color(189, 198, 208));
+		lPoster.setPreferredSize(new Dimension(200, 25));
+		lPoster.setMaximumSize(new Dimension(200, 25));
+		lPoster.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		
 		JButton btnPoster = new JButton("열기");
 		btnPoster.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (fcPoster.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					poster = fcPoster.getSelectedFile();
-					try {
-						lPoster.setIcon(new ImageIcon(ImageIO.read(poster)));
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					lPoster.setText(poster.getPath());
 				}
 			}
 		});
+		
+		JPanel pFlowPoster = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pFlowPoster.setBackground(new Color(18, 21, 26));
+		pFlowPoster.add(lPoster);
+		pFlowPoster.add(btnPoster);
 		
 		JTextArea taSummary = new JTextArea();
 		taSummary.setPreferredSize(new Dimension(280, 100));
 		taSummary.setMaximumSize(new Dimension(280, 100));
 		taSummary.setLineWrap(true);
 		
-		pBoxAction = new JPanel();
-		pBoxAction.setLayout(new BoxLayout(pBoxAction, BoxLayout.PAGE_AXIS));
-		pBoxAction.setBackground(new Color(18, 21, 26));
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfTitle);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfDirector);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfActors);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfGenre);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfReleaseDate);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfRunningTime);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(tfAgeLimit);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(lPoster);
-		pBoxAction.add(btnPoster);
-		pBoxAction.add(Box.createVerticalStrut(10));
-		pBoxAction.add(taSummary);
-		pBoxAction.add(Box.createVerticalStrut(10));
+		pBoxField = new JPanel();
+		pBoxField.setLayout(new BoxLayout(pBoxField, BoxLayout.Y_AXIS));
+		pBoxField.setBackground(new Color(18, 21, 26));
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfTitle);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfDirector);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfActors);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfGenre);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfReleaseDate);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfRunningTime);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(tfAgeLimit);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(pFlowPoster);
+		pBoxField.add(Box.createVerticalStrut(10));
+		pBoxField.add(taSummary);
+		pBoxField.add(Box.createVerticalStrut(10));
 		
-		return pBoxAction;
+		btnAddMovie = new JButton("영화 추가");
+		btnAddMovie.setPreferredSize(new Dimension(180, 40));
+		btnAddMovie.setMaximumSize(new Dimension(180, 40));
+		btnAddMovie.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnAddMovie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminProcess ap = new AdminProcess();
+				boolean isGood = ap.checkValidationMovie(poster,
+						new String[] { 
+							tfTitle.getText(),
+							tfDirector.getText(),
+							tfActors.getText(),
+							tfGenre.getText(),
+							tfReleaseDate.getText(),
+							tfRunningTime.getText(),
+							tfAgeLimit.getText(),
+							taSummary.getText()
+						});
+				
+				if (isGood) {
+					Date releaseDate = Date.valueOf(tfReleaseDate.getText());
+					BufferedImage posterImg = null;
+					try {
+						posterImg = ImageIO.read(poster);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					Movie newMovie = new Movie(
+							0
+							, tfTitle.getText()
+							, tfDirector.getText()
+							, tfActors.getText()
+							, tfGenre.getText()
+							, 0.0
+							, releaseDate
+							, Integer.parseInt(tfRunningTime.getText())
+							, Integer.parseInt(tfAgeLimit.getText())
+							, taSummary.getText()
+							, posterImg
+							);
+					
+					ap.addMovie(newMovie, btnAddMovie);
+				}
+			}
+		});
+		
+		btnResetMovie = new JButton("다시 쓰기");
+		btnResetMovie.setPreferredSize(new Dimension(180, 40));
+		btnResetMovie.setMaximumSize(new Dimension(180, 40));
+		btnResetMovie.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		btnResetMovie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfTitle.setText("");
+				tfDirector.setText("");
+				tfActors.setText("");
+				tfGenre.setText("");
+				tfReleaseDate.setText("");
+				tfRunningTime.setText("");
+				tfAgeLimit.setText("");
+				lPoster.setText("");
+				taSummary.setText("");
+				poster = null;
+			}
+		});
+		
+		return pBoxField;
 	}
 	
 	public JPanel getAddMovieLabel() {
@@ -289,39 +368,41 @@ public class AdminScreen extends JPanel {
 		lAgeLimit.setForeground(new Color(189, 198, 208));
 		lAgeLimit.setFont(new Font("Arial", Font.PLAIN, 15));
 		lAgeLimit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
-		JLabel lSummary = new JLabel("줄거리");
-		lSummary.setForeground(new Color(189, 198, 208));
-		lSummary.setFont(new Font("Arial", Font.PLAIN, 15));
-		lSummary.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
+
 		JLabel lPoster = new JLabel("포스터");
 		lPoster.setForeground(new Color(189, 198, 208));
 		lPoster.setFont(new Font("Arial", Font.PLAIN, 15));
 		lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
+		JLabel lSummary = new JLabel("줄거리");
+		lSummary.setPreferredSize(new Dimension(40, 100));
+		lSummary.setMaximumSize(new Dimension(40, 100));
+		lSummary.setForeground(new Color(189, 198, 208));
+		lSummary.setFont(new Font("Arial", Font.PLAIN, 15));
+		lSummary.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		
 		pBoxLabel = new JPanel();
-		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.PAGE_AXIS));
+		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.Y_AXIS));
 		pBoxLabel.setBackground(new Color(18, 21, 26));
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(13));
 		pBoxLabel.add(lTitle);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(15));
 		pBoxLabel.add(lDirector);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lActors);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lGenre);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lReleaseDate);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lRunningTime);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lAgeLimit);
-		pBoxLabel.add(Box.createVerticalStrut(10));
-		pBoxLabel.add(lSummary);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lPoster);
 		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(lSummary);
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		
 		return pBoxLabel;
 	}
