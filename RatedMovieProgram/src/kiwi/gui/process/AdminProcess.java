@@ -3,14 +3,20 @@ package kiwi.gui.process;
 import java.io.File;
 import java.util.regex.Pattern;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dto.Movie;
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
 
 public class AdminProcess {
-	 public void addMovie(Movie movie) {
+	 public void addMovie(Movie movie, JComponent comp) {
+		 MovieDAO mDAO = new MovieDAO();
+		 mDAO.insert(movie);
 		 
+		 ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, comp);
 	 }
 	 
 	 public boolean checkExistByTitle(String title) {
@@ -24,7 +30,7 @@ public class AdminProcess {
 	 
 	 public boolean checkValidationMovie(File poster, String...strings) {
 		 // Title
-		 if (!Pattern.matches("^[a-zA-Z가-힣0-9!@#$:,\\s]{1,100}$", strings[0])) {
+		 if (!Pattern.matches("^[a-zA-Z가-힣0-9!@#$:?,\\s]{1,100}$", strings[0])) {
 			 JOptionPane.showMessageDialog(null, "영화 제목은 한글, 영문, 숫자, 일부 특수문자로 구성되야 합니다.");
 			 System.out.println("영화 제목은 한글, 영문, 숫자, 일부 특수문자로 구성되야 합니다.");
 			 return false;
@@ -73,7 +79,7 @@ public class AdminProcess {
 		 }
 
 		 // summary
-		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:]{1,500}$", strings[7])) {
+		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:?]{1,500}$", strings[7])) {
 			JOptionPane.showMessageDialog(null, "줄거리는 500자 이내로 입력해야 합니다.");
 			System.out.println("줄거리는 500자 이내로 입력해야 합니다.");
 			return false;

@@ -52,9 +52,25 @@ public class MovieDAO extends KiWiDAO {
 	} 
 	
 	public boolean checkExistByTitle(String title) {
+		boolean exists = true;
+		try {
+			Connection con = getConnection();
+			String sql = "select title from kiwidb.movies where title = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if (!rs.next()) {
+				exists = false;
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
-		
-		return false;
+		return exists;
 	}
 	
 	public Vector<Movie> selectAll() {
