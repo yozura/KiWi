@@ -16,11 +16,6 @@ public class PopularMoviesScreen extends JPanel {
 	private Vector<JPanel> vecMovie;
 	
 	private JLabel head;
-	private JLabel body;
-	
-	private JScrollBar scBar;
-	private JScrollBar scBar1;
-	private JScrollPane scPane;
 	
 	public PopularMoviesScreen() {
 		backTop.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
