@@ -17,13 +17,10 @@ public class PopularMoviesScreen extends JPanel {
 	
 	private JLabel head;
 	
-<<<<<<< HEAD
 	private JScrollBar scBar;
 	private JScrollBar scBar1;
 	private JScrollPane scPane;
 	
-=======
->>>>>>> 8d0c120d172e61e2c7c3efc2e1b95c00a33c1e7e
 	public PopularMoviesScreen() {
 		backTop.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
 		backBottom.setLayout(new GridLayout(0, 4, 40, 30));
