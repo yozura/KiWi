@@ -15,11 +15,23 @@ public class Define {
 		SIGN_UP,
 		ADMIN,
 		USER,
+		MOVIE,
 		FORGOT_PASSWORD,
 		REVIEW,
 		BOOKMARK,
 		POP_MOVIES,
 		ERROR,
+		
+		END
+	}
+	
+	public enum SFX_TYPE {
+		LOG_IN,
+		CLICK,
+		END
+	}
+	
+	public enum BGM_TYPE {
 		
 		END
 	}

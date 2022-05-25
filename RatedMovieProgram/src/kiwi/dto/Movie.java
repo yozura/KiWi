@@ -11,21 +11,21 @@ public class Movie implements java.io.Serializable {
 	private String director;
 	private String actors;
 	private String genre;
-	private double rate;
+	private int freshRate;
 	private Date releaseDate;
 	private int runningTime;
 	private int ageLimit;
 	private String summary;
 	private BufferedImage poster;
 	
-	public Movie(int id, String title, String director, String actors, String genre, double rate, Date releaseDate,
+	public Movie(int id, String title, String director, String actors, String genre, int freshRate, Date releaseDate,
 			int runningTime, int ageLimit, String summary, BufferedImage poster) {
 		this.id = id;
 		this.title = title;
 		this.director = director;
 		this.actors = actors;
 		this.genre = genre;
-		this.rate = rate;
+		this.freshRate = freshRate;
 		this.releaseDate = releaseDate;
 		this.runningTime = runningTime;
 		this.ageLimit = ageLimit;
@@ -68,11 +68,11 @@ public class Movie implements java.io.Serializable {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public double getRate() {
-		return rate;
+	public int getRate() {
+		return freshRate;
 	}
-	public void setRate(double rate) {
-		this.rate = rate;
+	public void setRate(int freshRate) {
+		this.freshRate = freshRate;
 	}
 	public Date getReleaseDate() {
 		return releaseDate;

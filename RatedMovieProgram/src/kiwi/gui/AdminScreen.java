@@ -298,7 +298,7 @@ public class AdminScreen extends JPanel {
 							, tfDirector.getText()
 							, tfActors.getText()
 							, tfGenre.getText()
-							, 0.0
+							, 0
 							, releaseDate
 							, Integer.parseInt(tfRunningTime.getText())
 							, Integer.parseInt(tfAgeLimit.getText())

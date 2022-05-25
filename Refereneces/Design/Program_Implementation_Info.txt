@@ -26,4 +26,15 @@
 2. Background Color - new Color(12, 14, 18)
 3. Panel Color - new Color(18, 21, 26)
 4. Text Color - new Color(189, 198, 208)
-5. Border Color - new Color(26, 30, 35)d
+5. Border Color - new Color(26, 30, 35)
+
+- 평점 백분율 계산 -
+(리뷰 총 점수) / (리뷰수 * 100) * 100 이 해당 영화의 점수.
+
+- TODO List -
+1. 영화 리스트 (3)
+2. 리뷰 글쓰기 (4), 리뷰 스크린(4)
+3. 영화 개인 스크린 (1)
+4. 북마크 스크린 (5)
+5. 유저 스크린 (2)
+5. 등등..

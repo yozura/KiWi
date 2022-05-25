@@ -92,7 +92,7 @@ public class MovieDAO extends KiWiDAO {
 							, rs.getString(3)
 							, rs.getString(4)
 							, rs.getString(5)
-							, rs.getDouble(6)
+							, rs.getInt(6)
 							, rs.getDate(7)
 							, rs.getInt(8)
 							, rs.getInt(9)
@@ -104,7 +104,7 @@ public class MovieDAO extends KiWiDAO {
 			}
 			
 			if (vecMovie != null) {
-				System.out.println("selectAll 성공");
+				System.out.println("영화 불러오기 성공...");
 			}
 			
 			pstmt.close();

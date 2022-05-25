@@ -10,6 +10,7 @@ import kiwi.gui.ForgotPasswordScreen;
 import kiwi.gui.HomeScreen;
 import kiwi.gui.LoginScreen;
 import kiwi.gui.MainFrame;
+import kiwi.gui.MovieScreen;
 import kiwi.gui.ReviewScreen;
 import kiwi.gui.PopularMoviesScreen;
 import kiwi.gui.SideBar;
@@ -28,7 +29,8 @@ public class ScreenMgr {
 	
 	ScreenMgr() {
 		pSideBar = new SideBar();
-		pCurScreen = new LoginScreen();
+		//pCurScreen = new LoginScreen();
+		pCurScreen = new ReviewScreen();
 	}
 	
 	public void changeCurScreenWithBar(SCREEN_TYPE eType, JComponent comp) {
@@ -38,6 +40,7 @@ public class ScreenMgr {
 		case SIGN_UP -> pCurScreen = new SignUpScreen();
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
+		case MOVIE -> pCurScreen = new MovieScreen();
 		case FORGOT_PASSWORD -> pCurScreen = new ForgotPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
@@ -57,6 +60,7 @@ public class ScreenMgr {
 		case SIGN_UP -> pCurScreen = new SignUpScreen();
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
+		case MOVIE -> pCurScreen = new MovieScreen();
 		case FORGOT_PASSWORD -> pCurScreen = new ForgotPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();

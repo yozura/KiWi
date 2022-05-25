@@ -30,6 +30,7 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
 import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
 import kiwi.gui.process.LoginProcess;

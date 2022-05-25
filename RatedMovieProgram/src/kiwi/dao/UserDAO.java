@@ -84,7 +84,7 @@ public class UserDAO extends KiWiDAO  {
 							, rs.getString(3)
 							, rs.getString(4)
 							, rs.getString(5)
-							, rs.getDouble(6)
+							, rs.getInt(6)
 							, rs.getDate(7)
 							, rs.getInt(8)
 							, rs.getInt(9)
