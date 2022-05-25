@@ -33,7 +33,7 @@ public class PopularMoviesScreen extends JPanel {
 		Image changeImg = img.getScaledInstance(210, 297, Image.SCALE_SMOOTH);
 		ImageIcon iconChangedLogo = new ImageIcon(changeImg);
 		
-		//ㅏ마난a
+	
 		
 		
 		vecMovie = new Vector<JPanel>();
