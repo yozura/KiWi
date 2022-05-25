@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class PopularMoviesScreen extends JFrame {
+public class PopularMoviesScreen extends JPanel {
 	private Point FRAME_SIZE = new Point(1280, 720);
 	private JPanel backGround = new JPanel();
 	private JPanel backTop = new JPanel();
@@ -22,14 +22,13 @@ public class PopularMoviesScreen extends JFrame {
 	private JScrollBar scBar1;
 	private JScrollPane scPane;
 	
-	PopularMoviesScreen() {
+	public PopularMoviesScreen() {
 		backTop.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
 		backBottom.setLayout(new GridLayout(0, 4, 40, 30));
 		backGround.setLayout(new BorderLayout());
 		
 		//위쪽 POPULAR MOVIES 부분   하단부분 그리드 레이아웃 사용시 에러발생
 		head = new JLabel("POPULAR MOVIES");
-		head.setHorizontalAlignment(NORMAL);
 		head.setBorder(new EmptyBorder(15, 0, 15, 0));
 		head.setForeground(new Color(189, 198, 208));
 		head.setFont(new Font("Arial", Font.PLAIN, 32));
@@ -84,12 +83,8 @@ public class PopularMoviesScreen extends JFrame {
 		
 		//실행창 부분
 		add(backGround);
-		setTitle("KiWi");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBackground(new Color(12, 14, 18));
 		setPreferredSize(new Dimension(1280, 800));
-		setResizable(true);
-		setLocationRelativeTo(null);
 		setSize(FRAME_SIZE.x , FRAME_SIZE.y);
 		setVisible(true);
 	}
