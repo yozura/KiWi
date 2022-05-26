@@ -29,8 +29,7 @@ public class ScreenMgr {
 	
 	ScreenMgr() {
 		pSideBar = new SideBar();
-		//pCurScreen = new LoginScreen();
-		pCurScreen = new ReviewScreen();
+		pCurScreen = new PopularMoviesScreen();
 	}
 	
 	public void changeCurScreenWithBar(SCREEN_TYPE eType, JComponent comp) {

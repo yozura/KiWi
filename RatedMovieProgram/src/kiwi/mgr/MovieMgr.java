@@ -35,7 +35,7 @@ public class MovieMgr {
 				, "쿠엔틴 타란티노"
 				, "마이클 잭슨"
 				, "코미디"
-				, 15
+				, 80
 				, Date.valueOf("2021-01-01")
 				, 130
 				, 15
@@ -49,18 +49,19 @@ public class MovieMgr {
 		vecMovie = dao.selectAll();
 	}
 	
+	public Vector<Movie> getMovies() {
+		return vecMovie;
+	}
+	
+	public int getMoviesCount() {
+		return vecMovie.size();
+	}
+	
 	public Movie getCurMovie() {
 		return curMovie;
 	}
 	
-	public void setCurMovie(Movie movie) {
-		curMovie = movie;
-	}
-	
-	public BufferedImage resizePoster(BufferedImage originImg, int width, int height) throws IOException {
-		Image resizedPoster = originImg.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-		BufferedImage outputPoster = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		outputPoster.getGraphics().drawImage(resizedPoster, 0, 0, null);
-		return outputPoster;
+	public void setCurMovie(int index) {
+		curMovie = vecMovie.get(index);
 	}
 }

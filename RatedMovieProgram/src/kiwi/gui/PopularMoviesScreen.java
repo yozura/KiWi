@@ -1,91 +1,101 @@
 package kiwi.gui;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import kiwi.dto.Movie;
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ScreenMgr;
+
 public class PopularMoviesScreen extends JPanel {
-	private Point FRAME_SIZE = new Point(1280, 720);
-	private JPanel backGround = new JPanel();
-	private JPanel backTop = new JPanel();
-	private JPanel backBottom = new JPanel();
-	
-	
-	private Vector<JPanel> vecMovie;
-	
-	private JLabel head;
-	
-	private JScrollBar scBar;
-	private JScrollBar scBar1;
-	private JScrollPane scPane;
-	
 	public PopularMoviesScreen() {
-		backTop.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
-		backBottom.setLayout(new GridLayout(0, 4, 40, 30));
-		backGround.setLayout(new BorderLayout());
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBackground(new Color(12, 14, 18));
 		
-		//위쪽 POPULAR MOVIES 부분 하단부분 그리드 레이아웃 사용시 에러발생
-		head = new JLabel("POPULAR MOVIES");
-		head.setBorder(new EmptyBorder(15, 0, 15, 0));
-		head.setForeground(new Color(189, 198, 208));
-		head.setFont(new Font("Arial", Font.PLAIN, 32));
+		JLabel lWelcome = new JLabel("Popular Movies");
+		lWelcome.setForeground(new Color(189, 198, 208));
+		lWelcome.setFont(new Font("Arial", Font.PLAIN, 32));
+		lWelcome.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+		lWelcome.setHorizontalAlignment(SwingConstants.CENTER);
+		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+		JSeparator hr = new JSeparator(JSeparator.HORIZONTAL);
+		hr.setBackground(new Color(189, 198, 208));
+		hr.setForeground(new Color(189, 198, 208));
+		hr.setPreferredSize(new Dimension(1080, 7));
+		hr.setMaximumSize(new Dimension(1080, 7));
 		
-		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
-		Image img = iconLogo.getImage();
-		Image changeImg = img.getScaledInstance(210, 297, Image.SCALE_SMOOTH);
-		ImageIcon iconChangedLogo = new ImageIcon(changeImg);
+		JPanel pGridBody = new JPanel(new GridLayout(0, 4, 30, 30));
+		pGridBody.setBackground(new Color(12, 14, 18));
 		
-		// ㅇ맨애
-		
-		
-		vecMovie = new Vector<JPanel>();
-		for (int i = 0; i < 25; ++i) {
+		int movieCount = MovieMgr.getInstance().getMoviesCount();
+		for (int i = 0; i < movieCount; ++i) {
+			Movie movie = MovieMgr.getInstance().getMovies().get(i);
+			
 			JPanel pMovie = new JPanel();
 			pMovie.setLayout(new BoxLayout(pMovie, BoxLayout.Y_AXIS));
 			pMovie.setBackground(new Color(12, 14, 18));
 			pMovie.setPreferredSize(new Dimension(210, 397));
 			pMovie.setMaximumSize(new Dimension(210, 397));
 			
-			JLabel lPoster = new JLabel();
+			ImageIcon iconLogo = new ImageIcon(movie.getPoster());
+			Image img = iconLogo.getImage();
+			Image changeImg = img.getScaledInstance(210, 297, Image.SCALE_SMOOTH);
+			ImageIcon iconChangedLogo = new ImageIcon(changeImg);
+			
+			JButton lPoster = new JButton();
+			lPoster.setText(String.valueOf(i));
 			lPoster.setIcon(iconChangedLogo);
+			lPoster.setBorder(BorderFactory.createEmptyBorder());
+			lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+			lPoster.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// 무비 스크린으로 이동
+					JButton btn = (JButton)e.getSource();
+					
+					MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getText()));
+					ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
+				}				
+			});
 			
-			JLabel lTitle = new JLabel("movieTitle");
+			JLabel lTitle = new JLabel(movie.getTitle());
 			lTitle.setForeground(new Color(189, 198, 208));
+			lTitle.setFont(new Font("Arial", Font.PLAIN, 15));
+			lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			
-			JLabel lGrade = new JLabel("Grade");
+			JLabel lGrade = new JLabel(String.valueOf(movie.getRate()));
 			lGrade.setForeground(new Color(189, 198, 208));
+			lGrade.setFont(new Font("Arial", Font.PLAIN, 15));
+			lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			
 			pMovie.add(lPoster);
 			pMovie.add(lTitle);
 			pMovie.add(lGrade);
 			
-			backBottom.add(pMovie);
-			vecMovie.add(pMovie);
+			pGridBody.add(pMovie);
 		}  
 		
-		//스크롤 바
-		JScrollPane scPane = new JScrollPane(backBottom, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scPane = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scPane.setBackground(new Color(12, 14, 18));
 		
-		//패널 부착
-		head.setBackground(new Color(12, 14, 18)); // 위쪽 패널 플로우레리아웃으로 초기화 
-		backTop.add(head); // 위쪽 패널에 head레이블 부착
-		// 전체 레이아웃은 보더 레이아웃으로 해야 위/아래로 부착 가능, 위 쪽 패널만 플로우 레이아웃 사 
-		backTop.setBackground(new Color(120, 140, 180));		// TEST
-		backTop.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		backBottom.setBackground(new Color(12, 14, 18));
-		backBottom.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
-		
-		//전체 화면시 보더 레이아웃 오류 발새d, backTop패널(head 레이블)이 왼 쪽으로  
-		backGround.add(backTop, BorderLayout.NORTH);
-		backGround.add(scPane, BorderLayout.CENTER);
+		JPanel pBoxPane = new JPanel();
+		pBoxPane.setLayout(new BoxLayout(pBoxPane, BoxLayout.X_AXIS));
+		pBoxPane.setBackground(new Color(12, 14, 18));
+		pBoxPane.add(Box.createHorizontalGlue());
+		pBoxPane.add(scPane);
+		pBoxPane.add(Box.createHorizontalGlue());
+
 		
 		//실행창 부분
-		add(backGround);
-		setBackground(new Color(12, 14, 18));
-		setPreferredSize(new Dimension(1280, 800));
-		setSize(FRAME_SIZE.x , FRAME_SIZE.y);
-		setVisible(true);
+		this.add(lWelcome);
+		this.add(hr);
+		this.add(Box.createVerticalStrut(40));
+		this.add(pBoxPane);
 	}
 }

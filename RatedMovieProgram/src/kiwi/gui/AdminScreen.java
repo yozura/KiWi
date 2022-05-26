@@ -196,19 +196,9 @@ public class AdminScreen extends JPanel {
 			}
 		});
 		
-		JTextField tfAgeLimit = new JTextField();
-		tfAgeLimit.setPreferredSize(new Dimension(280, 25));
-		tfAgeLimit.setMaximumSize(new Dimension(280, 25));
-		tfAgeLimit.setBackground(new Color(12, 14, 18));
-		tfAgeLimit.setForeground(new Color(189, 198, 208));
-		tfAgeLimit.setCaretColor(new Color(189, 198, 208));
-		tfAgeLimit.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
-		tfAgeLimit.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				JTextField tfSrc = (JTextField)e.getSource();
-				if (tfSrc.getText().length() >= 3) e.consume();
-			}
-		});
+		JComboBox<Integer> cbAge = new JComboBox<Integer>(new Integer[] { 0, 12, 15, 19 });
+		cbAge.setPreferredSize(new Dimension(280, 25));
+		cbAge.setMaximumSize(new Dimension(280, 25));
 
 		JFileChooser fcPoster = new JFileChooser();
 		fcPoster.setFileFilter(new FileNameExtensionFilter("png", "jpeg", "jpg"));
@@ -258,7 +248,7 @@ public class AdminScreen extends JPanel {
 		pBoxField.add(Box.createVerticalStrut(10));
 		pBoxField.add(tfRunningTime);
 		pBoxField.add(Box.createVerticalStrut(10));
-		pBoxField.add(tfAgeLimit);
+		pBoxField.add(cbAge);
 		pBoxField.add(Box.createVerticalStrut(10));
 		pBoxField.add(pFlowPoster);
 		pBoxField.add(Box.createVerticalStrut(10));
@@ -280,7 +270,6 @@ public class AdminScreen extends JPanel {
 							tfGenre.getText(),
 							tfReleaseDate.getText(),
 							tfRunningTime.getText(),
-							tfAgeLimit.getText(),
 							taSummary.getText()
 						});
 				
@@ -301,7 +290,7 @@ public class AdminScreen extends JPanel {
 							, 0
 							, releaseDate
 							, Integer.parseInt(tfRunningTime.getText())
-							, Integer.parseInt(tfAgeLimit.getText())
+							, (int)cbAge.getSelectedItem()
 							, taSummary.getText()
 							, posterImg
 							);
@@ -323,7 +312,7 @@ public class AdminScreen extends JPanel {
 				tfGenre.setText("");
 				tfReleaseDate.setText("");
 				tfRunningTime.setText("");
-				tfAgeLimit.setText("");
+				cbAge.setSelectedItem(0);
 				lPoster.setText("");
 				taSummary.setText("");
 				poster = null;
@@ -384,25 +373,25 @@ public class AdminScreen extends JPanel {
 		pBoxLabel = new JPanel();
 		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.Y_AXIS));
 		pBoxLabel.setBackground(new Color(18, 21, 26));
-		pBoxLabel.add(Box.createVerticalStrut(13));
-		pBoxLabel.add(lTitle);
 		pBoxLabel.add(Box.createVerticalStrut(15));
+		pBoxLabel.add(lTitle);
+		pBoxLabel.add(Box.createVerticalStrut(18));
 		pBoxLabel.add(lDirector);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lActors);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lGenre);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lReleaseDate);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lRunningTime);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lAgeLimit);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(30));
 		pBoxLabel.add(lPoster);
-		pBoxLabel.add(Box.createVerticalStrut(10));
+		pBoxLabel.add(Box.createVerticalStrut(17));
 		pBoxLabel.add(lSummary);
-		pBoxLabel.add(Box.createVerticalStrut(18));
+		pBoxLabel.add(Box.createVerticalStrut(15));
 		
 		return pBoxLabel;
 	}

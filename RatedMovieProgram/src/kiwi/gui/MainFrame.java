@@ -4,6 +4,8 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ReviewMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class MainFrame extends JFrame {
@@ -17,10 +19,12 @@ public class MainFrame extends JFrame {
 		this.setTitle("KiWi");
 		this.setLayout(new BorderLayout(0, 0));
 		
+		load();
+		
 		con = this.getContentPane();
 		pMainScreen.add(ScreenMgr.getInstance().getCurScreen(), BorderLayout.CENTER);
 		
-		//con.add(ScreenMgr.getInstance().getSideBar(), BorderLayout.WEST);
+		con.add(ScreenMgr.getInstance().getSideBar(), BorderLayout.WEST);
 		con.add(pMainScreen, BorderLayout.CENTER);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,5 +57,10 @@ public class MainFrame extends JFrame {
 		con.add(pMainScreen, BorderLayout.CENTER);
 	
 		con.revalidate();
+	}
+	
+	public void load() {
+		MovieMgr.getInstance().load();
+		ReviewMgr.getInstance().load();
 	}
 }
