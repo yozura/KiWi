@@ -46,7 +46,7 @@ public class PopularMoviesScreen extends JPanel {
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		// Body -------------------------
-		
+    
 		JPanel pGridBody = new JPanel(new GridLayout(0, 4, 30, 30));
 		pGridBody.setBackground(new Color(12, 14, 18));
 		
