@@ -31,6 +31,15 @@ from kiwidb.reviews
 group by movie_id
 having movie_id = 2;
 
+-- movie rate update
+update kiwidb.movies set freshrate = ? where movie_id = ?;
+
+insert into kiwidb.bookmarks values ('korean123', 3);
+insert into kiwidb.bookmarks values ('korean123', 4);
+insert into kiwidb.bookmarks values ('korean123', 6);
+
+select * from kiwidb.bookmarks;
+
 
 
 select * from kiwidb.movies;

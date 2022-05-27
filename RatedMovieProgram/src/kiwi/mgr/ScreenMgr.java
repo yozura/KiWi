@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import kiwi.gui.AdminScreen;
 import kiwi.gui.BookmarkScreen;
 import kiwi.gui.ErrorScreen;
-import kiwi.gui.ForgotPasswordScreen;
+import kiwi.gui.RenewalPasswordScreen;
 import kiwi.gui.HomeScreen;
 import kiwi.gui.LoginScreen;
 import kiwi.gui.MainFrame;
@@ -30,8 +30,8 @@ public class ScreenMgr {
 	
 	ScreenMgr() {
 		pSideBar = new SideBar();
-		pCurScreen = new PopularMoviesScreen();
-		curScreenType = SCREEN_TYPE.POP_MOVIES;
+		pCurScreen = new LoginScreen();
+		curScreenType = SCREEN_TYPE.LOG_IN;
 	}
 	
 	public void redirectWithSideBar(JComponent comp) {
@@ -42,7 +42,7 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case FORGOT_PASSWORD -> pCurScreen = new ForgotPasswordScreen();
+		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
@@ -63,7 +63,7 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case FORGOT_PASSWORD -> pCurScreen = new ForgotPasswordScreen();
+		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
@@ -84,7 +84,7 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case FORGOT_PASSWORD -> pCurScreen = new ForgotPasswordScreen();
+		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();

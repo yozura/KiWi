@@ -55,8 +55,8 @@ public class LoginScreen extends JPanel {
 	
 	public LoginScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(18, 12, 14));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		// Logo Image Setting
 		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
@@ -172,7 +172,7 @@ public class LoginScreen extends JPanel {
 		btnForgotPassword.setBorder(BorderFactory.createEmptyBorder());
 		btnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.FORGOT_PASSWORD, btnForgotPassword);
+				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.RENEWAL_PASSWORD, btnForgotPassword);
 			}
 		});
 		btnForgotPassword.addMouseListener(new MouseAdapter() {

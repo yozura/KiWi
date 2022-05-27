@@ -21,29 +21,7 @@ public class MovieMgr {
 	public static MovieMgr getInstance() {
 		return instance;
 	}
-	
-	public MovieMgr() {
-		BufferedImage poster = null;
-		try {
-			poster = ImageIO.read(new File("res/dogs.jpeg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		curMovie = new Movie(
-				0
-				, "저수지의 개들"
-				, "쿠엔틴 타란티노"
-				, "마이클 잭슨"
-				, "코미디"
-				, 80
-				, Date.valueOf("2021-01-01")
-				, 130
-				, 15
-				, "대충 세상이 멸망한 뒤"
-				, poster
-				);
-	}
-	
+
 	public void load() {
 		MovieDAO dao = new MovieDAO();
 		vecMovie = dao.selectAll();

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import kiwi.dto.Movie;
 import kiwi.dto.User;
+import kiwi.header.Pair;
 
 public class UserDAO extends KiWiDAO  {
 	public void insert(User user) {
@@ -37,6 +38,32 @@ public class UserDAO extends KiWiDAO  {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean deleteBookmarkByMovieId(Pair<String, Integer> pairId) {
+		boolean isDeleted = true;
+		try {
+			Connection con = getConnection();
+			String sql = "delete from kiwidb.bookmarks where user_id = ? and movie_id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pairId.first);
+			pstmt.setInt(2, pairId.second);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("북마크 삭제 성공...");
+			} else {
+				isDeleted = false;
+				System.out.println("북마크 삭제 실패...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isDeleted;
 	}
 	
 	public User findUser(String id, String password) {

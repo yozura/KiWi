@@ -29,6 +29,7 @@ public class ReviewScreen extends JPanel {
 	public ReviewScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		lWelcome = new JLabel(String.format("%s's Review", "Nickname"));
 		lWelcome.setForeground(new Color(189, 198, 208));

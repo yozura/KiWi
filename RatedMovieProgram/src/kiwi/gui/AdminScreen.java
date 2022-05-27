@@ -33,10 +33,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kiwi.dto.Movie;
 import kiwi.gui.process.AdminProcess;
 
-// ADD MOVIE
-// DELETE MOVIE
-// DELETE USER
-// DELETE REVIEW
 public class AdminScreen extends JPanel {
 	private static final long serialVersionUID = 7503498065709037810L;
 	
@@ -56,6 +52,7 @@ public class AdminScreen extends JPanel {
 	public AdminScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		cbSelect = new JComboBox<String>(actions);
 		cbSelect.setBackground(new Color(189, 198, 208));

@@ -9,7 +9,7 @@ import kiwi.dao.UserDAO;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.ScreenMgr;
 
-public class ForgotPasswordProcess {
+public class RenewalPasswordProcess {
 	public void changePassword(String email, String Password, JComponent comp) {
 		// db update
 		UserDAO uDAO = new UserDAO();

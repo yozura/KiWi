@@ -16,7 +16,7 @@ public class Define {
 		ADMIN,
 		USER,
 		MOVIE,
-		FORGOT_PASSWORD,
+		RENEWAL_PASSWORD,
 		REVIEW,
 		BOOKMARK,
 		POP_MOVIES,

@@ -55,7 +55,8 @@ public class HomeScreen extends JPanel {
 					return;
 				}
 				
-				// TODO :: 검색 결과와 일정부분 일치하는 영화가 있으면 새 패널에 열어서 보여주기..
+				// TODO :: 검색..
+				
 			}
 		});
 		

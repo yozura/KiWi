@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,6 +25,7 @@ import javax.swing.SwingConstants;
 import kiwi.dto.Movie;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ResourceMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class PopularMoviesScreen extends JPanel {
@@ -31,19 +34,18 @@ public class PopularMoviesScreen extends JPanel {
 	public PopularMoviesScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
-		JLabel lWelcome = new JLabel("Popular Movies");
+		// Header -------------------------
+		
+		JLabel lWelcome = new JLabel("영화 목록");
 		lWelcome.setForeground(new Color(189, 198, 208));
 		lWelcome.setFont(new Font("Arial", Font.PLAIN, 32));
 		lWelcome.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
 		lWelcome.setHorizontalAlignment(SwingConstants.CENTER);
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
-		JSeparator hr = new JSeparator(JSeparator.HORIZONTAL);
-		hr.setBackground(new Color(189, 198, 208));
-		hr.setForeground(new Color(189, 198, 208));
-		hr.setPreferredSize(new Dimension(1080, 7));
-		hr.setMaximumSize(new Dimension(1080, 7));
+		// Body -------------------------
 		
 		JPanel pGridBody = new JPanel(new GridLayout(0, 4, 30, 30));
 		pGridBody.setBackground(new Color(12, 14, 18));
@@ -57,15 +59,17 @@ public class PopularMoviesScreen extends JPanel {
 			pMovie.setBackground(new Color(12, 14, 18));
 			pMovie.setPreferredSize(new Dimension(210, 397));
 			pMovie.setMaximumSize(new Dimension(210, 397));
-			
-			ImageIcon iconLogo = new ImageIcon(movie.getPoster());
-			Image img = iconLogo.getImage();
-			Image changeImg = img.getScaledInstance(210, 297, Image.SCALE_SMOOTH);
-			ImageIcon iconChangedLogo = new ImageIcon(changeImg);
+					
+			BufferedImage iconChangedLogo = null;
+			try {
+				iconChangedLogo = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			JButton lPoster = new JButton();
-			lPoster.setText(String.valueOf(i));
-			lPoster.setIcon(iconChangedLogo);
+			lPoster.setName(String.valueOf(i));
+			lPoster.setIcon(new ImageIcon(iconChangedLogo));
 			lPoster.setBorder(BorderFactory.createEmptyBorder());
 			lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			lPoster.addActionListener(new ActionListener() {
@@ -73,19 +77,19 @@ public class PopularMoviesScreen extends JPanel {
 					// 무비 스크린으로 이동
 					JButton btn = (JButton)e.getSource();
 					
-					MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getText()));
+					MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getName()));
 					ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
 				}				
 			});
 			
 			JLabel lTitle = new JLabel(movie.getTitle());
 			lTitle.setForeground(new Color(189, 198, 208));
-			lTitle.setFont(new Font("Arial", Font.PLAIN, 15));
+			lTitle.setFont(new Font("Arial", Font.BOLD, 15));
 			lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			
-			JLabel lGrade = new JLabel(String.valueOf(movie.getRate()));
+			JLabel lGrade = new JLabel(String.format("신선도 %d%%", movie.getRate()));
 			lGrade.setForeground(new Color(189, 198, 208));
-			lGrade.setFont(new Font("Arial", Font.PLAIN, 15));
+			lGrade.setFont(new Font("Arial", Font.BOLD, 15));
 			lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			
 			pMovie.add(lPoster);
@@ -96,7 +100,7 @@ public class PopularMoviesScreen extends JPanel {
 		}  
 		
 		JScrollPane scPane = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scPane.setBackground(new Color(12, 14, 18));
+		scPane.setBorder(BorderFactory.createEmptyBorder());
 		
 		JPanel pBoxPane = new JPanel();
 		pBoxPane.setLayout(new BoxLayout(pBoxPane, BoxLayout.X_AXIS));
@@ -107,8 +111,8 @@ public class PopularMoviesScreen extends JPanel {
 
 		
 		//실행창 부분
+		//this.add(Box.createVerticalStrut(40));
 		this.add(lWelcome);
-		this.add(hr);
 		this.add(Box.createVerticalStrut(40));
 		this.add(pBoxPane);
 	}

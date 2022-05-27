@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -45,19 +46,20 @@ public class MovieScreen extends JPanel {
 	public MovieScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
-
-		JSeparator hr = new JSeparator(JSeparator.HORIZONTAL);
-		hr.setBackground(new Color(189, 198, 208));
-		hr.setForeground(new Color(189, 198, 208));
-		hr.setPreferredSize(new Dimension(1080, 5));
-		hr.setMaximumSize(new Dimension(1080, 5));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		Movie curMovie = MovieMgr.getInstance().getCurMovie();
-		this.add(getHeader(curMovie.getTitle()));
-		this.add(hr);
-		this.add(Box.createVerticalGlue());
+		
+		JLabel lTitle = new JLabel(curMovie.getTitle());
+		lTitle.setForeground(new Color(189, 198, 208));
+		lTitle.setFont(new Font("Arial", Font.PLAIN, 32));
+		lTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		
+		this.add(Box.createVerticalStrut(30));
+		this.add(lTitle);
+		this.add(Box.createVerticalStrut(30));
 		this.add(getBody(curMovie));
-		this.add(Box.createVerticalGlue());
 	}
 
 	public JPanel getBody(Movie movie) {
@@ -73,10 +75,15 @@ public class MovieScreen extends JPanel {
 		
 		JLabel lNumberInfo = new JLabel(String.format("%d세 관람가 | %s 개봉 | %d분 ", movie.getAgeLimit(), movie.getReleaseDate().toString(), movie.getRunningTime()));
 		lNumberInfo.setFont(new Font("Arial", Font.PLAIN, 15));
+		lNumberInfo.setBackground(Color.ORANGE);
+		lNumberInfo.setOpaque(true);
 		lNumberInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+
 		 
 		JLabel lCharInfo = new JLabel(String.format("감독 [%s] | 배우 [%s] | %s", movie.getDirector(), movie.getActors(), movie.getGenre()));
 		lCharInfo.setFont(new Font("Arial", Font.PLAIN, 15));
+		lCharInfo.setBackground(Color.CYAN);
+		lCharInfo.setOpaque(true);
 		lCharInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		
 		JTextArea taSummary = new JTextArea(" " + movie.getSummary());
@@ -264,25 +271,5 @@ public class MovieScreen extends JPanel {
 		pBoxBody.add(pBoxGrid);
 		
 		return pBoxBody;
-	}
-	
-	public JPanel getHeader(String title) {
-		JButton btnBookmark = new JButton();
-		btnBookmark.setIcon(new ImageIcon("res/icons48/bookmark.png"));
-		
-		JLabel lTitle = new JLabel(title);
-		lTitle.setForeground(new Color(189, 198, 208));
-		lTitle.setFont(new Font("Arial", Font.PLAIN, 32));
-		lTitle.setBorder(BorderFactory.createEmptyBorder(30, 10, 20, 0));
-		
-		JPanel pBoxHeader = new JPanel();
-		pBoxHeader.setLayout(new BoxLayout(pBoxHeader, BoxLayout.X_AXIS));
-		pBoxHeader.setBackground(new Color(12, 14, 18));
-		pBoxHeader.add(btnBookmark);
-		pBoxHeader.add(Box.createHorizontalStrut(10));
-		pBoxHeader.add(lTitle);
-		pBoxHeader.add(Box.createHorizontalGlue());
-		
-		return pBoxHeader;
 	}
 }
