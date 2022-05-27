@@ -78,7 +78,6 @@ public class MovieScreen extends JPanel {
 		lNumberInfo.setBackground(Color.ORANGE);
 		lNumberInfo.setOpaque(true);
 		lNumberInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-
 		 
 		JLabel lCharInfo = new JLabel(String.format("감독 [%s] | 배우 [%s] | %s", movie.getDirector(), movie.getActors(), movie.getGenre()));
 		lCharInfo.setFont(new Font("Arial", Font.PLAIN, 15));
