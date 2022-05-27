@@ -1,6 +1,5 @@
 package kiwi.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Vector;
@@ -20,21 +21,27 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import kiwi.dto.Movie;
 import kiwi.dto.Review;
+import kiwi.gui.process.MovieProcess;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ResourceMgr;
 import kiwi.mgr.ReviewMgr;
+import kiwi.mgr.UserMgr;
 
 public class MovieScreen extends JPanel {
+	private static final long serialVersionUID = 6124173310210976631L;
+	
+	private JTextArea taAddContent;
+	private JSlider sFreshRate;
+	
 	public MovieScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
@@ -72,11 +79,26 @@ public class MovieScreen extends JPanel {
 		lCharInfo.setFont(new Font("Arial", Font.PLAIN, 15));
 		lCharInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		
-		JLabel lSummary = new JLabel(" " + movie.getSummary());
-		lSummary.setPreferredSize(new Dimension(300, 20));
-		lSummary.setMaximumSize(new Dimension(300, 20));
-		lSummary.setFont(new Font("Arial", Font.PLAIN, 15));
-		lSummary.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+		JTextArea taSummary = new JTextArea(" " + movie.getSummary());
+		taSummary.setPreferredSize(new Dimension(500, 200));
+		taSummary.setMaximumSize(new Dimension(500, 200));
+		taSummary.setBackground(new Color(189, 198, 208));
+		taSummary.setFont(new Font("Arial", Font.PLAIN, 15));
+		taSummary.setEditable(false);
+		taSummary.setLineWrap(true);
+		taSummary.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+		taSummary.addKeyListener(new KeyAdapter() {			
+			public void keyTyped(KeyEvent e) {
+				int max = 300;
+				if (taSummary.getText().length() > max + 1) {
+					e.consume();
+					String shortened = taSummary.getText().substring(0, max);
+					taSummary.setText(shortened);
+				} else if (taSummary.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
 		
 		JPanel pBoxDescription = new JPanel();
 		pBoxDescription.setLayout(new BoxLayout(pBoxDescription, BoxLayout.Y_AXIS));
@@ -85,14 +107,14 @@ public class MovieScreen extends JPanel {
 		pBoxDescription.add(lNumberInfo);
 		pBoxDescription.add(lCharInfo);
 		pBoxDescription.add(Box.createVerticalStrut(10));
-		pBoxDescription.add(lSummary);
+		pBoxDescription.add(taSummary);
 		pBoxDescription.add(Box.createVerticalGlue());
 
 		JLabel lRatingIcon = new JLabel();
 		lRatingIcon.setIcon(ResourceMgr.getInstance().resizeImageIcon("res/images/fresh.png", 50, 50));
 		lRatingIcon.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		JLabel lFreshRate = new JLabel(String.valueOf(movie.getRate()) + "%");
+		JLabel lFreshRate = new JLabel(String.format("%d%%", movie.getRate()));
 		lFreshRate.setForeground(new Color(12, 14, 18));
 		lFreshRate.setFont(new Font("Arial", Font.PLAIN, 35));
 		lFreshRate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -144,8 +166,8 @@ public class MovieScreen extends JPanel {
 						EtchedBorder.RAISED), "리뷰", TitledBorder.RIGHT,
 						TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
 				
-				// 리뷰 콘텐트 + 작성일 + 닉네임
-				JTextArea taContent = new JTextArea();	
+				// 리뷰 콘텐트 + 작성일 + 닉네임 + 점수
+				JTextArea taContent = new JTextArea();
 				taContent.setText(String.format("%s - %s, %s일에 작성됨.", review.getContent(), review.getUserId(), review.getReviewDate().toString()));
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
@@ -167,14 +189,31 @@ public class MovieScreen extends JPanel {
 				EtchedBorder.RAISED), "리뷰 작성", TitledBorder.RIGHT,
 				TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
 		
+		sFreshRate = new JSlider(0, 100, 50);
+		sFreshRate.setMajorTickSpacing(10);
+		sFreshRate.setPaintTicks(true);
+		sFreshRate.setPaintLabels(true);
+		
 		// 리뷰 콘텐트
-		JTextArea taContent = new JTextArea();
-		taContent.setBackground(new Color(12, 14, 18));
-		taContent.setForeground(new Color(189, 198, 208));
-		taContent.setCaretColor(new Color(189, 198, 208));
-		taContent.setFont(new Font("Arial", Font.PLAIN, 13));
-		taContent.setLineWrap(true);
-		taContent.setWrapStyleWord(true);
+		taAddContent = new JTextArea();
+		taAddContent.setBackground(new Color(12, 14, 18));
+		taAddContent.setForeground(new Color(189, 198, 208));
+		taAddContent.setCaretColor(new Color(189, 198, 208));
+		taAddContent.setFont(new Font("Arial", Font.PLAIN, 13));
+		taAddContent.setLineWrap(true);
+		taAddContent.setWrapStyleWord(true);
+		taAddContent.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				int max = 200;
+				if(taAddContent.getText().length() > max+1) {
+					e.consume();
+					String shortened = taAddContent.getText().substring(0, max);
+					taAddContent.setText(shortened);
+				}else if(taAddContent.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
 		
 		JButton btnAddReview = new JButton("등록");
 		btnAddReview.setPreferredSize(new Dimension(260, 25));
@@ -186,11 +225,25 @@ public class MovieScreen extends JPanel {
 		btnAddReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO :: 리뷰 등록
-				
+				MovieProcess mp = new MovieProcess();
+				boolean isGood = mp.checkValidationReview(taAddContent.getText())
+								&& mp.checkCurrentUser();
+				if (isGood) {
+					Review review = new Review(
+							0
+							, UserMgr.getInstance().getCurUser().getId()
+							, MovieMgr.getInstance().getCurMovie().getId()
+							, taAddContent.getText()
+							, sFreshRate.getValue()
+							, null
+							);
+					mp.AddReview(review, taAddContent);
+				}
 			}
 		});
 	
-		pReview.add(taContent);
+		pReview.add(taAddContent);
+		pReview.add(sFreshRate);
 		pReview.add(btnAddReview);
 		pGridReview.add(pReview);
 		

@@ -1,14 +1,22 @@
 package kiwi.gui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ReviewMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class MainFrame extends JFrame {
+	private static final long serialVersionUID = -5319002609205461424L;
+
 	private Point FRAME_SIZE = new Point(1280, 800);
 	
 	private JPanel pMainScreen = new JPanel(new BorderLayout());
@@ -19,6 +27,7 @@ public class MainFrame extends JFrame {
 		this.setTitle("KiWi");
 		this.setLayout(new BorderLayout(0, 0));
 		
+		// 전체 리뷰, 영화 미리 로딩
 		load();
 		
 		con = this.getContentPane();
@@ -30,7 +39,11 @@ public class MainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_SIZE.x, FRAME_SIZE.y);
 		// 아이콘 변경
-		//this.setIconImage(new ImageIcon("res/icons/close.png").getImage());	
+		try {
+			this.setIconImage(ImageIO.read(new File("res/images/fresh.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);

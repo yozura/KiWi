@@ -29,13 +29,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
+import kiwi.gui.process.LoginProcess;
 import kiwi.header.Define.SCREEN_TYPE;
-import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
-import kiwi.gui.process.LoginProcess;
-
 public class LoginScreen extends JPanel {
+	private static final long serialVersionUID = -8282274135637243392L;
+	
 	private JLabel lLogoIcon;
 	private JLabel lWelcome;
 	
@@ -135,6 +135,13 @@ public class LoginScreen extends JPanel {
 		pfPassword.setCaretColor(new Color(189, 198, 208));
 		pfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		pfPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		pfPassword.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					new LoginProcess().loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), btnLogin);
+				}
+			}
+		});
 		
 		btnLogin = new JButton("Login");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
@@ -177,7 +184,6 @@ public class LoginScreen extends JPanel {
 			
 			public void mouseExited(MouseEvent e) {
 				// Return default color out focus
-				Color color = btnSignUp.getForeground();
 				btnForgotPassword.setForeground(new Color(71, 143, 250));
 			}
 		});
@@ -199,7 +205,6 @@ public class LoginScreen extends JPanel {
 			
 			public void mouseExited(MouseEvent e) {
 				// Return default color out focus
-				Color color = btnSignUp.getForeground();
 				btnSignUp.setForeground(new Color(71, 143, 250));
 			}
 		});

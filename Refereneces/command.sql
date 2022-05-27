@@ -26,12 +26,14 @@ insert into kiwidb.reviews values (null, 'kimmijun123', 2, '로망스의 끝', 8
 insert into kiwidb.reviews values (null, 'kimmijun123', 3, '누군가는 해야 한다.', 56, now());
 
 -- movie id에 대한 리뷰 정보를 가져온다.
-select *
+select count(freshRate) as 'count', sum(freshRate) as 'sum'
 from kiwidb.reviews
-group by movie_id;
+group by movie_id
+having movie_id = 2;
 
 
-select * from kiwidb.reviews;
+
+select * from kiwidb.movies;
 
 
 

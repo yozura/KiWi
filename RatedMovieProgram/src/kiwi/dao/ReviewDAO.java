@@ -8,8 +8,59 @@ import java.util.HashMap;
 import java.util.Vector;
 
 import kiwi.dto.Review;
+import kiwi.header.Pair;
 
 public class ReviewDAO extends KiWiDAO {
+	public void insert(Review review) {
+		try {
+			Connection con = getConnection();
+			String sql = "insert into kiwidb.reviews values(null, ?, ?, ?, ?, now())";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, review.getUserId());
+			pstmt.setInt(2, review.getMovieId());
+			pstmt.setString(3, review.getContent());
+			pstmt.setInt(4, review.getFreshRate());
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("리뷰 저장 성공...");
+			} else {
+				System.out.println("리뷰 저장 실패...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Pair<Integer, Integer> selectFreshByMovieId(int movieId) {
+		Pair<Integer, Integer> pairRate = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select count(freshRate), sum(freshRate) from kiwidb.reviews group by movie_id having movie_id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, movieId);
+				
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (pairRate == null) {
+					// t1 = count, t2 = sum
+					pairRate = new Pair<>(rs.getInt(1), rs.getInt(2));
+				}
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return pairRate;
+	}
+	
+	
 	public HashMap<Integer, Vector<Review>> selectAll() {
 		HashMap<Integer, Vector<Review>> mapReviews = null;
 		try {

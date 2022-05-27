@@ -14,7 +14,9 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 public class BookmarkScreen extends JPanel {
-private JLabel lWelcome;
+	private static final long serialVersionUID = -807717172091339569L;
+
+	private JLabel lWelcome;
 	
 	private JPanel pBoxReview;
 	

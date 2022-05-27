@@ -19,14 +19,12 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -40,6 +38,8 @@ import kiwi.gui.process.AdminProcess;
 // DELETE USER
 // DELETE REVIEW
 public class AdminScreen extends JPanel {
+	private static final long serialVersionUID = 7503498065709037810L;
+	
 	private JComboBox<String> cbSelect;
 	private String actions[] = { "없음", "영화 추가" };
 

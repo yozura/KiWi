@@ -26,7 +26,7 @@ public class UserMgr {
 		this.vecBookmark = vecBookmark;
 		this.uType = uType;
 		
-		System.out.println(user.getNickname() + " " + uType.toString());
+		System.out.println("Entry : " + user.getNickname() + " " + uType.toString());
 	}
 	
 	// addBookmark :: 북마크에 추가한 시점

@@ -9,7 +9,6 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,10 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import kiwi.mgr.UserMgr;
-
 // 사용자 개인의 리뷰를 가져와 보여줌.
 public class ReviewScreen extends JPanel {
+	private static final long serialVersionUID = -6986538754400943024L;
+
 	private JLabel lWelcome;
 
 	private JPanel pFlowBody;

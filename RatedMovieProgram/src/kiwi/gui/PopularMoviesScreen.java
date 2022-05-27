@@ -1,12 +1,24 @@
 package kiwi.gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import kiwi.dto.Movie;
 import kiwi.header.Define.SCREEN_TYPE;
@@ -14,6 +26,8 @@ import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class PopularMoviesScreen extends JPanel {
+	private static final long serialVersionUID = 5476977243502241593L;
+
 	public PopularMoviesScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));

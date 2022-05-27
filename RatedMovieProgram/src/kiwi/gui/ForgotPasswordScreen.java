@@ -23,6 +23,8 @@ import javax.swing.text.PlainDocument;
 import kiwi.gui.process.ForgotPasswordProcess;
 
 public class ForgotPasswordScreen extends JPanel {
+	private static final long serialVersionUID = -4978154617607159571L;
+
 	private JLabel lWelcome;
 	
 	private JTextField tfEmail;

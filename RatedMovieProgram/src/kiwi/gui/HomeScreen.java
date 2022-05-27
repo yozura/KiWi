@@ -18,11 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class HomeScreen extends JPanel {
-	JLabel lLogoIcon;
+	private static final long serialVersionUID = -6747425612297717735L;
+
+	private JLabel lLogoIcon;
 	
-	JTextField tfSearch;
+	private JTextField tfSearch;
 	
-	JLabel lDonate;
+	private JLabel lDonate;
 	
 	public HomeScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

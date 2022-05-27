@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dto.Movie;
-import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
@@ -18,7 +17,7 @@ public class AdminProcess {
 		 mDAO.insert(movie);
 		 
 		 MovieMgr.getInstance().load();
-		 ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, comp);
+		 ScreenMgr.getInstance().redirectWithSideBar(comp);
 	 }
 	 
 	 public boolean checkExistByTitle(String title) {
