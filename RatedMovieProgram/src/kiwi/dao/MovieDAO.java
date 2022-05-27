@@ -2,10 +2,7 @@ package kiwi.dao;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +12,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 
 import kiwi.dto.Movie;
+import kiwi.header.Pair;
 
 public class MovieDAO extends KiWiDAO {
 	public void insert(Movie movie) {
@@ -49,7 +47,48 @@ public class MovieDAO extends KiWiDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	} 
+	}
+	
+	public void updateFresh(Pair<Integer, Integer> pairFreshId) {
+		try {
+			Connection con = getConnection();
+			String sql = "update kiwidb.movies set freshrate = ? where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pairFreshId.first);
+			pstmt.setInt(2, pairFreshId.second);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt >= 1) System.out.println("점수 갱신 성공...");
+			else System.out.println("점수 갱신 실패...");
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int selectFreshByMovieId(int movieId) {
+		int freshRate = -1;
+		try {
+			Connection con = getConnection();
+			String sql = "select freshrate from kiwidb.movies where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, movieId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				freshRate = rs.getInt(1);
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return freshRate;
+	}
 	
 	public boolean checkExistByTitle(String title) {
 		boolean exists = true;
@@ -92,7 +131,7 @@ public class MovieDAO extends KiWiDAO {
 							, rs.getString(3)
 							, rs.getString(4)
 							, rs.getString(5)
-							, rs.getDouble(6)
+							, rs.getInt(6)
 							, rs.getDate(7)
 							, rs.getInt(8)
 							, rs.getInt(9)
@@ -104,7 +143,7 @@ public class MovieDAO extends KiWiDAO {
 			}
 			
 			if (vecMovie != null) {
-				System.out.println("selectAll 성공");
+				System.out.println("영화 불러오기 성공...");
 			}
 			
 			pstmt.close();

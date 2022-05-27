@@ -1,6 +1,6 @@
 package kiwi.header;
 
-// 열거체 집합 or 전역 변수 집합
+// 열거체 집합 or 전역 변수, 구조체 집합
 public class Define {
 	public enum USER_TYPE {
 		ADMIN,
@@ -15,11 +15,23 @@ public class Define {
 		SIGN_UP,
 		ADMIN,
 		USER,
-		FORGOT_PASSWORD,
+		MOVIE,
+		RENEWAL_PASSWORD,
 		REVIEW,
 		BOOKMARK,
 		POP_MOVIES,
 		ERROR,
+		
+		END
+	}
+	
+	public enum SFX_TYPE {
+		LOG_IN,
+		CLICK,
+		END
+	}
+	
+	public enum BGM_TYPE {
 		
 		END
 	}

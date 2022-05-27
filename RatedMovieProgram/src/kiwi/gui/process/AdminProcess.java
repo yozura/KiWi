@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dto.Movie;
-import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class AdminProcess {
@@ -16,7 +16,8 @@ public class AdminProcess {
 		 MovieDAO mDAO = new MovieDAO();
 		 mDAO.insert(movie);
 		 
-		 ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, comp);
+		 MovieMgr.getInstance().load();
+		 ScreenMgr.getInstance().redirectWithSideBar(comp);
 	 }
 	 
 	 public boolean checkExistByTitle(String title) {
@@ -70,16 +71,9 @@ public class AdminProcess {
 			System.out.println("상영 시간은 분으로 환산하여 기입해야 합니다.");
 			return false;
 		 }
-		 
-		 // ageLimit
-		 if (!Pattern.matches("^[0-9]{1,3}$", strings[6])) {
-			JOptionPane.showMessageDialog(null, "연령 제한은 숫자로 입력하셔야 합니다.");
-			System.out.println("연령 제한은 숫자로 입력하셔야 합니다.");
-			return false;
-		 }
 
 		 // summary
-		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:?]{1,500}$", strings[7])) {
+		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:?.]{1,500}$", strings[6])) {
 			JOptionPane.showMessageDialog(null, "줄거리는 500자 이내로 입력해야 합니다.");
 			System.out.println("줄거리는 500자 이내로 입력해야 합니다.");
 			return false;

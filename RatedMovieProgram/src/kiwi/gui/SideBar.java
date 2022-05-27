@@ -16,15 +16,9 @@ import javax.swing.JPanel;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.ScreenMgr;
 
-// btn func
-// 1. home
-// 2. my account
-// 3. bookmark (favorite movies)
-// 4. review (my review)
-// 5. movie list (pop movie)
-// 5. logout
-
-public class SideBar extends JPanel {	
+public class SideBar extends JPanel {
+	private static final long serialVersionUID = -4685581869908944837L;
+	
 	private JButton[] arrOfSideBtns = new JButton[6];
 	
 	public SideBar() {

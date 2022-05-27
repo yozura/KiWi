@@ -18,11 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class HomeScreen extends JPanel {
-	JLabel lLogoIcon;
+	private static final long serialVersionUID = -6747425612297717735L;
+
+	private JLabel lLogoIcon;
 	
-	JTextField tfSearch;
+	private JTextField tfSearch;
 	
-	JLabel lDonate;
+	private JLabel lDonate;
 	
 	public HomeScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -53,7 +55,8 @@ public class HomeScreen extends JPanel {
 					return;
 				}
 				
-				// TODO :: 검색 결과와 일정부분 일치하는 영화가 있으면 새 패널에 열어서 보여주기..
+				// TODO :: 검색..
+				
 			}
 		});
 		

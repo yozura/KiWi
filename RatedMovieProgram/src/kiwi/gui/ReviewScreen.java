@@ -18,21 +18,25 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
 import javax.swing.border.LineBorder;
 
 // 사용자 개인의 리뷰를 가져와 보여줌.
 public class ReviewScreen extends JPanel {
-	// 초기화는 멤버변수 쓰는 곳에서 하기
+	private static final long serialVersionUID = -6986538754400943024L;
+// 초기화는 멤버변수 쓰는 곳에서 하기
 	private JPanel poster;		// 포스터 바디에 붙는 포스터 패널
 	private JPanel review;		// 포스터 패널에 붙는 리뷰 패널
-	
 	private JLabel lWelcome;
+
+	private JPanel pFlowBody;
 	
 	private Vector<JPanel> vecReview;
 	
 	public ReviewScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		//상단 헤더 라벨
 		lWelcome = new JLabel(String.format("%s's Review", "Nickname"));
@@ -118,7 +122,7 @@ public class ReviewScreen extends JPanel {
 			
 		}
 		
-		// 패널 부착 -----------------------------------------------------------
+		// -----------------------------------------------------------
 		
 		this.add(Box.createVerticalGlue());
 		this.add(lWelcome);

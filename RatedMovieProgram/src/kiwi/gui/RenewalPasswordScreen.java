@@ -20,9 +20,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
-import kiwi.gui.process.ForgotPasswordProcess;
+import kiwi.gui.process.RenewalPasswordProcess;
 
-public class ForgotPasswordScreen extends JPanel {
+public class RenewalPasswordScreen extends JPanel {
+	private static final long serialVersionUID = -4978154617607159571L;
+
 	private JLabel lWelcome;
 	
 	private JTextField tfEmail;
@@ -30,10 +32,10 @@ public class ForgotPasswordScreen extends JPanel {
 	private JLabel lPassword;
 	private JPasswordField pfPassword;
 	
-	public ForgotPasswordScreen() {
+	public RenewalPasswordScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(12, 14, 18));
+		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		lWelcome = new JLabel("Please enter your E-mail!");
 		lWelcome.setForeground(new Color(189, 198, 208));
@@ -53,7 +55,7 @@ public class ForgotPasswordScreen extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// TODO :: email 유효성 검사 + 이메일이 있으면 새로 만들 패스워드 창 열어주기.
-					ForgotPasswordProcess fpp = new ForgotPasswordProcess();
+					RenewalPasswordProcess fpp = new RenewalPasswordProcess();
 					boolean isGood = fpp.checkValidationEmail(tfEmail.getText())
 									 && fpp.checkExistByEmail(tfEmail.getText());
 					if (isGood) {
@@ -91,7 +93,7 @@ public class ForgotPasswordScreen extends JPanel {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// TODO :: 패스워드 유효성 검사 + 디비에 패스워드 restore
-					ForgotPasswordProcess fpp = new ForgotPasswordProcess();
+					RenewalPasswordProcess fpp = new RenewalPasswordProcess();
 					boolean isGood = fpp.checkValidationPassword(String.valueOf(pfPassword.getPassword()));
 					if (isGood) {
 						fpp.changePassword(tfEmail.getText(), String.valueOf(pfPassword.getPassword()), pfPassword);

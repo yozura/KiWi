@@ -26,10 +26,10 @@ import javax.swing.text.PlainDocument;
 
 import kiwi.dto.User;
 import kiwi.gui.process.SignUpProcess;
-import kiwi.header.Define.SCREEN_TYPE;
-import kiwi.mgr.ScreenMgr;
 
 public class SignUpScreen extends JPanel {
+	private static final long serialVersionUID = -8811286744899602431L;
+	
 	private JPanel pBoxWelcome;
 	private JPanel pBoxLabel;
 	private JPanel pBoxTextField;
