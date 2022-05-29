@@ -109,9 +109,6 @@ public class PopularMoviesScreen extends JPanel {
 		pBoxPane.add(scPane);
 		pBoxPane.add(Box.createHorizontalGlue());
 
-		
-		//실행창 부분
-		//this.add(Box.createVerticalStrut(40));
 		this.add(lWelcome);
 		this.add(Box.createVerticalStrut(40));
 		this.add(pBoxPane);

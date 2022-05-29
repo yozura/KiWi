@@ -39,14 +39,14 @@ public class ReviewDAO extends KiWiDAO {
 		Pair<Integer, Integer> pairRate = null;
 		try {
 			Connection con = getConnection();
-			String sql = "select count(freshRate), sum(freshRate) from kiwidb.reviews group by movie_id having movie_id = ?";
+			String sql = "select sum(freshRate), count(freshRate) from kiwidb.reviews group by movie_id having movie_id = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, movieId);
 				
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (pairRate == null) {
-					// t1 = count, t2 = sum
+					// t1 = sum (총점), t2 = count (리뷰수)
 					pairRate = new Pair<>(rs.getInt(1), rs.getInt(2));
 				}
 			}

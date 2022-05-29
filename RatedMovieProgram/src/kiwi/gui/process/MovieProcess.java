@@ -17,11 +17,10 @@ public class MovieProcess {
 		ReviewDAO rDAO = new ReviewDAO();
 		rDAO.insert(review);
 		
-		// TODO :: freshRate 재계산
 		MovieMgr.getInstance().updateCalculateFresh(review.getMovieId());
 		
-		MovieMgr.getInstance().load();
 		ReviewMgr.getInstance().load();
+		MovieMgr.getInstance().load();
 		ScreenMgr.getInstance().redirectWithSideBar(comp);
 	}
 	

@@ -33,7 +33,6 @@ public class MainFrame extends JFrame {
 		con = this.getContentPane();
 		pMainScreen.add(ScreenMgr.getInstance().getCurScreen(), BorderLayout.CENTER);
 		
-		con.add(ScreenMgr.getInstance().getSideBar(), BorderLayout.WEST);
 		con.add(pMainScreen, BorderLayout.CENTER);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

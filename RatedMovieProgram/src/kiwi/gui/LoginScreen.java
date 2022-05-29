@@ -36,16 +36,9 @@ import kiwi.mgr.ScreenMgr;
 public class LoginScreen extends JPanel {
 	private static final long serialVersionUID = -8282274135637243392L;
 	
-	private JLabel lLogoIcon;
-	private JLabel lWelcome;
-	
 	private JPanel pPaddingBox;
 	private JPanel pBox;
-	private JLabel lID;
-	private JLabel lPassword;
 	
-	private JButton btnLogin;
-
 	private JPasswordField pfPassword;
 	private JTextField tfID;
 	
@@ -63,11 +56,11 @@ public class LoginScreen extends JPanel {
 		Image img = iconLogo.getImage();
 		Image changeImg = img.getScaledInstance(160, 120, Image.SCALE_SMOOTH);
 		ImageIcon iconChangedLogo = new ImageIcon(changeImg);
-		lLogoIcon = new JLabel();
+		JLabel lLogoIcon = new JLabel();
 		lLogoIcon.setIcon(iconChangedLogo);
 		lLogoIcon.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		lWelcome = new JLabel("Login to KiWi");
+		JLabel lWelcome = new JLabel("Login to KiWi");
 		lWelcome.setBorder(new EmptyBorder(15, 0, 15, 0));
 		lWelcome.setForeground(new Color(189, 198, 208));
 		lWelcome.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -85,7 +78,7 @@ public class LoginScreen extends JPanel {
 		pBox.setPreferredSize(new Dimension(280, 150));
 		pBox.setBackground(new Color(18, 21, 26));
 		
-		lID = new JLabel("ID");
+		JLabel lID = new JLabel("ID");
 		lID.setPreferredSize(new Dimension(280, 25));
 		lID.setMaximumSize(new Dimension(280, 25));
 		lID.setForeground(new Color(189, 198, 208));
@@ -109,7 +102,7 @@ public class LoginScreen extends JPanel {
 		});
 		tfID.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		lPassword = new JLabel("Password");
+		JLabel lPassword = new JLabel("Password");
 		lPassword.setPreferredSize(new Dimension(280, 25));
 		lPassword.setMaximumSize(new Dimension(280, 25));
 		lPassword.setForeground(new Color(189, 198, 208));
@@ -138,12 +131,12 @@ public class LoginScreen extends JPanel {
 		pfPassword.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					new LoginProcess().loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), btnLogin);
+					new LoginProcess().loginUser(tfID.getText(), String.valueOf(pfPassword.getPassword()), pfPassword);
 				}
 			}
 		});
 		
-		btnLogin = new JButton("Login");
+		JButton btnLogin = new JButton("Login");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
 		btnLogin.setMaximumSize(new Dimension(280, 40));
 		btnLogin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -172,7 +165,7 @@ public class LoginScreen extends JPanel {
 		btnForgotPassword.setBorder(BorderFactory.createEmptyBorder());
 		btnForgotPassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.RENEWAL_PASSWORD, btnForgotPassword);
+				new RenewalPasswordFrame();
 			}
 		});
 		btnForgotPassword.addMouseListener(new MouseAdapter() {

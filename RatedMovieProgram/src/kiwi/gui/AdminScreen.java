@@ -25,6 +25,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -223,11 +224,13 @@ public class AdminScreen extends JPanel {
 		pFlowPoster.setBackground(new Color(18, 21, 26));
 		pFlowPoster.add(lPoster);
 		pFlowPoster.add(btnPoster);
-		
+				
 		JTextArea taSummary = new JTextArea();
-		taSummary.setPreferredSize(new Dimension(280, 100));
-		taSummary.setMaximumSize(new Dimension(280, 100));
 		taSummary.setLineWrap(true);
+		
+		JScrollPane spSummary = new JScrollPane(taSummary);
+		spSummary.setPreferredSize(new Dimension(280, 100));
+		spSummary.setMaximumSize(new Dimension(280, 100));
 		
 		pBoxField = new JPanel();
 		pBoxField.setLayout(new BoxLayout(pBoxField, BoxLayout.Y_AXIS));
@@ -249,7 +252,7 @@ public class AdminScreen extends JPanel {
 		pBoxField.add(Box.createVerticalStrut(10));
 		pBoxField.add(pFlowPoster);
 		pBoxField.add(Box.createVerticalStrut(10));
-		pBoxField.add(taSummary);
+		pBoxField.add(spSummary);
 		pBoxField.add(Box.createVerticalStrut(10));
 		
 		btnAddMovie = new JButton("영화 추가");
@@ -344,6 +347,7 @@ public class AdminScreen extends JPanel {
 		lReleaseDate.setForeground(new Color(189, 198, 208));
 		lReleaseDate.setFont(new Font("Arial", Font.PLAIN, 15));
 		lReleaseDate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		lReleaseDate.setToolTipText("개봉일은 yyyy-mm-dd의 형식으로 작성되야 합니다.");
 
 		JLabel lRunningTime = new JLabel("상영 시간(분)");
 		lRunningTime.setForeground(new Color(189, 198, 208));
@@ -359,6 +363,7 @@ public class AdminScreen extends JPanel {
 		lPoster.setForeground(new Color(189, 198, 208));
 		lPoster.setFont(new Font("Arial", Font.PLAIN, 15));
 		lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		lPoster.setToolTipText("포스터의 크기는 16MB 이하의 .jpg, .png, .jpeg 파일 이어야 합니다.");
 
 		JLabel lSummary = new JLabel("줄거리");
 		lSummary.setPreferredSize(new Dimension(40, 100));
@@ -366,6 +371,7 @@ public class AdminScreen extends JPanel {
 		lSummary.setForeground(new Color(189, 198, 208));
 		lSummary.setFont(new Font("Arial", Font.PLAIN, 15));
 		lSummary.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		lSummary.setToolTipText("줄거리는 500자 이내로 작성할 수 있습니다.");
 		
 		pBoxLabel = new JPanel();
 		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.Y_AXIS));

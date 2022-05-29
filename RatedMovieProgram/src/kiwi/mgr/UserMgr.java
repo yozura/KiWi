@@ -17,10 +17,6 @@ public class UserMgr {
 		return instance;
 	}
 	
-	public UserMgr() {
-		this.uType = USER_TYPE.ADMIN;
-	}
-	
 	// enter :: 로그인 시점
 	public void enter(User user, Vector<Movie> vecBookmark, USER_TYPE uType) {
 		this.curUser = user;
@@ -30,15 +26,25 @@ public class UserMgr {
 		System.out.println("Entry : " + user.getNickname() + " " + uType.toString());
 	}
 	
+	public void setUserType(USER_TYPE uType) {
+		this.uType = uType;
+	}
+	
 	// exit :: 로그아웃 시점
 	public void exit() {
 		curUser = null;
-		vecBookmark.clear();
+		if (!vecBookmark.equals(null)) {
+			vecBookmark.clear();
+		}
 	}
 	
 	public void reloadBookmark() {
 		UserDAO uDAO = new UserDAO();
 		vecBookmark = uDAO.findBookmarkByUserId(curUser.getId());
+	}
+	
+	public USER_TYPE getUserType() {
+		return uType;
 	}
 	
 	public User getCurUser() {

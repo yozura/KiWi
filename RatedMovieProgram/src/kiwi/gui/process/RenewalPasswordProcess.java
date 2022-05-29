@@ -15,7 +15,6 @@ public class RenewalPasswordProcess {
 		UserDAO uDAO = new UserDAO();
 		if (uDAO.updatePassword(email, Password)) {
 			JOptionPane.showMessageDialog(null, "새로운 비밀번호가 성공적으로 변경되었습니다. 로그인 창에 가셔서 다시 로그인해주세요.");
-			ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.LOG_IN, comp);
 		} else {
 			JOptionPane.showMessageDialog(null, "새로운 비밀번호 저장에 실패했습니다.");
 		}

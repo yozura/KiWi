@@ -58,8 +58,8 @@ public class MovieScreen extends JPanel {
 		
 		this.add(Box.createVerticalStrut(30));
 		this.add(lTitle);
-		this.add(Box.createVerticalStrut(30));
 		this.add(getBody(curMovie));
+		this.add(Box.createVerticalGlue());
 	}
 
 	public JPanel getBody(Movie movie) {
@@ -130,7 +130,7 @@ public class MovieScreen extends JPanel {
 		pBoxRating.setBackground(new Color(235, 245, 240));
 		pBoxRating.setPreferredSize(new Dimension(200, 200));
 		pBoxRating.setMaximumSize(new Dimension(200, 200));
-		pBoxRating.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.orange), "Fresh", TitledBorder.CENTER, TitledBorder.TOP));
+		pBoxRating.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.orange), "신선도", TitledBorder.CENTER, TitledBorder.TOP));
 		pBoxRating.add(Box.createVerticalGlue());
 		pBoxRating.add(lRatingIcon);
 		pBoxRating.add(lFreshRate);

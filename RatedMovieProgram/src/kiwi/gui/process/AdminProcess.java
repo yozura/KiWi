@@ -73,7 +73,7 @@ public class AdminProcess {
 		 }
 
 		 // summary
-		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:?.]{1,500}$", strings[6])) {
+		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,'\"!@#$:?.]{1,500}$", strings[6])) {
 			JOptionPane.showMessageDialog(null, "줄거리는 500자 이내로 입력해야 합니다.");
 			System.out.println("줄거리는 500자 이내로 입력해야 합니다.");
 			return false;
@@ -81,6 +81,12 @@ public class AdminProcess {
 		 
 		 // poster
 		 if (poster == null) {
+			JOptionPane.showMessageDialog(null, "포스터를 업로드해주세요.");
+			return false;
+		 }
+		 
+		 if (poster.length() > 16777215) {
+			JOptionPane.showMessageDialog(null, "포스터의 크기가 16MB를 초과합니다.");
 			return false;
 		 }
 

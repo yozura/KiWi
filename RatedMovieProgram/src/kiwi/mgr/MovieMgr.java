@@ -1,12 +1,6 @@
 package kiwi.mgr;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
 import java.util.Vector;
-
-import javax.imageio.ImageIO;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dao.ReviewDAO;
@@ -31,16 +25,17 @@ public class MovieMgr {
 		MovieDAO mDAO = new MovieDAO();
 		ReviewDAO rDAO = new ReviewDAO();
 		Pair<Integer, Integer> pairRate = rDAO.selectFreshByMovieId(movieId);
-		System.out.println("리뷰 수 : " + pairRate.first + ", 총점 : " + pairRate.second);
+		System.out.println("리뷰 수 : " + pairRate.second + ", 총점 : " + pairRate.first);
 		
 		// (리뷰 총 점수) / (리뷰수 * 100) * 100 이 해당 영화의 점수.
-		int freshRate = (pairRate.second / (pairRate.first * 100) * 100);
+		float freshRate = (((float)pairRate.first / ((float)pairRate.second * 100)) * 100);
 		System.out.println("갱신된 점수 : " + freshRate + ", 대상 영화 : " + movieId);
 		if (freshRate < 0) {
+			System.out.println("접수가 0점보다 낮습니다.");
 			return;
 		}
 		
-		Pair<Integer, Integer> pairFreshId = new Pair<>(freshRate, movieId);
+		Pair<Integer, Integer> pairFreshId = new Pair<>((int)freshRate, movieId);
 		
 		mDAO.updateFresh(pairFreshId);
 	}

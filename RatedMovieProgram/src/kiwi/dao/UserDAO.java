@@ -134,6 +134,72 @@ public class UserDAO extends KiWiDAO  {
 		return vecBookmark;
 	}
 	
+	public boolean updateNickname(String nickname, String id) {
+		boolean isGood = true;
+		try {
+			Connection con = getConnection();
+			String sql = "update kiwidb.users set nickname = ? where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+			pstmt.setString(2, id);
+
+			int rt = pstmt.executeUpdate();
+			if (rt <= 0) {
+				isGood = false;
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isGood;
+	}
+	
+	public boolean updateEmail(String email, String id) {
+		boolean isGood = true;
+		try {
+			Connection con = getConnection();
+			String sql = "update kiwidb.users set email = ? where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2, id);
+
+			int rt = pstmt.executeUpdate();
+			if (rt <= 0) {
+				isGood = false;
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isGood;
+	}
+	
+	public boolean updateTel(String tel, String id) {
+		boolean isGood = true;
+		try {
+			Connection con = getConnection();
+			String sql = "update kiwidb.users set tel = ? where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, tel);
+			pstmt.setString(2, id);
+
+			int rt = pstmt.executeUpdate();
+			if (rt <= 0) {
+				isGood = false;
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isGood;
+	}
+	
 	public boolean updatePassword(String email, String password) {
 		boolean isGood = true;
 		try {

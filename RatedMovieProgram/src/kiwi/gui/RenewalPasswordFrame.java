@@ -1,15 +1,19 @@
 package kiwi.gui;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -22,22 +26,33 @@ import javax.swing.text.PlainDocument;
 
 import kiwi.gui.process.RenewalPasswordProcess;
 
-public class RenewalPasswordScreen extends JPanel {
+public class RenewalPasswordFrame extends JFrame {
 	private static final long serialVersionUID = -4978154617607159571L;
 
-	private JLabel lWelcome;
-	
 	private JTextField tfEmail;
 	
 	private JLabel lPassword;
 	private JPasswordField pfPassword;
 	
-	public RenewalPasswordScreen() {
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(new Color(12, 14, 18));
-		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
+	private Container con;
+	private JPanel pBoxScreen;
+	
+	public RenewalPasswordFrame() {
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				setVisible(false);
+				dispose();
+			}
+		});
 		
-		lWelcome = new JLabel("Please enter your E-mail!");
+		con = this.getContentPane();
+		
+		pBoxScreen = new JPanel();
+		pBoxScreen.setLayout(new BoxLayout(pBoxScreen, BoxLayout.Y_AXIS));
+		pBoxScreen.setBackground(new Color(12, 14, 18));
+		pBoxScreen.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
+		
+		JLabel lWelcome = new JLabel("이메일을 입력하세요.");
 		lWelcome.setForeground(new Color(189, 198, 208));
 		lWelcome.setFont(new Font("Arial", Font.PLAIN, 30));
 		lWelcome.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -67,7 +82,7 @@ public class RenewalPasswordScreen extends JPanel {
 			}
 		});
 		
-		lPassword = new JLabel("<html><hr>Enter your new Password!</html>");
+		lPassword = new JLabel("<html><hr>변경할 비밀번호를 입력하세요.</html>");
 		lPassword.setForeground(new Color(189, 198, 208));
 		lPassword.setFont(new Font("Arial", Font.PLAIN, 30));
 		lPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -97,17 +112,25 @@ public class RenewalPasswordScreen extends JPanel {
 					boolean isGood = fpp.checkValidationPassword(String.valueOf(pfPassword.getPassword()));
 					if (isGood) {
 						fpp.changePassword(tfEmail.getText(), String.valueOf(pfPassword.getPassword()), pfPassword);
+						dispose();
 					}
 				}
 			}
 		});
 		pfPassword.setVisible(false);
 		
-		this.add(Box.createVerticalGlue());
-		this.add(lWelcome);
-		this.add(tfEmail);
-		this.add(lPassword);
-		this.add(pfPassword);
-		this.add(Box.createVerticalGlue());
+		pBoxScreen.add(Box.createVerticalGlue());
+		pBoxScreen.add(lWelcome);
+		pBoxScreen.add(tfEmail);
+		pBoxScreen.add(lPassword);
+		pBoxScreen.add(pfPassword);
+		pBoxScreen.add(Box.createVerticalGlue());
+		
+		con.add(pBoxScreen);		
+		
+		this.setSize(480, 640);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
 	}
 }

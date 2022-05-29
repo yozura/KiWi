@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import kiwi.gui.AdminScreen;
 import kiwi.gui.BookmarkScreen;
 import kiwi.gui.ErrorScreen;
-import kiwi.gui.RenewalPasswordScreen;
 import kiwi.gui.HomeScreen;
 import kiwi.gui.LoginScreen;
 import kiwi.gui.MainFrame;
@@ -42,7 +41,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
@@ -63,7 +61,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
@@ -84,7 +81,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case RENEWAL_PASSWORD -> pCurScreen = new RenewalPasswordScreen();
 		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();

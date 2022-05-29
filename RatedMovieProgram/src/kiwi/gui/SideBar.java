@@ -11,21 +11,24 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.header.Define.USER_TYPE;
 import kiwi.mgr.ScreenMgr;
+import kiwi.mgr.UserMgr;
 
 public class SideBar extends JPanel {
 	private static final long serialVersionUID = -4685581869908944837L;
 	
-	private JButton[] arrOfSideBtns = new JButton[6];
+	private JButton[] arrOfSideBtns = new JButton[5];
 	
 	public SideBar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(210, 180, 140));
-		for (int i = 0; i < 6; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			JButton btn = new JButton();
 			btn.setPreferredSize(new Dimension(60, 60));
 			btn.setMaximumSize(new Dimension(60, 60));
@@ -35,47 +38,66 @@ public class SideBar extends JPanel {
 				iconBtn = new ImageIcon("res/icons/home.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if (UserMgr.getInstance().getCurUser().equals(null)) {
+							JOptionPane.showMessageDialog(null, "로그인 후 사용 가능합니다.");
+							return;
+						}
+						
 						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, btn);
 					}
 				});
 				break;
 			case 1:
-				iconBtn = new ImageIcon("res/icons/account_box.png");
+				iconBtn = new ImageIcon("res/icons/account_circle.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, btn);
+						if (UserMgr.getInstance().getCurUser().equals(null)) {
+							JOptionPane.showMessageDialog(null, "로그인 후 사용 가능합니다.");
+							return;
+						}
+						
+						if (UserMgr.getInstance().getUserType().equals(USER_TYPE.ADMIN)) {
+							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, btn);
+						} else {
+							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.USER, btn);
+						}
 					}
 				});
 				break;
 			case 2:
-				iconBtn = new ImageIcon("res/icons/bookmarks.png");
-				btn.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.BOOKMARK, btn);
-					}
-				});
-				break;
-			case 3:
-				iconBtn = new ImageIcon("res/icons/review2.png");
-				btn.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.REVIEW, btn);
-					}
-				});
-				break;
-			case 4:
 				iconBtn = new ImageIcon("res/icons/collections.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if (UserMgr.getInstance().getCurUser().equals(null)) {
+							JOptionPane.showMessageDialog(null, "로그인 후 사용 가능합니다.");
+							return;
+						}
+						
 						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.POP_MOVIES, btn);
 					}
 				});
 				break;
-			case 5:
+			case 3:
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						UserMgr.getInstance().exit();
+						JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
 						ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.LOG_IN, btn);
+					}
+				});
+				break;
+			case 4:
+				iconBtn = new ImageIcon("res/icons/delete.png");
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (UserMgr.getInstance().getUserType().equals(USER_TYPE.ADMIN)) {
+							UserMgr.getInstance().setUserType(USER_TYPE.NORMAL);
+							JOptionPane.showMessageDialog(null, "유저 타입이 일반으로 변경되었습니다.");
+						} else {
+							UserMgr.getInstance().setUserType(USER_TYPE.ADMIN);
+							JOptionPane.showMessageDialog(null, "유저 타입이 어드민으로 변경되었습니다.");
+						}
 					}
 				});
 				break;
