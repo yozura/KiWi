@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -40,32 +41,6 @@ public class UserDAO extends KiWiDAO  {
 		}
 	}
 	
-	public boolean deleteBookmarkByMovieId(Pair<String, Integer> pairId) {
-		boolean isDeleted = true;
-		try {
-			Connection con = getConnection();
-			String sql = "delete from kiwidb.bookmarks where user_id = ? and movie_id = ?";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, pairId.first);
-			pstmt.setInt(2, pairId.second);
-			
-			int rt = pstmt.executeUpdate();
-			if (rt > 0) {
-				System.out.println("북마크 삭제 성공...");
-			} else {
-				isDeleted = false;
-				System.out.println("북마크 삭제 실패...");
-			}
-			
-			pstmt.close();
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return isDeleted;
-	}
-	
 	public User findUser(String id, String password) {
 		User user = null;
 		try {
@@ -89,13 +64,62 @@ public class UserDAO extends KiWiDAO  {
 		return user;
 	}
 	
-	public Vector<Movie> findBookmarkByUserId(String id) {
-		Vector<Movie> vecBookmark = null;
+	public HashMap<Integer, Movie> findMapBookmarkByUserId(String id) {
+		HashMap<Integer, Movie> mapBookmark = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select m.* from movies as m"
 					+ " inner join bookmarks as bm"
 					+ " on bm.user_id = ? and bm.movie_id = m.id";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (mapBookmark == null) {
+					mapBookmark = new HashMap<Integer, Movie>();
+				}
+				try {
+					int movie_id = rs.getInt(1);
+					mapBookmark.put(movie_id,
+							new Movie(
+							movie_id
+							, rs.getString(2)
+							, rs.getString(3)
+							, rs.getString(4)
+							, rs.getString(5)
+							, rs.getInt(6)
+							, rs.getDate(7)
+							, rs.getInt(8)
+							, rs.getInt(9)
+							, rs.getString(10)
+							, ImageIO.read(rs.getBinaryStream(11))));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (mapBookmark != null) {
+				System.out.println("북마크 불러오기 성공");
+			}
+
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return mapBookmark;
+	}
+	
+	public Vector<Movie> findVecBookmarkByUserId(String id) {
+		Vector<Movie> vecBookmark = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select m.* from movies as m"
+					+ " inner join bookmarks as bm"
+					+ " on bm.user_id = ? and bm.movie_id = m.id"
+					+ " order by m.id asc";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			

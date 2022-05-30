@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -112,21 +113,22 @@ public class MovieDAO extends KiWiDAO {
 		return exists;
 	}
 	
-	public Vector<Movie> selectAll() {
-		Vector<Movie> vecMovie = null;
+	public HashMap<Integer, Movie> selectAll() {
+		HashMap<Integer, Movie> mapMovie = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select * from kiwidb.movies";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				if (vecMovie == null) {
-					vecMovie = new Vector<Movie>();
+				if (mapMovie == null) {
+					mapMovie = new HashMap<Integer, Movie>();
 				}
-				
 				try {
-					vecMovie.add(new Movie(
-							rs.getInt(1)
+					int movie_id = rs.getInt(1);
+					mapMovie.put(movie_id,
+							new Movie(
+							movie_id
 							, rs.getString(2)
 							, rs.getString(3)
 							, rs.getString(4)
@@ -142,7 +144,7 @@ public class MovieDAO extends KiWiDAO {
 				}
 			}
 			
-			if (vecMovie != null) {
+			if (mapMovie != null) {
 				System.out.println("영화 불러오기 성공...");
 			}
 			
@@ -152,6 +154,24 @@ public class MovieDAO extends KiWiDAO {
 			e.printStackTrace();
 		}
 		
-		return vecMovie;
+		return mapMovie;
+	}
+	
+	// 전체 영화 점수 동기화
+	public boolean updateSyncMovieFresh() {
+		boolean isGood = false;
+		try {
+			Connection con = getConnection();
+			String sql = "call synchronizeFreshRate()";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			isGood = pstmt.execute();
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isGood;
 	}
 }

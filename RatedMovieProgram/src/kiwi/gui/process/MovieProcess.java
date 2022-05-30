@@ -5,7 +5,9 @@ import java.util.regex.Pattern;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import kiwi.dao.BookmarkDAO;
 import kiwi.dao.ReviewDAO;
+import kiwi.dto.Bookmark;
 import kiwi.dto.Review;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ReviewMgr;
@@ -13,14 +15,32 @@ import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
 public class MovieProcess {
-	public void AddReview(Review review, JComponent comp) {
+	public void addReview(Review review, JComponent comp) {
 		ReviewDAO rDAO = new ReviewDAO();
 		rDAO.insert(review);
-		
+
 		MovieMgr.getInstance().updateCalculateFresh(review.getMovieId());
-		
+
 		ReviewMgr.getInstance().load();
 		MovieMgr.getInstance().load();
+		MovieMgr.getInstance().setCurMovie(review.getMovieId());
+		
+		ScreenMgr.getInstance().redirectWithSideBar(comp);
+	}
+	
+	public void addBookmark(Bookmark bookmark, JComponent comp) {
+		BookmarkDAO bDAO = new BookmarkDAO();
+		bDAO.insert(bookmark);
+		
+		UserMgr.getInstance().reloadBookmark();
+		ScreenMgr.getInstance().redirectWithSideBar(comp);
+	}
+	
+	public void deleteBookmark(Bookmark bookmark, JComponent comp) {
+		BookmarkDAO bDAO = new BookmarkDAO();
+		bDAO.delete(bookmark);
+		
+		UserMgr.getInstance().reloadBookmark();
 		ScreenMgr.getInstance().redirectWithSideBar(comp);
 	}
 	

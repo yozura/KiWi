@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,6 +28,7 @@ import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ResourceMgr;
 import kiwi.mgr.ScreenMgr;
+import kiwi.mgr.UserMgr;
 
 public class PopularMoviesScreen extends JPanel {
 	private static final long serialVersionUID = 5476977243502241593L;
@@ -50,54 +52,56 @@ public class PopularMoviesScreen extends JPanel {
 		JPanel pGridBody = new JPanel(new GridLayout(0, 4, 30, 30));
 		pGridBody.setBackground(new Color(12, 14, 18));
 		
-		int movieCount = MovieMgr.getInstance().getMoviesCount();
-		for (int i = 0; i < movieCount; ++i) {
-			Movie movie = MovieMgr.getInstance().getMovies().get(i);
-			
-			JPanel pMovie = new JPanel();
-			pMovie.setLayout(new BoxLayout(pMovie, BoxLayout.Y_AXIS));
-			pMovie.setBackground(new Color(12, 14, 18));
-			pMovie.setPreferredSize(new Dimension(210, 397));
-			pMovie.setMaximumSize(new Dimension(210, 397));
-					
-			BufferedImage iconChangedLogo = null;
-			try {
-				iconChangedLogo = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			JButton lPoster = new JButton();
-			lPoster.setName(String.valueOf(i));
-			lPoster.setIcon(new ImageIcon(iconChangedLogo));
-			lPoster.setBorder(BorderFactory.createEmptyBorder());
-			lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-			lPoster.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					// 무비 스크린으로 이동
-					JButton btn = (JButton)e.getSource();
-					
-					MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getName()));
-					ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
-				}				
-			});
-			
-			JLabel lTitle = new JLabel(movie.getTitle());
-			lTitle.setForeground(new Color(189, 198, 208));
-			lTitle.setFont(new Font("Arial", Font.BOLD, 15));
-			lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-			
-			JLabel lGrade = new JLabel(String.format("신선도 %d%%", movie.getRate()));
-			lGrade.setForeground(new Color(189, 198, 208));
-			lGrade.setFont(new Font("Arial", Font.BOLD, 15));
-			lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-			
-			pMovie.add(lPoster);
-			pMovie.add(lTitle);
-			pMovie.add(lGrade);
-			
-			pGridBody.add(pMovie);
-		}  
+		HashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
+		if (mapMovie != null) {
+			for (int movieId : mapMovie.keySet()) {
+				Movie movie = mapMovie.get(movieId);
+				
+				JPanel pMovie = new JPanel();
+				pMovie.setLayout(new BoxLayout(pMovie, BoxLayout.Y_AXIS));
+				pMovie.setBackground(new Color(12, 14, 18));
+				pMovie.setPreferredSize(new Dimension(210, 397));
+				pMovie.setMaximumSize(new Dimension(210, 397));
+						
+				BufferedImage iconChangedLogo = null;
+				try {
+					iconChangedLogo = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				JButton lPoster = new JButton();
+				lPoster.setName(String.valueOf(movie.getId()));
+				lPoster.setIcon(new ImageIcon(iconChangedLogo));
+				lPoster.setBorder(BorderFactory.createEmptyBorder());
+				lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				lPoster.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// 무비 스크린으로 이동
+						JButton btn = (JButton)e.getSource();
+						
+						MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getName()));
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
+					}				
+				});
+				
+				JLabel lTitle = new JLabel(movie.getTitle());
+				lTitle.setForeground(new Color(189, 198, 208));
+				lTitle.setFont(new Font("Arial", Font.BOLD, 15));
+				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				
+				JLabel lGrade = new JLabel(String.format("신선도 %d%%", movie.getRate()));
+				lGrade.setForeground(new Color(189, 198, 208));
+				lGrade.setFont(new Font("Arial", Font.BOLD, 15));
+				lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				
+				pMovie.add(lPoster);
+				pMovie.add(lTitle);
+				pMovie.add(lGrade);
+				
+				pGridBody.add(pMovie);
+			}  
+		}
 		
 		JScrollPane scPane = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scPane.setBorder(BorderFactory.createEmptyBorder());

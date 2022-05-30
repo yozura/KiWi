@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import kiwi.dto.Bookmark;
 import kiwi.dto.Movie;
 import kiwi.dto.Review;
 import kiwi.gui.process.MovieProcess;
@@ -49,20 +50,11 @@ public class MovieScreen extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		Movie curMovie = MovieMgr.getInstance().getCurMovie();
-		
-		JLabel lTitle = new JLabel(curMovie.getTitle());
-		lTitle.setForeground(new Color(189, 198, 208));
-		lTitle.setFont(new Font("Arial", Font.PLAIN, 32));
-		lTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
-		this.add(Box.createVerticalStrut(30));
-		this.add(lTitle);
-		this.add(getBody(curMovie));
+		this.add(getMovieBody(curMovie));
 		this.add(Box.createVerticalGlue());
 	}
 
-	public JPanel getBody(Movie movie) {
+	public JPanel getMovieBody(Movie movie) {
 		JLabel lPoster = new JLabel();
 		try {
 			BufferedImage resizedPoster = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
@@ -72,6 +64,34 @@ public class MovieScreen extends JPanel {
 		}
 		lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		lPoster.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 50));
+		
+		// header ----
+		
+		JButton btnAddBookmark = new JButton(movie.getTitle());
+		if (UserMgr.getInstance().checkBookmarkByMovieId(movie.getId())) {
+			btnAddBookmark.setIcon(new ImageIcon("res/icons/bookmark_remove.png"));
+		} else {
+			btnAddBookmark.setIcon(new ImageIcon("res/icons/bookmark_add.png"));
+		}
+		btnAddBookmark.setFont(new Font("Arial", Font.PLAIN, 21));
+		btnAddBookmark.setBorder(BorderFactory.createEmptyBorder());
+		btnAddBookmark.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+		btnAddBookmark.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JButton btn = (JButton)e.getSource();
+				MovieProcess mp = new MovieProcess();
+				Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
+				if (UserMgr.getInstance().checkBookmarkByMovieId(movie.getId())) {
+					mp.deleteBookmark(bookmark, btn);
+					btn.setIcon(new ImageIcon("res/icons/bookmark_add.png"));
+				} else {
+					mp.addBookmark(bookmark, btn);
+					btn.setIcon(new ImageIcon("res/icons/bookmark_remove.png"));
+				}
+			}
+		});
+		
+		// -----------
 		
 		JLabel lNumberInfo = new JLabel(String.format("%d세 관람가 | %s 개봉 | %d분 ", movie.getAgeLimit(), movie.getReleaseDate().toString(), movie.getRunningTime()));
 		lNumberInfo.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -110,6 +130,8 @@ public class MovieScreen extends JPanel {
 		pBoxDescription.setLayout(new BoxLayout(pBoxDescription, BoxLayout.Y_AXIS));
 		pBoxDescription.setBackground(new Color(189, 198, 208));
 		pBoxDescription.add(Box.createVerticalStrut(20));
+		pBoxDescription.add(btnAddBookmark);
+		pBoxDescription.add(Box.createVerticalStrut(10));
 		pBoxDescription.add(lNumberInfo);
 		pBoxDescription.add(lCharInfo);
 		pBoxDescription.add(Box.createVerticalStrut(10));
@@ -152,6 +174,8 @@ public class MovieScreen extends JPanel {
 		pFlowInfo.setBorder(BorderFactory.createEmptyBorder(30, 80, 0, 80));
 		pFlowInfo.add(lPoster);
 		pFlowInfo.add(pBoxInfo);
+		
+		// Review -----------
 
 		JPanel pGridReview = new JPanel();
 		pGridReview.setLayout(new GridLayout(0, 3, 30, 30));
@@ -174,7 +198,7 @@ public class MovieScreen extends JPanel {
 				
 				// 리뷰 콘텐트 + 작성일 + 닉네임 + 점수
 				JTextArea taContent = new JTextArea();
-				taContent.setText(String.format("%s - %s, %s일에 작성됨.", review.getContent(), review.getUserId(), review.getReviewDate().toString()));
+				taContent.setText(String.format("%s - [%d%%] %s, %s일에 작성됨.", review.getContent(), review.getFreshRate(), review.getUserId(), review.getReviewDate().toString()));
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
 				taContent.setWrapStyleWord(true);
@@ -230,8 +254,8 @@ public class MovieScreen extends JPanel {
 		btnAddReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		btnAddReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO :: 리뷰 등록
 				MovieProcess mp = new MovieProcess();
+				JButton btn = (JButton)e.getSource();
 				boolean isGood = mp.checkValidationReview(taAddContent.getText())
 								&& mp.checkCurrentUser();
 				if (isGood) {
@@ -243,7 +267,7 @@ public class MovieScreen extends JPanel {
 							, sFreshRate.getValue()
 							, null
 							);
-					mp.AddReview(review, taAddContent);
+					mp.addReview(review, btn);
 				}
 			}
 		});
@@ -262,6 +286,8 @@ public class MovieScreen extends JPanel {
 		pBoxGrid.add(Box.createHorizontalGlue());
 		pBoxGrid.add(spBody);
 		pBoxGrid.add(Box.createHorizontalGlue());
+		
+		// ------------------
 		
 		JPanel pBoxBody = new JPanel();
 		pBoxBody.setLayout(new BoxLayout(pBoxBody, BoxLayout.Y_AXIS));

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -22,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import kiwi.dto.Bookmark;
 import kiwi.dto.Movie;
 import kiwi.gui.process.BookmarkProcess;
 import kiwi.header.Define.SCREEN_TYPE;
@@ -59,10 +61,10 @@ public class BookmarkScreen extends JPanel {
 		
 		JLabel lGuide = null;
 		
-		if (UserMgr.getInstance().getBookmark() != null) {
-			int bookmarkCount = UserMgr.getInstance().getBookmarkCount();
-			for (int i = 0; i < bookmarkCount; ++i) {
-				Movie movie = UserMgr.getInstance().getBookmark().get(i);
+		HashMap<Integer, Movie> mapBookmark = UserMgr.getInstance().getMapBookmark();
+		if (mapBookmark != null) {
+			for (int movieId : mapBookmark.keySet()) {
+				Movie movie = mapBookmark.get(movieId);
 				
 				JPanel pMovie = new JPanel();
 				pMovie.setLayout(new BoxLayout(pMovie, BoxLayout.Y_AXIS));
@@ -78,7 +80,7 @@ public class BookmarkScreen extends JPanel {
 				}
 				
 				JButton lPoster = new JButton();
-				lPoster.setName(String.valueOf(i));
+				lPoster.setName(String.valueOf(movie.getId()));
 				lPoster.setIcon(new ImageIcon(iconChangedLogo));
 				lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				lPoster.addActionListener(new ActionListener() {
@@ -111,7 +113,8 @@ public class BookmarkScreen extends JPanel {
 						BookmarkProcess bp = new BookmarkProcess();
 						JButton btn = (JButton)e.getSource();
 						
-						bp.DeleteBookmark(Integer.parseInt(btn.getName()), btn);
+						Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
+						bp.DeleteBookmark(bookmark, btn);
 					}
 				});
 				
@@ -138,7 +141,7 @@ public class BookmarkScreen extends JPanel {
 		pBoxPane.setLayout(new BoxLayout(pBoxPane, BoxLayout.X_AXIS));
 		pBoxPane.setBackground(new Color(12, 14, 18));
 		pBoxPane.add(Box.createHorizontalGlue());
-		if (UserMgr.getInstance().getBookmark() != null) pBoxPane.add(scPane);
+		if (UserMgr.getInstance().getMapBookmark() != null) pBoxPane.add(scPane);
 		else pBoxPane.add(lGuide);
 		pBoxPane.add(Box.createHorizontalGlue());
 

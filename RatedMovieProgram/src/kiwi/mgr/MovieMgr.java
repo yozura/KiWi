@@ -1,5 +1,6 @@
 package kiwi.mgr;
 
+import java.util.HashMap;
 import java.util.Vector;
 
 import kiwi.dao.MovieDAO;
@@ -9,7 +10,7 @@ import kiwi.header.Pair;
 
 public class MovieMgr {
 	public static MovieMgr instance = new MovieMgr();
-	public Vector<Movie> vecMovie;
+	public HashMap<Integer, Movie> mapMovie;
 	public Movie curMovie;
 	
 	public static MovieMgr getInstance() {
@@ -18,7 +19,7 @@ public class MovieMgr {
 
 	public void load() {
 		MovieDAO dao = new MovieDAO();
-		vecMovie = dao.selectAll();
+		mapMovie = dao.selectAll();
 	}
 	
 	public void updateCalculateFresh(int movieId) {
@@ -40,19 +41,21 @@ public class MovieMgr {
 		mDAO.updateFresh(pairFreshId);
 	}
 	
-	public Vector<Movie> getMovies() {
-		return vecMovie;
+	public HashMap<Integer, Movie> getMapMovie() {
+		return mapMovie;
 	}
 	
 	public int getMoviesCount() {
-		return vecMovie.size();
+		return mapMovie.size();
 	}
 	
 	public Movie getCurMovie() {
 		return curMovie;
 	}
 	
-	public void setCurMovie(int index) {
-		curMovie = vecMovie.get(index);
+	public void setCurMovie(int movieId) {
+		if (mapMovie.containsKey(movieId)) {
+			curMovie = mapMovie.get(movieId);
+		}
 	}
 }

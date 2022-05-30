@@ -34,9 +34,11 @@ having movie_id = 5;
 -- movie rate update
 update kiwidb.movies set freshrate = ? where movie_id = ?;
 
-insert into kiwidb.bookmarks values ('korean123', 3);
+insert into kiwidb.bookmarks values ('korean123', 8);
 insert into kiwidb.bookmarks values ('korean123', 4);
 insert into kiwidb.bookmarks values ('korean123', 6);
+
+select * from kiwidb.bookmarks;
 
 -- 점수 동기화 함수
 DELIMITER $$
@@ -75,7 +77,14 @@ DELIMITER ;
 
 call synchronizeFreshRate();
 
-select * from movies;
+select * from bookmarks;
+
+select m.* from movies as m
+inner join bookmarks as bm
+on bm.user_id = 'korean123' and bm.movie_id = m.id
+order by m.id asc;
+
+show procedure status;
 
 
 

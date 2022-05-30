@@ -1,5 +1,6 @@
 package kiwi.gui.process;
 
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -28,8 +29,9 @@ public class LoginProcess {
 			return;
 		}
 		
-		Vector<Movie> vecBookmark = uDAO.findBookmarkByUserId(id);
-		UserMgr.getInstance().enter(user, vecBookmark, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
+		// Vector<Movie> vecBookmark = uDAO.findVecBookmarkByUserId(id);
+		HashMap<Integer, Movie> mapBookmark = uDAO.findMapBookmarkByUserId(id);
+		UserMgr.getInstance().enter(user, mapBookmark, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
 		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}
 	
