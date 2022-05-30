@@ -29,8 +29,8 @@ public class ScreenMgr {
 	
 	ScreenMgr() {
 		pSideBar = new SideBar();
-		pCurScreen = new LoginScreen();
-		curScreenType = SCREEN_TYPE.LOG_IN;
+		pCurScreen = new ReviewScreen();
+		curScreenType = SCREEN_TYPE.REVIEW;
 	}
 	
 	public void redirectWithSideBar(JComponent comp) {
@@ -41,7 +41,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
 		case ERROR -> pCurScreen = new ErrorScreen();
@@ -61,7 +60,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
 		case ERROR -> pCurScreen = new ErrorScreen();
@@ -81,7 +79,6 @@ public class ScreenMgr {
 		case ADMIN -> pCurScreen = new AdminScreen();
 		case USER -> pCurScreen = new UserScreen();
 		case MOVIE -> pCurScreen = new MovieScreen();
-		case BOOKMARK -> pCurScreen = new BookmarkScreen();
 		case REVIEW -> pCurScreen = new ReviewScreen();
 		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
 		case ERROR -> pCurScreen = new ErrorScreen();

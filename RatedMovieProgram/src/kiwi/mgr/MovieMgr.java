@@ -1,7 +1,6 @@
 package kiwi.mgr;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dao.ReviewDAO;

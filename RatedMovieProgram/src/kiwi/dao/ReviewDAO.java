@@ -104,13 +104,52 @@ public class ReviewDAO extends KiWiDAO {
 		return mapReviews;
 	}
 	
-	public Vector<Review> selectReviewsByMovieId(int movieID) {
+	public HashMap<String, Review> selectReviewByUserId(String userId) {
+		HashMap<String, Review> mapReview = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select * from kiwidb.reviews where user_id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (mapReview == null) {
+					mapReview = new HashMap<String, Review>();
+				}
+				
+				mapReview.put(
+						userId,
+						new Review(
+						rs.getInt(1)
+						, rs.getString(2)
+						, rs.getInt(3)
+						, rs.getString(4)
+						, rs.getInt(5)
+						, rs.getDate(6)
+						));
+			}
+			
+			if (mapReview != null) {
+				System.out.println("리뷰 불러오기 성공...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return mapReview;
+	}
+	
+	public Vector<Review> selectReviewsByMovieId(int movieId) {
 		Vector<Review> vecReview = null;
 		try {
 			Connection con = getConnection();
-			String sql = "select user_id, content, freshrate, reviewdate from kiwidb.reviews where movie_id = ?";
+			String sql = "select * from kiwidb.reviews where movie_id = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, movieID);
+			pstmt.setInt(1, movieId);
 			
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {

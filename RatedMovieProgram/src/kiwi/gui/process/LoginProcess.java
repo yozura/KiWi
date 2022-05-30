@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import kiwi.dao.ReviewDAO;
 import kiwi.dao.UserDAO;
 import kiwi.dto.Movie;
+import kiwi.dto.Review;
 import kiwi.dto.User;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.header.Define.USER_TYPE;
@@ -18,6 +20,7 @@ import kiwi.mgr.UserMgr;
 public class LoginProcess {
 	public void loginUser(String id, String password, JComponent comp) {
 		UserDAO uDAO = new UserDAO();
+		ReviewDAO rDAO = new ReviewDAO();
 		
 		if (!checkValidationUser(new String[] { id, password })) {
 			return;
@@ -29,9 +32,9 @@ public class LoginProcess {
 			return;
 		}
 		
-		// Vector<Movie> vecBookmark = uDAO.findVecBookmarkByUserId(id);
-		HashMap<Integer, Movie> mapBookmark = uDAO.findMapBookmarkByUserId(id);
-		UserMgr.getInstance().enter(user, mapBookmark, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
+		HashMap<Integer, Movie> mapBookmark = uDAO.selectMapBookmarkByUserId(id);
+		HashMap<String, Review> mapReview = rDAO.selectReviewByUserId(id);
+		UserMgr.getInstance().enter(user, mapBookmark, mapReview, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
 		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}
 	

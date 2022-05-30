@@ -9,7 +9,6 @@ import kiwi.dto.Review;
 public class ReviewMgr {
 	private static ReviewMgr instance = new ReviewMgr();
 	private HashMap<Integer, Vector<Review>> mapReview;
-	private Vector<Review> vecUserReview;
 	
 	public static ReviewMgr getInstance() {
 		return instance;
@@ -28,5 +27,9 @@ public class ReviewMgr {
 		ReviewDAO rDAO = new ReviewDAO();
 		mapReview.put(movieId, rDAO.selectReviewsByMovieId(movieId));
 		return mapReview.get(movieId);
+	}
+	
+	public HashMap<Integer, Vector<Review>> getMapReview() {
+		return mapReview;
 	}
 }

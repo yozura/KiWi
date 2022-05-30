@@ -86,5 +86,8 @@ order by m.id asc;
 
 show procedure status;
 
+select * from reviews;
 
+select * from reviews where user_id = 'korean123';
 
+truncate table kiwidb.reviews;

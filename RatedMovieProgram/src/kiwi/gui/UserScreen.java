@@ -200,7 +200,6 @@ public class UserScreen extends JPanel {
 		
 		HashMap<Integer, Movie> mapBookmark = UserMgr.getInstance().getMapBookmark();
 		if (mapBookmark != null) {
-			//int bookmarkCount = UserMgr.getInstance().getMapBookmarkCount();
 			for (int movieId : mapBookmark.keySet()) {
 				Movie movie = mapBookmark.get(movieId);
 				
@@ -293,6 +292,7 @@ public class UserScreen extends JPanel {
 	}
 	
 	public JPanel getReviewBody() {
+		
 		
 		return null;
 	}

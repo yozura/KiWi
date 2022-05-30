@@ -24,7 +24,8 @@ import javax.swing.border.LineBorder;
 // 사용자 개인의 리뷰를 가져와 보여줌.
 public class ReviewScreen extends JPanel {
 	private static final long serialVersionUID = -6986538754400943024L;
-// 초기화는 멤버변수 쓰는 곳에서 하기
+	
+	// 초기화는 멤버변수 쓰는 곳에서 하기
 	private JPanel poster;		// 포스터 바디에 붙는 포스터 패널
 	private JPanel review;		// 포스터 패널에 붙는 리뷰 패널
 	private JLabel lWelcome;

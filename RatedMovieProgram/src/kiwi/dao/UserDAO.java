@@ -64,7 +64,7 @@ public class UserDAO extends KiWiDAO  {
 		return user;
 	}
 	
-	public HashMap<Integer, Movie> findMapBookmarkByUserId(String id) {
+	public HashMap<Integer, Movie> selectMapBookmarkByUserId(String id) {
 		HashMap<Integer, Movie> mapBookmark = null;
 		try {
 			Connection con = getConnection();
@@ -110,52 +110,6 @@ public class UserDAO extends KiWiDAO  {
 		}
 		
 		return mapBookmark;
-	}
-	
-	public Vector<Movie> findVecBookmarkByUserId(String id) {
-		Vector<Movie> vecBookmark = null;
-		try {
-			Connection con = getConnection();
-			String sql = "select m.* from movies as m"
-					+ " inner join bookmarks as bm"
-					+ " on bm.user_id = ? and bm.movie_id = m.id"
-					+ " order by m.id asc";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, id);
-			
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				if (vecBookmark == null) {
-					vecBookmark = new Vector<Movie>();
-				}
-				try {
-					vecBookmark.add(new Movie(
-							rs.getInt(1)
-							, rs.getString(2)
-							, rs.getString(3)
-							, rs.getString(4)
-							, rs.getString(5)
-							, rs.getInt(6)
-							, rs.getDate(7)
-							, rs.getInt(8)
-							, rs.getInt(9)
-							, rs.getString(10)
-							, ImageIO.read(rs.getBinaryStream(11))));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			if (vecBookmark != null)
-				System.out.println("북마크 불러오기 성공");
-
-			pstmt.close();
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-			
-		return vecBookmark;
 	}
 	
 	public boolean updateNickname(String nickname, String id) {

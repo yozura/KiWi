@@ -17,7 +17,6 @@ public class Define {
 		USER,
 		MOVIE,
 		REVIEW,
-		BOOKMARK,
 		POP_MOVIES,
 		ERROR,
 		
