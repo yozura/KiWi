@@ -4,14 +4,11 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import kiwi.gui.AdminScreen;
-import kiwi.gui.BookmarkScreen;
-import kiwi.gui.ErrorScreen;
 import kiwi.gui.HomeScreen;
 import kiwi.gui.LoginScreen;
 import kiwi.gui.MainFrame;
+import kiwi.gui.MovieListScreen;
 import kiwi.gui.MovieScreen;
-import kiwi.gui.PopularMoviesScreen;
-import kiwi.gui.ReviewScreen;
 import kiwi.gui.SideBar;
 import kiwi.gui.SignUpScreen;
 import kiwi.gui.UserScreen;
@@ -33,18 +30,28 @@ public class ScreenMgr {
 		curScreenType = SCREEN_TYPE.LOG_IN;
 	}
 	
+	private JPanel getScreenByScreenType(SCREEN_TYPE eType) {
+		return switch (eType) {
+		case HOME -> new HomeScreen();
+		case LOG_IN -> new LoginScreen();
+		case SIGN_UP -> new SignUpScreen();
+		case ADMIN -> new AdminScreen();
+		case USER -> new UserScreen();
+		case MOVIE -> new MovieScreen();
+		case MOVIE_LIST -> new MovieListScreen();
+		default -> new HomeScreen();
+		};
+	}
+	
+	public void redirectWithSideBar() {
+		pCurScreen = getScreenByScreenType(curScreenType);
+		
+		MainFrame rootFrame = (MainFrame)pCurScreen.getTopLevelAncestor();
+		rootFrame.revalidateScreenWithSideBar();
+	}
+	
 	public void redirectWithSideBar(JComponent comp) {
-		switch (curScreenType) {
-		case HOME -> pCurScreen = new HomeScreen();
-		case LOG_IN -> pCurScreen = new LoginScreen();
-		case SIGN_UP -> pCurScreen = new SignUpScreen();
-		case ADMIN -> pCurScreen = new AdminScreen();
-		case USER -> pCurScreen = new UserScreen();
-		case MOVIE -> pCurScreen = new MovieScreen();
-		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
-		case ERROR -> pCurScreen = new ErrorScreen();
-		default -> pCurScreen = new ErrorScreen();
-		}
+		pCurScreen = getScreenByScreenType(curScreenType);
 		
 		MainFrame rootFrame = (MainFrame)comp.getTopLevelAncestor();
 		rootFrame.revalidateScreenWithSideBar();
@@ -52,17 +59,7 @@ public class ScreenMgr {
 	
 	public void changeCurScreenWithBar(SCREEN_TYPE eType, JComponent comp) {
 		curScreenType = eType;
-		switch (eType) {
-		case HOME -> pCurScreen = new HomeScreen();
-		case LOG_IN -> pCurScreen = new LoginScreen();
-		case SIGN_UP -> pCurScreen = new SignUpScreen();
-		case ADMIN -> pCurScreen = new AdminScreen();
-		case USER -> pCurScreen = new UserScreen();
-		case MOVIE -> pCurScreen = new MovieScreen();
-		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
-		case ERROR -> pCurScreen = new ErrorScreen();
-		default -> pCurScreen = new ErrorScreen();
-		}
+		pCurScreen = getScreenByScreenType(eType);
 		
 		MainFrame rootFrame = (MainFrame)comp.getTopLevelAncestor();
 		rootFrame.revalidateScreenWithSideBar();
@@ -70,17 +67,7 @@ public class ScreenMgr {
 	
 	public void changeCurScreen(SCREEN_TYPE eType, JComponent comp) {
 		curScreenType = eType;
-		switch (eType) {
-		case HOME -> pCurScreen = new HomeScreen();
-		case LOG_IN -> pCurScreen = new LoginScreen();
-		case SIGN_UP -> pCurScreen = new SignUpScreen();
-		case ADMIN -> pCurScreen = new AdminScreen();
-		case USER -> pCurScreen = new UserScreen();
-		case MOVIE -> pCurScreen = new MovieScreen();
-		case POP_MOVIES -> pCurScreen = new PopularMoviesScreen();
-		case ERROR -> pCurScreen = new ErrorScreen();
-		default -> pCurScreen = new ErrorScreen();
-		}
+		pCurScreen = getScreenByScreenType(eType);
 		
 		MainFrame rootFrame = (MainFrame)comp.getTopLevelAncestor();
 		rootFrame.revalidateScreen();

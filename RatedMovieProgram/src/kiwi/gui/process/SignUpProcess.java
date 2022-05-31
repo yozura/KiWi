@@ -16,7 +16,8 @@ public class SignUpProcess {
 		UserDAO uDAO = new UserDAO();
 		uDAO.insert(user);
 
-		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
+		JOptionPane.showMessageDialog(null, "계정 생성에 성공하였습니다. 로그인 창에서 로그인 해주세요.");
+		ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.LOG_IN, comp);
 	}
 	
 	public boolean checkExistById(String id) {

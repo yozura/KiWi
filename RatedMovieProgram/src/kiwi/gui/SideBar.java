@@ -22,19 +22,20 @@ import kiwi.mgr.UserMgr;
 public class SideBar extends JPanel {
 	private static final long serialVersionUID = -4685581869908944837L;
 	
-	private JButton[] arrOfSideBtns = new JButton[5];
+	private JButton[] arrOfSideBtns = new JButton[4];
 	
 	public SideBar() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(210, 180, 140));
-		for (int i = 0; i < 5; ++i) {
+		for (int i = 0; i < 4; ++i) {
 			JButton btn = new JButton();
 			btn.setPreferredSize(new Dimension(60, 60));
 			btn.setMaximumSize(new Dimension(60, 60));
 			ImageIcon iconBtn;
 			switch (i) {
 			case 0:
+				// 홈 스크린 이동 버튼
 				iconBtn = new ImageIcon("res/icons/home.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -48,6 +49,7 @@ public class SideBar extends JPanel {
 				});
 				break;
 			case 1:
+				// 유저 & 어드민 스크린 이동 버튼
 				iconBtn = new ImageIcon("res/icons/account_circle.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -65,6 +67,7 @@ public class SideBar extends JPanel {
 				});
 				break;
 			case 2:
+				// 영화 목록 이동 버튼
 				iconBtn = new ImageIcon("res/icons/collections.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -73,11 +76,12 @@ public class SideBar extends JPanel {
 							return;
 						}
 						
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.POP_MOVIES, btn);
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE_LIST, btn);
 					}
 				});
 				break;
 			case 3:
+				// 로그아웃 버튼
 				iconBtn = new ImageIcon("res/icons/logout.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -88,6 +92,7 @@ public class SideBar extends JPanel {
 				});
 				break;
 			case 4:
+				// 디버깅용 유저 타입 변환 버튼
 				iconBtn = new ImageIcon("res/icons/delete.png");
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {

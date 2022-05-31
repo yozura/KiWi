@@ -65,6 +65,7 @@ BEGIN
 		from kiwidb.reviews
 		group by movie_id
 		having movie_id = movieId;
+        
         -- (총점 / 개수 * 100) * 100 계산해서 다시 무비 아이디에 값 넣어주기
 		set reviewFresh = (reviewSum / (reviewCount * 100)) * 100;
         
@@ -94,6 +95,8 @@ select * from kiwidb.reviews;
 
 delete from kiwidb.review;
 
+
+
 SELECT 
   ORDINAL_POSITION '필드 순번',
   COLUMN_NAME '필드 이름',
@@ -108,7 +111,7 @@ FROM
 
 WHERE
   TABLE_SCHEMA = 'kiwidb'
-  AND TABLE_NAME = 'reviews'
+  AND TABLE_NAME = 'users'
 
 ORDER BY
   ORDINAL_POSITION 

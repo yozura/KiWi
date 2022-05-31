@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
@@ -276,21 +278,20 @@ public class UserScreen extends JPanel {
 			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
 		}
 		
-		JScrollPane scReview = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scReview.setBackground(new Color(12, 14, 18));
-		scReview.setBorder(BorderFactory.createEmptyBorder());
+		JScrollPane spReview = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		spReview.setBackground(new Color(12, 14, 18));
+		spReview.setBorder(BorderFactory.createEmptyBorder());
 		
 		JPanel pBoxPane = new JPanel();
 		pBoxPane.setLayout(new BoxLayout(pBoxPane, BoxLayout.X_AXIS));
 		pBoxPane.setBackground(new Color(12, 14, 18));
 		pBoxPane.add(Box.createHorizontalGlue());
-		if (mapBookmark != null) pBoxPane.add(scReview);
+		if (mapBookmark != null) pBoxPane.add(spReview);
 		else pBoxPane.add(lGuide);
 		pBoxPane.add(Box.createHorizontalGlue());
 
 		// -------------------------
 		
-		pBoxBookmark.add(Box.createVerticalStrut(40));
 		pBoxBookmark.add(pBoxPane);
 		
 		return pBoxBookmark;
@@ -346,23 +347,34 @@ public class UserScreen extends JPanel {
 				btnDeleteReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnDeleteReview.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						// TODO :: 리뷰 삭제.
+						// 리뷰 삭제
 						UserProcess up = new UserProcess();
 						JButton btn = (JButton)e.getSource();
 						
 						up.deleteReview(review, btn);
 					}
 				});
+				btnDeleteReview.addMouseListener(new MouseAdapter() {
+					public void mouseEntered(MouseEvent e) {
+						JButton btn = (JButton)e.getSource();
+						btn.setForeground(new Color(71, 143, 250));
+					}
+					
+					public void mouseExited(MouseEvent e) {
+						JButton btn = (JButton)e.getSource();
+						btn.setForeground(new Color(12, 14, 18));
+					}
+				});
 				
 				JLabel lFreshRate = new JLabel("- " + String.valueOf(review.getFreshRate()) + "%");
-				lFreshRate.setFont(new Font("Arial", Font.ITALIC, 24));
+				lFreshRate.setFont(new Font("Arial", Font.ITALIC, 22));
 				lFreshRate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JTextArea taContent = new JTextArea();
 				taContent.setPreferredSize(new Dimension(300, 200));
 				taContent.setMaximumSize(new Dimension(300, 200));
 				taContent.setBackground(new Color(189, 198, 208));
-				taContent.setText(String.format("%s - %s, %s일에 작성됨.", review.getContent(), review.getUserId(), review.getReviewDate().toString()));
+				taContent.setText(String.format("%s - %s에 작성됨.", review.getContent(), review.getReviewDate().toString()));
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
 				taContent.setWrapStyleWord(true);

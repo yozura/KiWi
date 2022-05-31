@@ -33,6 +33,11 @@ public class MovieMgr {
 		MovieDAO mDAO = new MovieDAO();
 		ReviewDAO rDAO = new ReviewDAO();
 		Pair<Integer, Integer> pairRate = rDAO.selectFreshByMovieId(movieId);
+		if (pairRate == null) {
+			mDAO.updateFresh(new Pair<>(0, movieId));
+			return;
+		}
+		
 		System.out.println("리뷰 수 : " + pairRate.second + ", 총점 : " + pairRate.first);
 		
 		// (리뷰 총 점수) / (리뷰수 * 100) * 100 이 해당 영화의 점수.
@@ -44,7 +49,6 @@ public class MovieMgr {
 		}
 		
 		Pair<Integer, Integer> pairFreshId = new Pair<>((int)freshRate, movieId);
-		
 		mDAO.updateFresh(pairFreshId);
 	}
 	

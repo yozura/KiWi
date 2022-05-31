@@ -1,7 +1,6 @@
 package kiwi.mgr;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 import kiwi.dao.ReviewDAO;
 import kiwi.dao.UserDAO;
@@ -44,7 +43,7 @@ public class UserMgr {
 	
 	public void reloadUserInfo() {
 		UserDAO uDAO = new UserDAO();
-		uDAO.findUser(curUser.getId(), null);
+		curUser = uDAO.findUser(curUser.getId(), curUser.getPassword());
 	}
 	
 	public void reloadReview() {
@@ -55,6 +54,12 @@ public class UserMgr {
 	public void reloadBookmark() {
 		UserDAO uDAO = new UserDAO();
 		mapBookmark = uDAO.selectMapBookmarkByUserId(curUser.getId());
+	}
+	
+	public String findNicknameByUserId(String userId) {
+		UserDAO uDAO = new UserDAO();
+		String nickname = uDAO.selectNickname(userId);
+		return nickname;
 	}
 	
 	public boolean checkBookmarkByMovieId(int movieId) {

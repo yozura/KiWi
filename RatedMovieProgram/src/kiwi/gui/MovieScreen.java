@@ -11,7 +11,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Vector;
@@ -25,10 +24,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -217,8 +214,9 @@ public class MovieScreen extends JPanel {
 
 					// 리뷰 콘텐트 + 작성일 + 닉네임 + 점수
 					JTextArea taContent = new JTextArea();
-					taContent.setText(String.format("%s - [%d%%] %s, %s일에 작성됨.", review.getContent(),
-							review.getFreshRate(), review.getUserId(), review.getReviewDate().toString()));
+					taContent.setText(String.format("%s - [%d%%] %s, %s에 작성됨.", review.getContent(),
+							review.getFreshRate(), UserMgr.getInstance().findNicknameByUserId(review.getUserId())
+							, review.getReviewDate().toString()));
 					taContent.setEditable(false);
 					taContent.setLineWrap(true);
 					taContent.setWrapStyleWord(true);

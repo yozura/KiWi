@@ -1,14 +1,14 @@
 package kiwi.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -19,45 +19,35 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import kiwi.gui.process.HomeProcess;
-import kiwi.header.Pair;
 import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.header.Pair;
 import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ResourceMgr;
 import kiwi.mgr.ScreenMgr;
-import kiwi.mgr.UserMgr;
 
 public class HomeScreen extends JPanel {
 	private static final long serialVersionUID = -6747425612297717735L;
 
-	private JPanel pBoxSearch;
-	private JLabel lLogoIcon;
-	private JTextField tfSearch;
-	private JLabel lDonate;
-	
 	public HomeScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(12, 14, 18));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
-		pBoxSearch = new JPanel();
+		JPanel pBoxSearch = new JPanel();
 		pBoxSearch.setLayout(new BoxLayout(pBoxSearch, BoxLayout.Y_AXIS));
-		pBoxSearch.setBackground(new Color(12, 14, 18));
-		pBoxSearch.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
+		pBoxSearch.setBackground(new Color(189, 198, 208));
 		pBoxSearch.setVisible(false);
 		
-		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
-		Image img = iconLogo.getImage();
-		Image changeImg = img.getScaledInstance(160, 120, Image.SCALE_SMOOTH);
-		ImageIcon iconChangedLogo = new ImageIcon(changeImg);
-		lLogoIcon = new JLabel();
-		lLogoIcon.setIcon(iconChangedLogo);
+		ImageIcon logoIcon = ResourceMgr.getInstance().resizeImageIcon("res/images/logo.png", 160, 120);
+		JLabel lLogoIcon = new JLabel();
+		lLogoIcon.setIcon(logoIcon);
 		lLogoIcon.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		tfSearch = new JTextField();
+		JTextField tfSearch = new JTextField();
 		tfSearch.setPreferredSize(new Dimension(280, 30));
 		tfSearch.setMaximumSize(new Dimension(280, 30));
 		tfSearch.setBackground(new Color(189, 198, 208));
@@ -66,7 +56,9 @@ public class HomeScreen extends JPanel {
 		tfSearch.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfSearch.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfSearch.addKeyListener(new KeyAdapter() {
+			// 영화 타이틀 입력시 이동
 			public void keyPressed(KeyEvent e) {
+				pBoxSearch.removeAll();
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					HomeProcess hp = new HomeProcess();
 					JTextField tf = (JTextField)e.getSource();
@@ -76,11 +68,11 @@ public class HomeScreen extends JPanel {
 				}
 			}
 			
+			// 추천 검색어 보여주기
 			public void keyReleased(KeyEvent e) {
 				HomeProcess hp = new HomeProcess();
 				JTextField tf = (JTextField)e.getSource();
 				String str = tf.getText();
-				pBoxSearch.removeAll();
 				
 				Vector<Pair<String, Integer>> vecSearch = hp.searchMovie(str);
 				if (vecSearch == null || !(str.length() > 0)) {
@@ -93,11 +85,22 @@ public class HomeScreen extends JPanel {
 					btnSearch.setBorder(BorderFactory.createEmptyBorder());
 					btnSearch.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 					btnSearch.setForeground(new Color(12, 14, 18));
+					btnSearch.setBackground(new Color(189, 198, 208));
 					btnSearch.setOpaque(true);
+					btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
 					btnSearch.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							MovieMgr.getInstance().setCurMovie(pair.second);
 							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btnSearch);
+						}
+					});
+					btnSearch.addMouseListener(new MouseAdapter() {
+						public void mouseEntered(MouseEvent e) {
+							btnSearch.setFont(new Font("Arial", Font.BOLD, 15));
+						}
+						
+						public void mouseExited(MouseEvent e) {
+							btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
 						}
 					});
 					
@@ -108,7 +111,7 @@ public class HomeScreen extends JPanel {
 			}
 		});
 		
-		lDonate = new JLabel("<html><hr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please Donate for developer!<br>Account : TossBank 1000-1133-5282</html>");
+		JLabel lDonate = new JLabel("<html><hr>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Please Donate for developer!<br>Account : TossBank 1000-1133-5282</html>");
 		lDonate.setForeground(new Color(189, 198, 208));
 		lDonate.setHorizontalAlignment(SwingConstants.CENTER);
 		lDonate.setAlignmentX(JComponent.CENTER_ALIGNMENT);

@@ -1,7 +1,6 @@
 package kiwi.gui.process;
 
 import java.util.HashMap;
-import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.JComponent;
@@ -18,6 +17,7 @@ import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
 public class LoginProcess {
+	// 유저 로그인
 	public void loginUser(String id, String password, JComponent comp) {
 		UserDAO uDAO = new UserDAO();
 		ReviewDAO rDAO = new ReviewDAO();
@@ -38,6 +38,7 @@ public class LoginProcess {
 		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}
 	
+	// 아이디, 비밀번호 유효성 검사
 	public boolean checkValidationUser(String...strings) {
 		if (!Pattern.matches("^[a-zA-Z0-9]{6,20}$", strings[0])) {
 			JOptionPane.showMessageDialog(null, "ID는 최소 6자 이상 20자 이내 영문, 숫자로 구성되어야 합니다.");

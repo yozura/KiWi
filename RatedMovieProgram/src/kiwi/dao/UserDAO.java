@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 
 import kiwi.dto.Movie;
 import kiwi.dto.User;
-import kiwi.header.Pair;
 
 public class UserDAO extends KiWiDAO  {
 	public void insert(User user) {
@@ -97,6 +96,34 @@ public class UserDAO extends KiWiDAO  {
 		}
 		
 		return vecUser;
+	}
+	
+	public String selectNickname(String userId) {
+		String nickname = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select nickname from kiwidb.users where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				nickname = rs.getString(1);
+			}
+			
+			if (nickname != null) {
+				System.out.println("닉네임 불러오기 성공...");
+			} else {
+				System.out.println("닉네임 불러오기 실패...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return nickname;
 	}
 	
 	public User findUser(String id, String password) {

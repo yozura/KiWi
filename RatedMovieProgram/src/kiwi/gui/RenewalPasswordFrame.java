@@ -69,7 +69,7 @@ public class RenewalPasswordFrame extends JFrame {
 		tfEmail.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// TODO :: email 유효성 검사 + 이메일이 있으면 새로 만들 패스워드 창 열어주기.
+					// 이메일 유효성 검사 + 패스워드 변경창 띄우기
 					RenewalPasswordProcess fpp = new RenewalPasswordProcess();
 					boolean isGood = fpp.checkValidationEmail(tfEmail.getText())
 									 && fpp.checkExistByEmail(tfEmail.getText());
@@ -91,7 +91,6 @@ public class RenewalPasswordFrame extends JFrame {
 		lPassword.setVisible(false);
 		
 		pfPassword = new JPasswordField();
-		// limit of letter
 		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
 		doc.setDocumentFilter(new DocumentFilter() {
 		        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
@@ -107,7 +106,7 @@ public class RenewalPasswordFrame extends JFrame {
 		pfPassword.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// TODO :: 패스워드 유효성 검사 + 디비에 패스워드 restore
+					// 유효성 검사 + 비밀번호 변경
 					RenewalPasswordProcess fpp = new RenewalPasswordProcess();
 					boolean isGood = fpp.checkValidationPassword(String.valueOf(pfPassword.getPassword()));
 					if (isGood) {

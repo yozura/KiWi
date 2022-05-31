@@ -13,6 +13,7 @@ import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
 public class HomeProcess {
+	// 영화 검색
 	public Vector<Pair<String, Integer>> searchMovie(String src) {
 		Vector<Pair<String, Integer>> similarTitles = null;
 		HashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
@@ -29,6 +30,7 @@ public class HomeProcess {
 		return similarTitles;
 	}
 	
+	// 영화 스크린으로 이동	
 	public void moveToMovieScreen(String title, JComponent comp) {	
 		Movie movie = MovieMgr.getInstance().getMovieByTitle(title);
 		if (movie != null) {

@@ -1,7 +1,6 @@
 package kiwi.gui;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -19,22 +18,15 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.PlainDocument;
 
-import kiwi.gui.process.RenewalPasswordProcess;
 import kiwi.gui.process.RenewalUserInfoProcess;
+import kiwi.mgr.ScreenMgr;
 
 public class RenewalUserInfoFrame extends JFrame {
 	private static final long serialVersionUID = 2588496365029541095L;
 	
 	private JPanel pBoxScreen;
-	
 	private JLabel lGuide;
 	
 	public RenewalUserInfoFrame() {
@@ -48,9 +40,9 @@ public class RenewalUserInfoFrame extends JFrame {
 		JPanel pBoxContainer = new JPanel();
 		pBoxContainer.setLayout(new BoxLayout(pBoxContainer, BoxLayout.Y_AXIS));
 		pBoxContainer.setBackground(new Color(12, 14, 18));
-		pBoxContainer.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208),1));
+		pBoxContainer.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 	
-		String actions[] = { "없음", "닉네임 변경", "이메일 변경", "휴대폰 번호 변경" };
+		String actions[] = { "없음", "닉네임 변경", "이메일 변경", "연락처 변경" };
 		JComboBox<String> cbSelect = new JComboBox<String>(actions);
 		cbSelect.setBackground(new Color(189, 198, 208));
 		cbSelect.setOpaque(true);
@@ -95,8 +87,8 @@ public class RenewalUserInfoFrame extends JFrame {
 					
 					pBoxScreen.setVisible(true);
 					break;
-				case "휴대폰 번호 변경":
-					lGuide.setText("변경할 휴대폰 번호를 작성하세요.");
+				case "연락처 변경":
+					lGuide.setText("변경할 연락처를 작성하세요.");
 					pBoxScreen.removeAll();
 
 					pBoxScreen.add(Box.createVerticalGlue());
@@ -150,11 +142,13 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfNickname.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// TODO :: 닉네임 입력 시 유효성 검사 + 업데이트하기
+					// 닉네임 입력 시 유효성 검사 + 업데이트
 					RenewalUserInfoProcess ruip = new RenewalUserInfoProcess();
 					boolean isGood = ruip.checkValidationNickname(tfNickname.getText());
 					if (isGood) {
 						ruip.changeNickname(tfNickname.getText());
+						setVisible(false);
+						dispose();
 					}
 				}
 			}
@@ -180,11 +174,13 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfEmail.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// TODO :: 닉네임 입력 시 유효성 검사 + 업데이트하기
+					// 이메일 입력 시 유효성 검사 + 업데이트하기
 					RenewalUserInfoProcess ruip = new RenewalUserInfoProcess();
 					boolean isGood = ruip.checkValidationEmail(tfEmail.getText());
 					if (isGood) {
 						ruip.changeEmail(tfEmail.getText());
+						setVisible(false);
+						dispose();
 					}
 				}
 			}
@@ -210,11 +206,13 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfTel.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					// TODO :: 닉네임 입력 시 유효성 검사 + 업데이트하기
+					// 연락처 입력 시 유효성 검사 + 업데이트하기
 					RenewalUserInfoProcess ruip = new RenewalUserInfoProcess();
 					boolean isGood = ruip.checkValidationTel(tfTel.getText());
 					if (isGood) {
 						ruip.changeTel(tfTel.getText());
+						setVisible(false);
+						dispose();
 					}
 				}
 			}

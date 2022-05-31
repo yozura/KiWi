@@ -1,7 +1,6 @@
 package kiwi.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -37,7 +36,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import kiwi.dto.Movie;
@@ -54,8 +52,6 @@ public class AdminScreen extends JPanel {
 	private String actions[] = { "없음", "영화 추가", "영화 삭제", "리뷰 삭제", "회원 삭제" };
 
 	private JLabel lGuide;
-	private JPanel pBoxLabel;
-	private JPanel pBoxField;
 	private JPanel pFlowForm;
 
 	private File poster;
@@ -574,7 +570,7 @@ public class AdminScreen extends JPanel {
 			}
 		});
 
-		pBoxLabel = new JPanel();
+		JPanel pBoxLabel = new JPanel();
 		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.Y_AXIS));
 		pBoxLabel.setBackground(new Color(12, 14, 18));
 		pBoxLabel.add(Box.createVerticalStrut(15));
@@ -598,7 +594,7 @@ public class AdminScreen extends JPanel {
 		pBoxLabel.add(Box.createVerticalStrut(15));
 		pBoxLabel.add(btnResetMovie);
 
-		pBoxField = new JPanel();
+		JPanel pBoxField = new JPanel();
 		pBoxField.setLayout(new BoxLayout(pBoxField, BoxLayout.Y_AXIS));
 		pBoxField.setBackground(new Color(12, 14, 18));
 		pBoxField.add(Box.createVerticalStrut(10));

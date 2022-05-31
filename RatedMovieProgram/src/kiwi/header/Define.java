@@ -16,8 +16,7 @@ public class Define {
 		ADMIN,
 		USER,
 		MOVIE,
-		POP_MOVIES,
-		ERROR,
+		MOVIE_LIST,
 		
 		END
 	}

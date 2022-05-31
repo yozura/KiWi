@@ -15,6 +15,7 @@ import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
 public class MovieProcess {
+	// 리뷰 저장 및 점수 반영
 	public void addReview(Review review, JComponent comp) {
 		ReviewDAO rDAO = new ReviewDAO();
 		rDAO.insert(review);
@@ -29,6 +30,7 @@ public class MovieProcess {
 		ScreenMgr.getInstance().redirectWithSideBar(comp);
 	}
 	
+	// 유저 북마크 추가
 	public void addBookmark(Bookmark bookmark, JComponent comp) {
 		BookmarkDAO bDAO = new BookmarkDAO();
 		bDAO.insert(bookmark);
@@ -37,6 +39,7 @@ public class MovieProcess {
 		ScreenMgr.getInstance().redirectWithSideBar(comp);
 	}
 	
+	// 유저 북마크 삭제
 	public void deleteBookmark(Bookmark bookmark, JComponent comp) {
 		BookmarkDAO bDAO = new BookmarkDAO();
 		bDAO.delete(bookmark);
@@ -45,6 +48,7 @@ public class MovieProcess {
 		ScreenMgr.getInstance().redirectWithSideBar(comp);
 	}
 	
+	// 리뷰 유효성 검사
 	public boolean checkValidationReview(String string) {
 		 // Review
 		 if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,!@#$:?.]{1,100}$", string)) {
@@ -56,6 +60,7 @@ public class MovieProcess {
 		 return true;
 	}
 	
+	// 로그인 확인
 	public boolean checkCurrentUser() {
 		if (UserMgr.getInstance().getCurUser() == null) {
 			JOptionPane.showMessageDialog(null, "로그인 후 이용 가능합니다.");

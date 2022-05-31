@@ -117,7 +117,6 @@ public class SignUpScreen extends JPanel {
 		});
 		
 		JPasswordField pfPassword = new JPasswordField();
-		// limit of letter
 		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
 		doc.setDocumentFilter(new DocumentFilter() {
 		        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
@@ -223,7 +222,7 @@ public class SignUpScreen extends JPanel {
 				String email = tfEmail.getText();
 				String tel = tfTel.getText();
 
-				// ID, Email 중복 확인 + 유효성 검사까지.
+				// ID, Email 중복 확인 + 유효성 검사.
 				boolean isGood = sup.checkValidationUserInfo(new String[] { id, password, nickname, originBirth, email, tel })
 						&& sup.checkExistById(id) && sup.checkExistByEmail(email);
 		

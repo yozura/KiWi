@@ -5,10 +5,7 @@ import java.awt.Container;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -47,6 +44,7 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 	}
 	
+	// 사이드바와 함께 스크린 재배치
 	public void revalidateScreenWithSideBar() {
 		pMainScreen.removeAll();
 		con.removeAll();
@@ -59,6 +57,7 @@ public class MainFrame extends JFrame {
 		con.revalidate();
 	}
 	
+	// 사이드바 없이 스크린 재배치
 	public void revalidateScreen() {
 		pMainScreen.removeAll();
 		con.removeAll();
