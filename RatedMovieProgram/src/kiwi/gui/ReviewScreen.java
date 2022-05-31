@@ -39,21 +39,6 @@ public class ReviewScreen extends JPanel {
 		this.setBackground(new Color(12, 14, 18));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
-		//상단 헤더 라벨
-		lWelcome = new JLabel(String.format("%s's Review", "Nickname"));
-		lWelcome.setForeground(new Color(189, 198, 208));
-		lWelcome.setFont(new Font("Arial", Font.PLAIN, 32));
-		lWelcome.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
-		lWelcome.setHorizontalAlignment(SwingConstants.CENTER);
-		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
-		//헤더 아래 수평선
-		JSeparator hr = new JSeparator(JSeparator.HORIZONTAL);
-		hr.setForeground(new Color(189, 198, 208));
-		hr.setPreferredSize(new Dimension(1080, 5));
-		hr.setMaximumSize(new Dimension(1080, 5));
-		hr.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-		
 		//포스터 라벨 이미지
 		ImageIcon iconLogo = new ImageIcon("res/images/logo.png");
 		Image img = iconLogo.getImage();
@@ -67,12 +52,6 @@ public class ReviewScreen extends JPanel {
 		// 3. 리뷰 패널에 라인 보더로 핑크색깔 일단 넣기 (v)
 		// 4. 리뷰 패널에 줄넘김 기능 추가
 		// 5. 바디 패널에 줄넘김 기능 추가
-		
-		//중앙분리선 보류
-		//JSeparator vr = new JSeparator(JSeparator.VERTICAL);
-		//vr.setForeground(new Color(255, 131, 205)); 
-		//vr.setPreferredSize(new Dimension(1920, 5));
-		//vr.setMinimumSize(new Dimension());
 		
 		//포스터 붙는 바디
 		JPanel pBorderBack = new JPanel();
@@ -95,7 +74,7 @@ public class ReviewScreen extends JPanel {
 		//포스터 라벨
 		JLabel lPoster = new JLabel();
 		lPoster.setIcon(iconChangedLogo);
-		lPoster.setPreferredSize(new Dimension(140, 210));
+		lPoster.setPreferredSize(new Dimension(148, 210));
 		
 		//영화 제목 라벨
 		JLabel lMovieTitle = new JLabel("Movie Title");
@@ -112,9 +91,6 @@ public class ReviewScreen extends JPanel {
 		JLabel lReview = new JLabel("Hi! I`m Review!");
 		lReview.setForeground(new Color(189, 198, 208));
 		
-		
-		
-		
 		JScrollPane spBody = new JScrollPane(pBorderBody, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		//리뷰 갯수 증가, 플로우 레이아웃으로 2개 마다 아랫 줄으로 이동
@@ -127,7 +103,6 @@ public class ReviewScreen extends JPanel {
 		
 		this.add(Box.createVerticalGlue());
 		this.add(lWelcome);
-		this.add(hr);
 		this.add(spBody);
 		this.add(Box.createVerticalGlue());
 	}

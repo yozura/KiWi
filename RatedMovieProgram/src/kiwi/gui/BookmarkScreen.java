@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -25,7 +24,7 @@ import javax.swing.SwingConstants;
 
 import kiwi.dto.Bookmark;
 import kiwi.dto.Movie;
-import kiwi.gui.process.BookmarkProcess;
+import kiwi.gui.process.UserProcess;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ResourceMgr;
@@ -110,11 +109,11 @@ public class BookmarkScreen extends JPanel {
 				btnCancelBookmark.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnCancelBookmark.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						BookmarkProcess bp = new BookmarkProcess();
+						UserProcess bp = new UserProcess();
 						JButton btn = (JButton)e.getSource();
 						
 						Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
-						bp.DeleteBookmark(bookmark, btn);
+						bp.deleteBookmark(bookmark, btn);
 					}
 				});
 				

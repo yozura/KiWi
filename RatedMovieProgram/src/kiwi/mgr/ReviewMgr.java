@@ -14,7 +14,7 @@ public class ReviewMgr {
 		return instance;
 	}
 	
-	public void load() {
+	public void reloadReview() {
 		ReviewDAO rDAO = new ReviewDAO();
 		mapReview = rDAO.selectAll();
 	}

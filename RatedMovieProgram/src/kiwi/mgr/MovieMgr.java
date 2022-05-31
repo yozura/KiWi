@@ -1,6 +1,8 @@
 package kiwi.mgr;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Vector;
 
 import kiwi.dao.MovieDAO;
 import kiwi.dao.ReviewDAO;
@@ -10,15 +12,21 @@ import kiwi.header.Pair;
 public class MovieMgr {
 	public static MovieMgr instance = new MovieMgr();
 	public HashMap<Integer, Movie> mapMovie;
+	public Vector<String> vecMovieTitles;
 	public Movie curMovie;
 	
 	public static MovieMgr getInstance() {
 		return instance;
 	}
 
-	public void load() {
+	public void reloadMovie() {
 		MovieDAO dao = new MovieDAO();
 		mapMovie = dao.selectAll();
+		vecMovieTitles = new Vector<String>();
+		for (int movieId : mapMovie.keySet()) {
+			String title = mapMovie.get(movieId).getTitle();
+			vecMovieTitles.add(title);
+		}
 	}
 	
 	public void updateCalculateFresh(int movieId) {
@@ -40,6 +48,14 @@ public class MovieMgr {
 		mDAO.updateFresh(pairFreshId);
 	}
 	
+	public BufferedImage findPosterByMovieId(int movieId) {
+		if (mapMovie.containsKey(movieId)) {
+			return mapMovie.get(movieId).getPoster();
+		}
+		
+		return null;
+	}
+	
 	public HashMap<Integer, Movie> getMapMovie() {
 		return mapMovie;
 	}
@@ -48,10 +64,40 @@ public class MovieMgr {
 		return mapMovie.size();
 	}
 	
+	public Vector<String> getVecMovieTitles() {
+		if (vecMovieTitles == null) {
+			return null;
+		}
+		
+		return vecMovieTitles;
+	}
+	
+	public String getTitleByMovieId(int movieId) {
+		if (mapMovie.containsKey(movieId)) {
+			return mapMovie.get(movieId).getTitle();
+		}
+		
+		return null;
+	}
+	
+	public Movie getMovieByTitle(String title) {
+		if (mapMovie == null) {
+			return null;
+		}
+		
+		for (int movieId : mapMovie.keySet()) {
+			if (mapMovie.get(movieId).getTitle().equals(title)) {
+				return mapMovie.get(movieId);
+			}
+		}
+		
+		return null;
+	}
+	
 	public Movie getCurMovie() {
 		return curMovie;
 	}
-	
+
 	public void setCurMovie(int movieId) {
 		if (mapMovie.containsKey(movieId)) {
 			curMovie = mapMovie.get(movieId);

@@ -48,7 +48,7 @@ public class LoginScreen extends JPanel {
 	
 	public LoginScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(new Color(18, 12, 14));
+		this.setBackground(new Color(12, 14, 18));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		
 		// Logo Image Setting

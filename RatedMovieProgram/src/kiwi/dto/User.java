@@ -11,14 +11,16 @@ public class User implements java.io.Serializable {
 	private Date birthday;
 	private String email; 
 	private String tel;
+	private Date joinDate;
 	
-	public User(String id, String password, String nickname, Date birthday, String email, String tel) {
+	public User(String id, String password, String nickname, Date birthday, String email, String tel, Date joinDate) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.birthday = birthday;
 		this.email = email;
 		this.tel = tel;
+		this.joinDate = joinDate;
 	}
 	
 	public String getId() {
@@ -57,5 +59,13 @@ public class User implements java.io.Serializable {
 	}
 	public void setTel(String tel) {
 		this.tel = tel;
+	}
+
+	public Date getJoinDate() {
+		return joinDate;
+	}
+
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
 	}
 }

@@ -41,18 +41,111 @@ public class UserDAO extends KiWiDAO  {
 		}
 	}
 	
+	public void delete(String userId) {
+		try {
+			Connection con = getConnection();
+			String sql = "delete from kiwidb.users where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("유저 삭제 성공...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Vector<User> selectAll() {
+		Vector<User> vecUser = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select * from kiwidb.users;";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				if (vecUser == null) {
+					vecUser = new Vector<User>();
+				}
+				
+				User user = new User(
+						rs.getString(1)
+						, rs.getString(2)
+						, rs.getString(3)
+						, rs.getDate(4)
+						, rs.getString(5)
+						, rs.getString(6)
+						, rs.getDate(7)
+						);
+				
+				vecUser.add(user);
+			}
+			
+			if (vecUser != null) {
+				System.out.println("유저 불러오기 성공...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return vecUser;
+	}
+	
 	public User findUser(String id, String password) {
 		User user = null;
 		try {
 			Connection con = getConnection();
-			String sql = "select nickname, birthday, email, tel from kiwidb.users where id = ? and password = md5(?)";
+			String sql = "select * from kiwidb.users where id = ? and password = md5(?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, password);
 			
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				user = new User(id, password, rs.getString(1), rs.getDate(2), rs.getString(3), rs.getString(4));
+				user = new User(id, password
+						, rs.getString(3)
+						, rs.getDate(4)
+						, rs.getString(5)
+						, rs.getString(6)
+						, rs.getDate(7));
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
+	public User findUser(String id) {
+		User user = null;
+		try {
+			Connection con = getConnection();
+			String sql = "select * from kiwidb.users where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				user = new User(
+						rs.getString(1)
+						, rs.getString(2)
+						, rs.getString(3)
+						, rs.getDate(4)
+						, rs.getString(5)
+						, rs.getString(6)
+						, rs.getDate(7)
+						);
 			}
 			
 			pstmt.close();

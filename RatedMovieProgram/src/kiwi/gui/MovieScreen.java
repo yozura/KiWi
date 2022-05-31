@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Vector;
@@ -73,7 +76,7 @@ public class MovieScreen extends JPanel {
 		} else {
 			btnAddBookmark.setIcon(new ImageIcon("res/icons/bookmark_add.png"));
 		}
-		btnAddBookmark.setFont(new Font("Arial", Font.PLAIN, 21));
+		btnAddBookmark.setFont(new Font("Arial", Font.PLAIN, 24));
 		btnAddBookmark.setBorder(BorderFactory.createEmptyBorder());
 		btnAddBookmark.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		btnAddBookmark.addActionListener(new ActionListener() {
@@ -88,6 +91,17 @@ public class MovieScreen extends JPanel {
 					mp.addBookmark(bookmark, btn);
 					btn.setIcon(new ImageIcon("res/icons/bookmark_remove.png"));
 				}
+			}
+		});
+		btnAddBookmark.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				JButton btn = (JButton)e.getSource();
+				btn.setForeground(new Color(71, 143, 250));
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				JButton btn = (JButton)e.getSource();
+				btn.setForeground(new Color(12, 14, 18));
 			}
 		});
 
@@ -117,7 +131,7 @@ public class MovieScreen extends JPanel {
 		taSummary.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		taSummary.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				int max = 300;
+				int max = 500;
 				if (taSummary.getText().length() > max + 1) {
 					e.consume();
 					String shortened = taSummary.getText().substring(0, max);
@@ -217,12 +231,12 @@ public class MovieScreen extends JPanel {
 		}
 
 		// 리뷰 작성 칸
-		JPanel pReview = new JPanel();
-		pReview.setLayout(new BoxLayout(pReview, BoxLayout.Y_AXIS));
-		pReview.setBackground(new Color(255, 250, 245));
-		pReview.setPreferredSize(new Dimension(200, 250));
-		pReview.setMaximumSize(new Dimension(200, 250));
-		pReview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
+		JPanel pAddReview = new JPanel();
+		pAddReview.setLayout(new BoxLayout(pAddReview, BoxLayout.Y_AXIS));
+		pAddReview.setBackground(new Color(255, 250, 245));
+		pAddReview.setPreferredSize(new Dimension(200, 250));
+		pAddReview.setMaximumSize(new Dimension(200, 250));
+		pAddReview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
 				"리뷰 작성", TitledBorder.RIGHT, TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
 
 		sFreshRate = new JSlider(0, 100, 50);
@@ -261,7 +275,8 @@ public class MovieScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				MovieProcess mp = new MovieProcess();
 				JButton btn = (JButton) e.getSource();
-				boolean isGood = mp.checkValidationReview(taAddContent.getText()) && mp.checkCurrentUser();
+				boolean isGood = mp.checkValidationReview(taAddContent.getText())
+								&& mp.checkCurrentUser();
 				if (isGood) {
 					Review review = new Review(0, UserMgr.getInstance().getCurUser().getId(),
 							MovieMgr.getInstance().getCurMovie().getId(), taAddContent.getText(), sFreshRate.getValue(),
@@ -270,12 +285,12 @@ public class MovieScreen extends JPanel {
 				}
 			}
 		});
-
+		
 		if (!UserMgr.getInstance().checkReviewByMovieId(movie.getId())) {
-			pReview.add(taAddContent);
-			pReview.add(sFreshRate);
-			pReview.add(btnAddReview);
-			pGridReview.add(pReview);
+			pAddReview.add(taAddContent);
+			pAddReview.add(sFreshRate);
+			pAddReview.add(btnAddReview);
+			pGridReview.add(pAddReview);
 		}
 
 		JScrollPane spBody = new JScrollPane(pGridReview, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

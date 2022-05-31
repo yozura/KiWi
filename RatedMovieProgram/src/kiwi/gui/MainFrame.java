@@ -2,7 +2,9 @@ package kiwi.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,12 +39,9 @@ public class MainFrame extends JFrame {
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_SIZE.x, FRAME_SIZE.y);
-		// 아이콘 변경
-		try {
-			this.setIconImage(ImageIO.read(new File("res/images/fresh.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		
+		Image icon = Toolkit.getDefaultToolkit().getImage("res/images/fresh.png");
+		this.setIconImage(icon);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -72,7 +71,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void load() {
-		MovieMgr.getInstance().load();
-		ReviewMgr.getInstance().load();
+		MovieMgr.getInstance().reloadMovie();
+		ReviewMgr.getInstance().reloadReview();
 	}
 }

@@ -104,8 +104,8 @@ public class ReviewDAO extends KiWiDAO {
 		return mapReviews;
 	}
 	
-	public HashMap<String, Review> selectReviewByUserId(String userId) {
-		HashMap<String, Review> mapReview = null;
+	public HashMap<Integer, Review> selectMapReviewByUserId(String userId) {
+		HashMap<Integer, Review> mapReview = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select * from kiwidb.reviews where user_id = ?";
@@ -115,15 +115,17 @@ public class ReviewDAO extends KiWiDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (mapReview == null) {
-					mapReview = new HashMap<String, Review>();
+					mapReview = new HashMap<Integer, Review>();
 				}
 				
+				int movie_id = rs.getInt(3);
+				
 				mapReview.put(
-						userId,
+						movie_id,
 						new Review(
 						rs.getInt(1)
 						, rs.getString(2)
-						, rs.getInt(3)
+						, movie_id
 						, rs.getString(4)
 						, rs.getInt(5)
 						, rs.getDate(6)
@@ -178,5 +180,44 @@ public class ReviewDAO extends KiWiDAO {
 		}
 		
 		return vecReview;
+	}
+	
+	public void delete(int reviewId) {
+		try {
+			Connection con = getConnection();
+			String sql = "delete from kiwidb.reviews where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, reviewId);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("리뷰 삭제에 성공했습니다.");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(Review review) {
+		try {
+			Connection con = getConnection();
+			String sql = "delete from kiwidb.reviews where user_id = ? and movie_id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, review.getUserId());
+			pstmt.setInt(2, review.getMovieId());
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("리뷰 삭제에 성공했습니다.");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

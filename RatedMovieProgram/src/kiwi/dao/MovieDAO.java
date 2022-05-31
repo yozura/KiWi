@@ -50,6 +50,25 @@ public class MovieDAO extends KiWiDAO {
 		}
 	}
 	
+	public void delete(int movieId) {
+		try {
+			Connection con = getConnection();
+			String sql = "delete from kiwidb.movies where id = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, movieId);
+			
+			int rt = pstmt.executeUpdate();
+			if (rt > 0) {
+				System.out.println("영화 삭제 성공...");
+			}
+			
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateFresh(Pair<Integer, Integer> pairFreshId) {
 		try {
 			Connection con = getConnection();

@@ -21,8 +21,9 @@ public class MovieProcess {
 
 		MovieMgr.getInstance().updateCalculateFresh(review.getMovieId());
 
-		ReviewMgr.getInstance().load();
-		MovieMgr.getInstance().load();
+		ReviewMgr.getInstance().reloadReview();
+		MovieMgr.getInstance().reloadMovie();
+		UserMgr.getInstance().reloadReview();
 		MovieMgr.getInstance().setCurMovie(review.getMovieId());
 		
 		ScreenMgr.getInstance().redirectWithSideBar(comp);

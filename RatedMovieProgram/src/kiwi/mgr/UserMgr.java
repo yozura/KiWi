@@ -3,6 +3,7 @@ package kiwi.mgr;
 import java.util.HashMap;
 import java.util.Vector;
 
+import kiwi.dao.ReviewDAO;
 import kiwi.dao.UserDAO;
 import kiwi.dto.Movie;
 import kiwi.dto.Review;
@@ -13,14 +14,14 @@ public class UserMgr {
 	private static UserMgr instance = new UserMgr();
 	private User curUser;
 	private HashMap<Integer, Movie> mapBookmark;
-	private HashMap<String, Review> mapReview;
+	private HashMap<Integer, Review> mapReview;
 	private USER_TYPE uType;
 	
 	public static UserMgr getInstance() {
 		return instance;
 	}
 	
-	public void enter(User user, HashMap<Integer, Movie> mapBookmark, HashMap<String, Review> mapReview, USER_TYPE uType) {
+	public void enter(User user, HashMap<Integer, Movie> mapBookmark, HashMap<Integer, Review> mapReview, USER_TYPE uType) {
 		this.curUser = user;
 		this.mapBookmark = mapBookmark;
 		this.mapReview = mapReview;
@@ -41,12 +42,26 @@ public class UserMgr {
 		}
 	}
 	
+	public void reloadUserInfo() {
+		UserDAO uDAO = new UserDAO();
+		uDAO.findUser(curUser.getId(), null);
+	}
+	
+	public void reloadReview() {
+		ReviewDAO rDAO = new ReviewDAO();
+		mapReview = rDAO.selectMapReviewByUserId(curUser.getId());
+	}
+	
 	public void reloadBookmark() {
 		UserDAO uDAO = new UserDAO();
 		mapBookmark = uDAO.selectMapBookmarkByUserId(curUser.getId());
 	}
 	
 	public boolean checkBookmarkByMovieId(int movieId) {
+		if (mapBookmark == null) {
+			return false;
+		}
+		
 		if (mapBookmark.containsKey(movieId)) {
 			return true;
 		}
@@ -75,7 +90,7 @@ public class UserMgr {
 		return curUser;
 	}
 	
-	public HashMap<String, Review> getMapReview() {
+	public HashMap<Integer, Review> getMapReview() {
 		return mapReview;
 	}
 	

@@ -26,86 +26,66 @@ import javax.swing.text.PlainDocument;
 
 import kiwi.dto.User;
 import kiwi.gui.process.SignUpProcess;
+import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.mgr.ScreenMgr;
 
 public class SignUpScreen extends JPanel {
 	private static final long serialVersionUID = -8811286744899602431L;
-	
-	private JPanel pBoxWelcome;
-	private JPanel pBoxLabel;
-	private JPanel pBoxTextField;
-	private JPanel pFlowForm;
-	
-	private JLabel lWelcome;
-	private JLabel lID;
-	private JLabel lPassword;
-	private JLabel lNickName;
-	private JLabel lBirthDay;
-	private JLabel lEmail;
-	private JLabel lTel;
-	
-	private JTextField tfID;
-	private JPasswordField pfPassword;
-	private JTextField tfNickName;
-	private JTextField tfBirthDay;
-	private JTextField tfEmail;
-	private JTextField tfTel;
-	
-	private JButton btnConfirm;
-	
+
 	public SignUpScreen() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(new Color(189, 198, 208), 1));
 		this.setBackground(new Color(12, 14, 18));
 		
-		lWelcome = new JLabel("Introduce yourself!");
+		JLabel lWelcome = new JLabel("당신의 정보를 입력해주세요.");
 		lWelcome.setForeground(new Color(189, 198, 208));
 		lWelcome.setFont(new Font("Arial", Font.PLAIN, 30));
 		lWelcome.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
-		pBoxWelcome = new JPanel();
+		JPanel pBoxWelcome = new JPanel();
 		pBoxWelcome.setLayout(new BoxLayout(pBoxWelcome, BoxLayout.Y_AXIS));
 		pBoxWelcome.setBackground(new Color(12, 14, 18));
 		pBoxWelcome.add(lWelcome);
 		
-		lID = new JLabel("아이디");
+		JLabel lID = new JLabel("아이디");
 		lID.setForeground(new Color(189, 198, 208));
 		lID.setFont(new Font("Arial", Font.PLAIN, 15));
 		lID.setToolTipText("아이디는 최소 6자 이상 20자 이내 영문, 숫자로 구성되야 합니다.");
 		lID.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lPassword = new JLabel("패스워드");
+		JLabel lPassword = new JLabel("패스워드");
 		lPassword.setForeground(new Color(189, 198, 208));
 		lPassword.setFont(new Font("Arial", Font.PLAIN, 15));
 		lPassword.setToolTipText("패스워드는 최소 6자 이상 20자 이내 하나 이상의 영문, 숫자 및 특수문자로 구성되야 합니다.");
 		lPassword.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lNickName = new JLabel("닉네임");
+		JLabel lNickName = new JLabel("닉네임");
 		lNickName.setForeground(new Color(189, 198, 208));
 		lNickName.setFont(new Font("Arial", Font.PLAIN, 15));
 		lNickName.setToolTipText("닉네임은 최소 6자 이상 20자 이내 영문, 숫자로 구성되야 합니다.");
 		lNickName.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lBirthDay = new JLabel("생년월일");
+		JLabel lBirthDay = new JLabel("생년월일");
 		lBirthDay.setForeground(new Color(189, 198, 208));
 		lBirthDay.setFont(new Font("Arial", Font.PLAIN, 15));
 		lBirthDay.setToolTipText("생년월일은 yyyy-mm-dd 형식으로 구성되야 합니다.");
 		lBirthDay.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 
-		lEmail = new JLabel("이메일");
+		JLabel lEmail = new JLabel("이메일");
 		lEmail.setForeground(new Color(189, 198, 208));
 		lEmail.setFont(new Font("Arial", Font.PLAIN, 15));
 		lEmail.setToolTipText("이메일은 abcde@kiwi.com 등의 형식으로 구성되야 합니다.");
 		lEmail.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 		
-		lTel = new JLabel("전화번호");
+		JLabel lTel = new JLabel("전화번호");
 		lTel.setForeground(new Color(189, 198, 208));
 		lTel.setFont(new Font("Arial", Font.PLAIN, 15));
 		lTel.setToolTipText("전화번호는 '-'를 포함한 형식으로 구성되야 합니다.");
 		lTel.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
 		
 		// Add Labels
-		pBoxLabel = new JPanel();
+		JPanel pBoxLabel = new JPanel();
 		pBoxLabel.setLayout(new BoxLayout(pBoxLabel, BoxLayout.Y_AXIS));
 		pBoxLabel.setBackground(new Color(18, 21, 26));
 		pBoxLabel.add(Box.createVerticalStrut(10));
@@ -122,7 +102,7 @@ public class SignUpScreen extends JPanel {
 		pBoxLabel.add(lTel);
 		pBoxLabel.add(Box.createVerticalStrut(10));
 		
-		tfID = new JTextField();
+		JTextField tfID = new JTextField();
 		tfID.setPreferredSize(new Dimension(280, 25));
 		tfID.setMaximumSize(new Dimension(280, 25));
 		tfID.setBackground(new Color(12, 14, 18));
@@ -136,7 +116,7 @@ public class SignUpScreen extends JPanel {
 			}
 		});
 		
-		pfPassword = new JPasswordField();
+		JPasswordField pfPassword = new JPasswordField();
 		// limit of letter
 		PlainDocument doc = (PlainDocument)pfPassword.getDocument();
 		doc.setDocumentFilter(new DocumentFilter() {
@@ -154,7 +134,7 @@ public class SignUpScreen extends JPanel {
 		pfPassword.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		
 
-		tfNickName = new JTextField();
+		JTextField tfNickName = new JTextField();
 		tfNickName.setPreferredSize(new Dimension(280, 25));
 		tfNickName.setMaximumSize(new Dimension(280, 25));
 		tfNickName.setBackground(new Color(12, 14, 18));
@@ -168,7 +148,7 @@ public class SignUpScreen extends JPanel {
 			}
 		});
 		
-		tfBirthDay = new JTextField();
+		JTextField tfBirthDay = new JTextField();
 		tfBirthDay.setPreferredSize(new Dimension(280, 25));
 		tfBirthDay.setMaximumSize(new Dimension(280, 25));
 		tfBirthDay.setBackground(new Color(12, 14, 18));
@@ -182,7 +162,7 @@ public class SignUpScreen extends JPanel {
 			}
 		});
 		
-		tfEmail = new JTextField();
+		JTextField tfEmail = new JTextField();
 		tfEmail.setPreferredSize(new Dimension(280, 25));
 		tfEmail.setMaximumSize(new Dimension(280, 25));
 		tfEmail.setBackground(new Color(12, 14, 18));
@@ -196,7 +176,7 @@ public class SignUpScreen extends JPanel {
 			}
 		});
 		
-		tfTel = new JTextField();
+		JTextField tfTel = new JTextField();
 		tfTel.setPreferredSize(new Dimension(280, 25));
 		tfTel.setMaximumSize(new Dimension(280, 25));
 		tfTel.setBackground(new Color(12, 14, 18));
@@ -211,7 +191,7 @@ public class SignUpScreen extends JPanel {
 		});
 		
 		// Add TextFields
-		pBoxTextField = new JPanel();
+		JPanel pBoxTextField = new JPanel();
 		pBoxTextField.setLayout(new BoxLayout(pBoxTextField, BoxLayout.Y_AXIS));
 		pBoxTextField.setBackground(new Color(18, 21, 26));
 		pBoxTextField.add(Box.createVerticalStrut(10));
@@ -229,7 +209,7 @@ public class SignUpScreen extends JPanel {
 		pBoxTextField.add(Box.createVerticalStrut(10));
 
 		// Confirm Button
-		btnConfirm = new JButton("Confirm");
+		JButton btnConfirm = new JButton("가입하기");
 		btnConfirm.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnConfirm.setPreferredSize(new Dimension(350, 40));
 		btnConfirm.setMaximumSize(new Dimension(350, 40));
@@ -249,22 +229,33 @@ public class SignUpScreen extends JPanel {
 		
 				if (isGood) {
 					Date birthDate = Date.valueOf(originBirth);			
-					User newbie = new User(id, password, nickname, birthDate, email, tel);
+					User newbie = new User(id, password, nickname, birthDate, email, tel, null);
 					sup.createAccount(newbie, btnConfirm);
 				}
 			}
 		});
 		
+		JButton btnLogin = new JButton("뒤로가기");
+		btnLogin.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnLogin.setPreferredSize(new Dimension(350, 40));
+		btnLogin.setMaximumSize(new Dimension(350, 40));
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScreenMgr.getInstance().changeCurScreen(SCREEN_TYPE.LOG_IN, btnLogin);
+			}
+		});
+		
 		// Merge Boxes
-		pFlowForm = new JPanel();
+		JPanel pFlowForm = new JPanel();
 		pFlowForm.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
-		pFlowForm.setPreferredSize(new Dimension(420, 250));
-		pFlowForm.setMaximumSize(new Dimension(420, 250));
+		pFlowForm.setPreferredSize(new Dimension(420, 280));
+		pFlowForm.setMaximumSize(new Dimension(420, 280));
 		pFlowForm.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		pFlowForm.setBackground(new Color(18, 21, 26));
 		pFlowForm.add(pBoxLabel);
 		pFlowForm.add(pBoxTextField);
 		pFlowForm.add(btnConfirm);
+		pFlowForm.add(btnLogin);
 		
 		this.add(Box.createVerticalGlue());
 		this.add(pBoxWelcome);

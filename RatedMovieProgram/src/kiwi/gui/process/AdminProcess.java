@@ -1,23 +1,74 @@
 package kiwi.gui.process;
 
 import java.io.File;
+import java.util.Vector;
 import java.util.regex.Pattern;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import kiwi.dao.MovieDAO;
+import kiwi.dao.ReviewDAO;
+import kiwi.dao.UserDAO;
 import kiwi.dto.Movie;
+import kiwi.dto.User;
 import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ReviewMgr;
 import kiwi.mgr.ScreenMgr;
+import kiwi.mgr.UserMgr;
 
 public class AdminProcess {
 	 public void addMovie(Movie movie, JComponent comp) {
 		 MovieDAO mDAO = new MovieDAO();
 		 mDAO.insert(movie);
 		 
-		 MovieMgr.getInstance().load();
+		 MovieMgr.getInstance().reloadMovie();
 		 ScreenMgr.getInstance().redirectWithSideBar(comp);
+	 }
+	 
+	 public void deleteMovie(String title, JComponent comp) {
+		 Movie movie = MovieMgr.getInstance().getMovieByTitle(title);
+		 if (movie == null) {
+			 JOptionPane.showMessageDialog(null, String.format("'%s' 영화를 찾지 못했습니다. 다시 시도해주세요.", title));
+			 return;
+		 }
+		 
+		 MovieDAO mDAO = new MovieDAO();
+		 mDAO.delete(movie.getId());
+		 
+		 MovieMgr.getInstance().reloadMovie();
+		 UserMgr.getInstance().reloadBookmark();
+		 ReviewMgr.getInstance().reloadReview();
+		 ScreenMgr.getInstance().redirectWithSideBar(comp);
+	 }
+	 
+	 public void deleteReview(int reviewId, JComponent comp) {
+		 ReviewDAO rDAO = new ReviewDAO();
+		 rDAO.delete(reviewId);
+		 
+		 MovieMgr.getInstance().reloadMovie();
+		 UserMgr.getInstance().reloadBookmark();
+		 ReviewMgr.getInstance().reloadReview();
+		 ScreenMgr.getInstance().redirectWithSideBar(comp);
+	 }
+	 
+	 public void deleteUser(String userId, JComponent comp) {
+		 UserDAO uDAO = new UserDAO();
+		 uDAO.delete(userId);
+		 
+		 MovieMgr.getInstance().reloadMovie();
+		 UserMgr.getInstance().reloadBookmark();
+		 ReviewMgr.getInstance().reloadReview();
+		 ScreenMgr.getInstance().redirectWithSideBar(comp);
+	 }
+	 
+	 public Vector<User> findAllUser() {
+		 Vector<User> vecUser = null;
+		 
+		 UserDAO uDAO = new UserDAO();
+		 vecUser = uDAO.selectAll();
+		  
+		 return vecUser;
 	 }
 	 
 	 public boolean checkExistByTitle(String title) {

@@ -33,7 +33,7 @@ public class LoginProcess {
 		}
 		
 		HashMap<Integer, Movie> mapBookmark = uDAO.selectMapBookmarkByUserId(id);
-		HashMap<String, Review> mapReview = rDAO.selectReviewByUserId(id);
+		HashMap<Integer, Review> mapReview = rDAO.selectMapReviewByUserId(id);
 		UserMgr.getInstance().enter(user, mapBookmark, mapReview, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);
 		ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, comp);
 	}

@@ -3,7 +3,6 @@ package kiwi.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,15 +23,16 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 import kiwi.dto.Bookmark;
 import kiwi.dto.Movie;
+import kiwi.dto.Review;
 import kiwi.dto.User;
-import kiwi.gui.process.BookmarkProcess;
+import kiwi.gui.process.UserProcess;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ResourceMgr;
@@ -45,7 +45,7 @@ public class UserScreen extends JPanel {
 	private JComboBox<String> cbSelect;
 	private String actions[] = { "없음", "내 정보", "내가 추가한 북마크", "내가 작성한 리뷰" };
 	
-	private JPanel pFlowForm;
+	private JPanel pBoxForm;
 	private JLabel lGuide;
 	
 	public UserScreen() {
@@ -62,39 +62,38 @@ public class UserScreen extends JPanel {
 		cbSelect.setAlignmentY(JComponent.TOP_ALIGNMENT);
 		cbSelect.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				pFlowForm.setVisible(false);
-				
+				pBoxForm.setVisible(false);
 				switch (e.getItem().toString()) {
 				case "없음":
 					lGuide.setText("원하는 행동을 선택해주세요.");
-					pFlowForm.removeAll();
+					pBoxForm.removeAll();
 					
-					pFlowForm.setVisible(false);
+					pBoxForm.setVisible(false);
 					break;
 				case "내 정보":
 					lGuide.setText("내 정보");
-					pFlowForm.removeAll();
+					pBoxForm.removeAll();
 					
 					User user = UserMgr.getInstance().getCurUser();
-					pFlowForm.add(getUserInfoBody(user));
+					pBoxForm.add(getUserInfoBody(user));
 					
-					pFlowForm.setVisible(true);
+					pBoxForm.setVisible(true);
 					break;
 				case "내가 추가한 북마크":
 					lGuide.setText("내 북마크");
-					pFlowForm.removeAll();
+					pBoxForm.removeAll();
 					
-					pFlowForm.add(getBookmarkBody());
+					pBoxForm.add(getBookmarkBody());
 					
-					pFlowForm.setVisible(true);
+					pBoxForm.setVisible(true);
 					break;
 				case "내가 작성한 리뷰":
 					lGuide.setText("내가 작성한 리뷰");
-					pFlowForm.removeAll();
+					pBoxForm.removeAll();
 					
-					pFlowForm.add(getReviewBody());
+					pBoxForm.add(getReviewBody());
 					
-					pFlowForm.setVisible(true);
+					pBoxForm.setVisible(true);
 					break;
 				}
 			}
@@ -107,17 +106,17 @@ public class UserScreen extends JPanel {
 		lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		// Merge Boxes
-		pFlowForm = new JPanel();
-		pFlowForm.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
-		pFlowForm.setBackground(new Color(12, 14, 18));
-		pFlowForm.setVisible(false);
+		pBoxForm = new JPanel();
+		pBoxForm.setLayout(new BoxLayout(pBoxForm, BoxLayout.Y_AXIS));
+		pBoxForm.setBackground(new Color(12, 14, 18));
+		pBoxForm.setVisible(false);
 				
 		this.add(cbSelect);
 		this.add(Box.createVerticalStrut(10));
 		this.add(Box.createVerticalGlue());
 		this.add(lGuide);
 		this.add(Box.createVerticalStrut(10));
-		this.add(pFlowForm);
+		this.add(pBoxForm);
 		this.add(Box.createVerticalGlue());
 	}
 	
@@ -127,10 +126,13 @@ public class UserScreen extends JPanel {
 				{ "닉네임", user.getNickname() },
 				{ "생년월일", user.getBirthDate().toString() },
 				{ "이메일", user.getEmail() },
-				{ "전화번호", user.getTel() }
+				{ "전화번호", user.getTel() },
+				{ "가입날짜", user.getJoinDate().toString() }
 		};
 		
 		JTable tblUser = new JTable(contents, new String[] { "분류", "정보" }) {
+			private static final long serialVersionUID = -8388655661937624130L;
+
 			public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int columnIndex) {
 				if (columnIndex == 1) {
 					setFont(new Font("Arial", Font.PLAIN, 13));
@@ -149,8 +151,8 @@ public class UserScreen extends JPanel {
 		
 		JScrollPane spUser = new JScrollPane(tblUser);
 		spUser.setBackground(new Color(12, 14, 18));
-		spUser.setPreferredSize(new Dimension(400, 85));
-		spUser.setMaximumSize(new Dimension(400, 85));
+		spUser.setPreferredSize(new Dimension(400, 100));
+		spUser.setMaximumSize(new Dimension(400, 100));
 		spUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		JButton btnChangePassword = new JButton("비밀번호 변경하기");
@@ -209,19 +211,19 @@ public class UserScreen extends JPanel {
 				pMovie.setPreferredSize(new Dimension(210, 397));
 				pMovie.setMaximumSize(new Dimension(210, 397));
 				
-				BufferedImage iconChangedLogo = null;
+				BufferedImage posterImg = null;
 				try {
-					iconChangedLogo = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
+					posterImg = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				
-				JButton lPoster = new JButton();
-				lPoster.setName(String.valueOf(movie.getId()));
-				lPoster.setIcon(new ImageIcon(iconChangedLogo));
-				lPoster.setBorder(BorderFactory.createEmptyBorder());
-				lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-				lPoster.addActionListener(new ActionListener() {
+				JButton btnPoster = new JButton();
+				btnPoster.setName(String.valueOf(movie.getId()));
+				btnPoster.setIcon(new ImageIcon(posterImg));
+				btnPoster.setBorder(BorderFactory.createEmptyBorder());
+				btnPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				btnPoster.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// 무비 스크린으로 이동
 						JButton btn = (JButton)e.getSource();
@@ -243,20 +245,20 @@ public class UserScreen extends JPanel {
 				
 				JButton btnCancelBookmark = new JButton("북마크 해제");
 				btnCancelBookmark.setName(String.valueOf(movie.getId()));
-				btnCancelBookmark.setPreferredSize(new Dimension(210, 25));
-				btnCancelBookmark.setMaximumSize(new Dimension(210, 25));
+				btnCancelBookmark.setPreferredSize(new Dimension(220, 25));
+				btnCancelBookmark.setMaximumSize(new Dimension(220, 25));
 				btnCancelBookmark.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnCancelBookmark.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						BookmarkProcess bp = new BookmarkProcess();
+						UserProcess up = new UserProcess();
 						JButton btn = (JButton)e.getSource();
 						
 						Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
-						bp.DeleteBookmark(bookmark, btn);
+						up.deleteBookmark(bookmark, btn);
 					}
 				});
 				
-				pMovie.add(lPoster);
+				pMovie.add(btnPoster);
 				pMovie.add(lTitle);
 				pMovie.add(lGrade);
 				pMovie.add(btnCancelBookmark);
@@ -268,18 +270,21 @@ public class UserScreen extends JPanel {
 			lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 			lGuide.setHorizontalAlignment(SwingConstants.CENTER);
 			lGuide.setForeground(new Color(189, 198, 208));
+			lGuide.setForeground(new Color(12, 14, 18));
+			lGuide.setBackground(Color.ORANGE);
+			lGuide.setOpaque(true);
 			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
 		}
 		
-		JScrollPane scPane = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scPane.setBackground(new Color(12, 14, 18));
-		scPane.setBorder(BorderFactory.createEmptyBorder());
+		JScrollPane scReview = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scReview.setBackground(new Color(12, 14, 18));
+		scReview.setBorder(BorderFactory.createEmptyBorder());
 		
 		JPanel pBoxPane = new JPanel();
 		pBoxPane.setLayout(new BoxLayout(pBoxPane, BoxLayout.X_AXIS));
 		pBoxPane.setBackground(new Color(12, 14, 18));
 		pBoxPane.add(Box.createHorizontalGlue());
-		if (UserMgr.getInstance().getMapBookmark() != null) pBoxPane.add(scPane);
+		if (mapBookmark != null) pBoxPane.add(scReview);
 		else pBoxPane.add(lGuide);
 		pBoxPane.add(Box.createHorizontalGlue());
 
@@ -292,8 +297,126 @@ public class UserScreen extends JPanel {
 	}
 	
 	public JPanel getReviewBody() {
+		// 전체 패널 밑에 리뷰 패널 밑에 포스터 옆에 - 타이틀 / 리뷰 콘텐츠 패널
+		JPanel pBoxReview = new JPanel();
+		pBoxReview.setLayout(new BoxLayout(pBoxReview, BoxLayout.Y_AXIS));
+		pBoxReview.setBackground(new Color(12, 14, 18));
+		
+		JLabel lGuide = null;
+		
+		// 리뷰 불러오기
+		HashMap<Integer, Review> mapReview = UserMgr.getInstance().getMapReview();
+		if (mapReview != null) {
+			for (int movieId : mapReview.keySet()) {
+				Review review = mapReview.get(movieId);
+				Movie movie = MovieMgr.getInstance().getMapMovie().get(review.getMovieId());
+				
+				// 리뷰 칸 전체 패널 
+				JPanel pReview = new JPanel();
+				pReview.setLayout(new BoxLayout(pReview, BoxLayout.X_AXIS));
+				pReview.setBackground(new Color(189, 198, 208));
+				pReview.setPreferredSize(new Dimension(640, 297));
+				pReview.setMaximumSize(new Dimension(640, 297));
+
+				BufferedImage posterImg = null;
+				try {
+					posterImg = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				JButton btnPoster = new JButton();
+				btnPoster.setName(String.valueOf(movie.getId()));
+				btnPoster.setIcon(new ImageIcon(posterImg));
+				btnPoster.setBorder(BorderFactory.createEmptyBorder());
+				btnPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				btnPoster.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// 무비 스크린으로 이동
+						JButton btn = (JButton)e.getSource();
+						
+						MovieMgr.getInstance().setCurMovie(Integer.parseInt(btn.getName()));
+						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
+					}				
+				});
+				JButton btnDeleteReview = new JButton(movie.getTitle());
+				btnDeleteReview.setFont(new Font("Arial", Font.BOLD, 24));
+				btnDeleteReview.setIcon(new ImageIcon("res/icons/delete.png"));
+				btnDeleteReview.setBorder(BorderFactory.createEmptyBorder());
+				btnDeleteReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				btnDeleteReview.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// TODO :: 리뷰 삭제.
+						UserProcess up = new UserProcess();
+						JButton btn = (JButton)e.getSource();
+						
+						up.deleteReview(review, btn);
+					}
+				});
+				
+				JLabel lFreshRate = new JLabel("- " + String.valueOf(review.getFreshRate()) + "%");
+				lFreshRate.setFont(new Font("Arial", Font.ITALIC, 24));
+				lFreshRate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				
+				JTextArea taContent = new JTextArea();
+				taContent.setPreferredSize(new Dimension(300, 200));
+				taContent.setMaximumSize(new Dimension(300, 200));
+				taContent.setBackground(new Color(189, 198, 208));
+				taContent.setText(String.format("%s - %s, %s일에 작성됨.", review.getContent(), review.getUserId(), review.getReviewDate().toString()));
+				taContent.setEditable(false);
+				taContent.setLineWrap(true);
+				taContent.setWrapStyleWord(true);
+				taContent.setFont(new Font("Arial", Font.PLAIN, 15));
+				taContent.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				
+				JPanel pBoxHeader = new JPanel();
+				pBoxHeader.setLayout(new BoxLayout(pBoxHeader, BoxLayout.X_AXIS));
+				pBoxHeader.setBackground(new Color(189, 198, 208));
+				pBoxHeader.add(btnDeleteReview);
+				pBoxHeader.add(Box.createHorizontalStrut(10));
+				pBoxHeader.add(lFreshRate);
+				
+				JPanel pBoxContents = new JPanel();
+				pBoxContents.setLayout(new BoxLayout(pBoxContents, BoxLayout.Y_AXIS));
+				pBoxContents.setBackground(new Color(189, 198, 208));
+				pBoxContents.add(pBoxHeader);
+				pBoxContents.add(taContent);
+
+				pReview.add(btnPoster);
+				pReview.add(Box.createHorizontalStrut(10));
+				pReview.add(pBoxContents);
+				
+				pBoxReview.add(pReview);
+				pBoxReview.add(Box.createVerticalStrut(10));
+			}
+		} else {
+			lGuide = new JLabel("당신의 리뷰 목록이 비어있습니다.");
+			lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+			lGuide.setHorizontalAlignment(SwingConstants.CENTER);
+			lGuide.setForeground(new Color(12, 14, 18));
+			lGuide.setBackground(Color.ORANGE);
+			lGuide.setOpaque(true);
+			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+		}
+	
+		JScrollPane spReview = new JScrollPane(pBoxReview, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		spReview.setBorder(BorderFactory.createEmptyBorder());
 		
 		
-		return null;
+		JPanel pBoxGrid = new JPanel();
+		pBoxGrid.setLayout(new BoxLayout(pBoxGrid, BoxLayout.X_AXIS));
+		pBoxGrid.setBackground(new Color(12, 14, 18));
+		pBoxGrid.add(Box.createHorizontalGlue());
+		if (mapReview != null) pBoxGrid.add(spReview);
+		else pBoxGrid.add(lGuide);
+		pBoxGrid.add(Box.createHorizontalGlue());
+		
+		JPanel pBoxBody = new JPanel();
+		pBoxBody.setLayout(new BoxLayout(pBoxBody, BoxLayout.Y_AXIS));
+		pBoxBody.setBackground(new Color(12, 14, 18));
+		pBoxBody.add(pBoxGrid);
+		
+		return pBoxBody;
 	}
 }

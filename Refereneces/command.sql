@@ -90,4 +90,25 @@ select * from reviews;
 
 select * from reviews where user_id = 'korean123';
 
-truncate table kiwidb.reviews;
+select * from kiwidb.reviews;
+
+delete from kiwidb.review;
+
+SELECT 
+  ORDINAL_POSITION '필드 순번',
+  COLUMN_NAME '필드 이름',
+  DATA_TYPE '데이터 타입',
+  COLUMN_KEY 'KEY',
+  IS_NULLABLE '널값 여부',
+  COLUMN_DEFAULT '기본값',
+  COLUMN_COMMENT '필드 설명',
+  EXTRA '특이사항'
+FROM 
+  `information_schema`.COLUMNS 
+
+WHERE
+  TABLE_SCHEMA = 'kiwidb'
+  AND TABLE_NAME = 'reviews'
+
+ORDER BY
+  ORDINAL_POSITION 

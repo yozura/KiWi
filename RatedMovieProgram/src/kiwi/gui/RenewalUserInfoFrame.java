@@ -212,7 +212,7 @@ public class RenewalUserInfoFrame extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// TODO :: 닉네임 입력 시 유효성 검사 + 업데이트하기
 					RenewalUserInfoProcess ruip = new RenewalUserInfoProcess();
-					boolean isGood = ruip.checkValidationNickname(tfTel.getText());
+					boolean isGood = ruip.checkValidationTel(tfTel.getText());
 					if (isGood) {
 						ruip.changeTel(tfTel.getText());
 					}
