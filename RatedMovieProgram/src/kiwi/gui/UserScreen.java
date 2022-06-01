@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 
 import kiwi.dto.Bookmark;
@@ -189,7 +191,6 @@ public class UserScreen extends JPanel {
 	}
 	
 	public JPanel getBookmarkBody() {
-		
 		JPanel pBoxBookmark = new JPanel();
 		pBoxBookmark.setLayout(new BoxLayout(pBoxBookmark, BoxLayout.Y_AXIS));
 		pBoxBookmark.setBackground(new Color(12, 14, 18));
@@ -302,9 +303,11 @@ public class UserScreen extends JPanel {
 	
 	public JPanel getReviewBody() {
 		// 전체 패널 밑에 리뷰 패널 밑에 포스터 옆에 - 타이틀 / 리뷰 콘텐츠 패널
-		JPanel pBoxReview = new JPanel();
-		pBoxReview.setLayout(new BoxLayout(pBoxReview, BoxLayout.Y_AXIS));
-		pBoxReview.setBackground(new Color(12, 14, 18));
+//		JPanel pBoxReview = new JPanel();
+//		pBoxReview.setLayout(new BoxLayout(pBoxReview, BoxLayout.Y_AXIS));
+//		pBoxReview.setBackground(new Color(12, 14, 18));
+		JPanel pGridReview = new JPanel(new GridLayout(0, 2, 10, 10));
+		pGridReview.setBackground(new Color(12, 14, 18));
 		
 		JLabel lGuide = null;
 		
@@ -318,10 +321,8 @@ public class UserScreen extends JPanel {
 				// 리뷰 칸 전체 패널 
 				JPanel pReview = new JPanel();
 				pReview.setLayout(new BoxLayout(pReview, BoxLayout.X_AXIS));
-				pReview.setBackground(new Color(189, 198, 208));
-				pReview.setPreferredSize(new Dimension(640, 297));
-				pReview.setMaximumSize(new Dimension(640, 297));
-
+				pReview.setBackground(new Color(12, 14, 18));
+				
 				BufferedImage posterImg = null;
 				try {
 					posterImg = ResourceMgr.getInstance().resizeImage(movie.getPoster(), 210, 297);
@@ -360,33 +361,38 @@ public class UserScreen extends JPanel {
 					}
 				});
 				
-				JLabel lTitle = new JLabel(movie.getTitle());
-				lTitle.setFont(new Font("Arial", Font.BOLD, 21));
+				JLabel lTitle = new JLabel(String.format("%s", movie.getTitle()));
+				lTitle.setFont(new Font("Arial", Font.BOLD, 18));
 				lTitle.setBorder(BorderFactory.createEmptyBorder());
 				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JTextArea taContent = new JTextArea();
 				taContent.setPreferredSize(new Dimension(300, 200));
 				taContent.setMaximumSize(new Dimension(300, 200));
-				taContent.setBackground(new Color(189, 198, 208));
-				taContent.setText(String.format("%s - %s. %s.", review.getContent()
+				taContent.setBackground(new Color(255, 250, 250));
+				taContent.setText(String.format("%s - [%s%%] %s.", review.getContent()
 						, review.getFreshRate(),  review.getReviewDate().toString()));
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
 				taContent.setWrapStyleWord(true);
-				taContent.setFont(new Font("Arial", Font.PLAIN, 15));
+				taContent.setFont(new Font("Arial", Font.PLAIN, 13));
 				taContent.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JPanel pBoxHeader = new JPanel();
 				pBoxHeader.setLayout(new BoxLayout(pBoxHeader, BoxLayout.X_AXIS));
-				pBoxHeader.setBackground(new Color(189, 198, 208));
+				pBoxHeader.setBackground(new Color(255, 250, 250));
 				pBoxHeader.add(btnDeleteReview);
-				pBoxHeader.add(Box.createHorizontalStrut(5));
+				pBoxHeader.add(Box.createHorizontalStrut(10));
 				pBoxHeader.add(lTitle);
 				
 				JPanel pBoxContents = new JPanel();
 				pBoxContents.setLayout(new BoxLayout(pBoxContents, BoxLayout.Y_AXIS));
-				pBoxContents.setBackground(new Color(189, 198, 208));
+				pBoxContents.setPreferredSize(new Dimension(300, 297));
+				pBoxContents.setMaximumSize(new Dimension(300, 297));
+				pBoxContents.setBackground(new Color(255, 250, 250));
+				pBoxContents.setBorder(BorderFactory.createTitledBorder(
+						BorderFactory.createEtchedBorder(EtchedBorder.RAISED), "리뷰",
+						TitledBorder.RIGHT, TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
 				pBoxContents.add(pBoxHeader);
 				pBoxContents.add(taContent);
 
@@ -394,8 +400,8 @@ public class UserScreen extends JPanel {
 				pReview.add(Box.createHorizontalStrut(10));
 				pReview.add(pBoxContents);
 				
-				pBoxReview.add(pReview);
-				pBoxReview.add(Box.createVerticalStrut(10));
+				pGridReview.add(pReview);
+				//pGridReview.add(Box.createVerticalStrut(10));
 			}
 		} else {
 			lGuide = new JLabel("당신의 리뷰 목록이 비어있습니다.");
@@ -407,7 +413,7 @@ public class UserScreen extends JPanel {
 			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
 		}
 	
-		JScrollPane spReview = new JScrollPane(pBoxReview, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane spReview = new JScrollPane(pGridReview, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		spReview.setBorder(BorderFactory.createEmptyBorder());
 		

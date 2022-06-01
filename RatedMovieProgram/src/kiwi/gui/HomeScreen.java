@@ -63,6 +63,8 @@ public class HomeScreen extends JPanel {
 			
 			// 영화 타이틀 입력시 이동
 			public void keyPressed(KeyEvent e) {
+				pBoxSearch.removeAll();
+				pBoxSearch.setVisible(false);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					HomeProcess hp = new HomeProcess();
 					JTextField tf = (JTextField)e.getSource();
