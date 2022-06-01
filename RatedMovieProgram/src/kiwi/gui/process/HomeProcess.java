@@ -1,14 +1,14 @@
 package kiwi.gui.process;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import kiwi.dto.Movie;
-import kiwi.header.Pair;
 import kiwi.header.Define.SCREEN_TYPE;
+import kiwi.header.Pair;
 import kiwi.mgr.MovieMgr;
 import kiwi.mgr.ScreenMgr;
 
@@ -16,7 +16,7 @@ public class HomeProcess {
 	// 영화 검색
 	public Vector<Pair<String, Integer>> searchMovie(String src) {
 		Vector<Pair<String, Integer>> similarTitles = null;
-		HashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
+		LinkedHashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
 		for (int movieId : mapMovie.keySet()) {
 			String title = mapMovie.get(movieId).getTitle();
 			if (title.contains(src)) {

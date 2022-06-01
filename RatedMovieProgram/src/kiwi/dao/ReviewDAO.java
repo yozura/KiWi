@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import kiwi.dto.Review;
@@ -61,8 +61,8 @@ public class ReviewDAO extends KiWiDAO {
 	}
 	
 	
-	public HashMap<Integer, Vector<Review>> selectAll() {
-		HashMap<Integer, Vector<Review>> mapReviews = null;
+	public LinkedHashMap<Integer, Vector<Review>> selectAll() {
+		LinkedHashMap<Integer, Vector<Review>> mapReviews = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select * from kiwidb.reviews";
@@ -70,7 +70,7 @@ public class ReviewDAO extends KiWiDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (mapReviews == null) {
-					mapReviews = new HashMap<Integer, Vector<Review>>();
+					mapReviews = new LinkedHashMap<Integer, Vector<Review>>();
 				}
 				
 				Review review = new Review(
@@ -104,8 +104,8 @@ public class ReviewDAO extends KiWiDAO {
 		return mapReviews;
 	}
 	
-	public HashMap<Integer, Review> selectMapReviewByUserId(String userId) {
-		HashMap<Integer, Review> mapReview = null;
+	public LinkedHashMap<Integer, Review> selectMapReviewByUserId(String userId) {
+		LinkedHashMap<Integer, Review> mapReview = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select * from kiwidb.reviews where user_id = ?";
@@ -115,7 +115,7 @@ public class ReviewDAO extends KiWiDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (mapReview == null) {
-					mapReview = new HashMap<Integer, Review>();
+					mapReview = new LinkedHashMap<Integer, Review>();
 				}
 				
 				int movie_id = rs.getInt(3);

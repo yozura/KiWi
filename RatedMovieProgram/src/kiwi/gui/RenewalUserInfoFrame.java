@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import kiwi.gui.process.RenewalUserInfoProcess;
-import kiwi.mgr.ScreenMgr;
 
 public class RenewalUserInfoFrame extends JFrame {
 	private static final long serialVersionUID = 2588496365029541095L;

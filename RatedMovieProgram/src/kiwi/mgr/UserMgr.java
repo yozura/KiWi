@@ -1,6 +1,6 @@
 package kiwi.mgr;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import kiwi.dao.ReviewDAO;
 import kiwi.dao.UserDAO;
@@ -12,15 +12,15 @@ import kiwi.header.Define.USER_TYPE;
 public class UserMgr {
 	private static UserMgr instance = new UserMgr();
 	private User curUser;
-	private HashMap<Integer, Movie> mapBookmark;
-	private HashMap<Integer, Review> mapReview;
+	private LinkedHashMap<Integer, Movie> mapBookmark;
+	private LinkedHashMap<Integer, Review> mapReview;
 	private USER_TYPE uType;
 	
 	public static UserMgr getInstance() {
 		return instance;
 	}
 	
-	public void enter(User user, HashMap<Integer, Movie> mapBookmark, HashMap<Integer, Review> mapReview, USER_TYPE uType) {
+	public void enter(User user, LinkedHashMap<Integer, Movie> mapBookmark, LinkedHashMap<Integer, Review> mapReview, USER_TYPE uType) {
 		this.curUser = user;
 		this.mapBookmark = mapBookmark;
 		this.mapReview = mapReview;
@@ -95,11 +95,11 @@ public class UserMgr {
 		return curUser;
 	}
 	
-	public HashMap<Integer, Review> getMapReview() {
+	public LinkedHashMap<Integer, Review> getMapReview() {
 		return mapReview;
 	}
 	
-	public HashMap<Integer, Movie> getMapBookmark() {
+	public LinkedHashMap<Integer, Movie> getMapBookmark() {
 		return mapBookmark;
 	}
 }

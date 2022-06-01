@@ -1,7 +1,7 @@
 package kiwi.mgr;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import kiwi.dao.MovieDAO;
@@ -11,7 +11,7 @@ import kiwi.header.Pair;
 
 public class MovieMgr {
 	public static MovieMgr instance = new MovieMgr();
-	public HashMap<Integer, Movie> mapMovie;
+	public LinkedHashMap<Integer, Movie> mapMovie;
 	public Vector<String> vecMovieTitles;
 	public Movie curMovie;
 	
@@ -60,7 +60,7 @@ public class MovieMgr {
 		return null;
 	}
 	
-	public HashMap<Integer, Movie> getMapMovie() {
+	public LinkedHashMap<Integer, Movie> getMapMovie() {
 		return mapMovie;
 	}
 	

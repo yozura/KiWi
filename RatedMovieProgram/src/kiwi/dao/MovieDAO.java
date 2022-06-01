@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.imageio.ImageIO;
 
@@ -131,16 +131,16 @@ public class MovieDAO extends KiWiDAO {
 		return exists;
 	}
 	
-	public HashMap<Integer, Movie> selectAll() {
-		HashMap<Integer, Movie> mapMovie = null;
+	public LinkedHashMap<Integer, Movie> selectAll() {
+		LinkedHashMap<Integer, Movie> mapMovie = null;
 		try {
 			Connection con = getConnection();
-			String sql = "select * from kiwidb.movies";
+			String sql = "select * from kiwidb.movies order by title";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (mapMovie == null) {
-					mapMovie = new HashMap<Integer, Movie>();
+					mapMovie = new LinkedHashMap<Integer, Movie>();
 				}
 				try {
 					int movie_id = rs.getInt(1);

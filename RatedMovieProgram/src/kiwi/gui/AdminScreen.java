@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -153,8 +153,12 @@ public class AdminScreen extends JPanel {
 		
 		Vector<String> vecHeaders = new Vector<String>();
 		Vector<Vector<String>> vecContents = new Vector<Vector<String>>();
-	
 		for (User user : vecUser) {
+			// 어드민은 보여주지 않는다.
+			if (user.getId().equals("administrator")) {
+				continue;
+			}
+			
 			Vector<String> content = new Vector<String>();
 			content.add(user.getId());
 			content.add(user.getNickname());
@@ -192,6 +196,8 @@ public class AdminScreen extends JPanel {
 		
 		JScrollPane spUser = new JScrollPane(tblUser);
 		spUser.setBackground(new Color(12, 14, 18));
+		spUser.setPreferredSize(new Dimension(800, 500));
+		spUser.setMaximumSize(new Dimension(800, 500));
 		spUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		JButton btnDeleteReview = new JButton("선택한 유저 삭제하기");
@@ -225,7 +231,7 @@ public class AdminScreen extends JPanel {
 		pBoxReview.setBackground(new Color(12, 14, 18));
 		pBoxReview.setVisible(false);
 
-		HashMap<Integer, Vector<Review>> mapReview = ReviewMgr.getInstance().getMapReview();
+		LinkedHashMap<Integer, Vector<Review>> mapReview = ReviewMgr.getInstance().getMapReview();
 		if (mapReview == null) {
 			return pBoxReview;
 		}
@@ -269,6 +275,8 @@ public class AdminScreen extends JPanel {
 
 		JScrollPane spUser = new JScrollPane(tblUser);
 		spUser.setBackground(new Color(12, 14, 18));
+		spUser.setPreferredSize(new Dimension(800, 500));
+		spUser.setMaximumSize(new Dimension(800, 500));
 		spUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JButton btnDeleteReview = new JButton("선택한 리뷰 삭제하기");

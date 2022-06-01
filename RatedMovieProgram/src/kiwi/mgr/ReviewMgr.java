@@ -1,6 +1,6 @@
 package kiwi.mgr;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import kiwi.dao.ReviewDAO;
@@ -8,7 +8,7 @@ import kiwi.dto.Review;
 
 public class ReviewMgr {
 	private static ReviewMgr instance = new ReviewMgr();
-	private HashMap<Integer, Vector<Review>> mapReview;
+	private LinkedHashMap<Integer, Vector<Review>> mapReview;
 	
 	public static ReviewMgr getInstance() {
 		return instance;
@@ -29,7 +29,7 @@ public class ReviewMgr {
 		return mapReview.get(movieId);
 	}
 	
-	public HashMap<Integer, Vector<Review>> getMapReview() {
+	public LinkedHashMap<Integer, Vector<Review>> getMapReview() {
 		return mapReview;
 	}
 }

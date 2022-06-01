@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -184,8 +184,8 @@ public class UserDAO extends KiWiDAO  {
 		return user;
 	}
 	
-	public HashMap<Integer, Movie> selectMapBookmarkByUserId(String id) {
-		HashMap<Integer, Movie> mapBookmark = null;
+	public LinkedHashMap<Integer, Movie> selectMapBookmarkByUserId(String id) {
+		LinkedHashMap<Integer, Movie> mapBookmark = null;
 		try {
 			Connection con = getConnection();
 			String sql = "select m.* from movies as m"
@@ -197,7 +197,7 @@ public class UserDAO extends KiWiDAO  {
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				if (mapBookmark == null) {
-					mapBookmark = new HashMap<Integer, Movie>();
+					mapBookmark = new LinkedHashMap<Integer, Movie>();
 				}
 				try {
 					int movie_id = rs.getInt(1);

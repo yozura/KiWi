@@ -9,11 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -202,7 +201,7 @@ public class UserScreen extends JPanel {
 		
 		JLabel lGuide = null;
 		
-		HashMap<Integer, Movie> mapBookmark = UserMgr.getInstance().getMapBookmark();
+		LinkedHashMap<Integer, Movie> mapBookmark = UserMgr.getInstance().getMapBookmark();
 		if (mapBookmark != null) {
 			for (int movieId : mapBookmark.keySet()) {
 				Movie movie = mapBookmark.get(movieId);
@@ -252,11 +251,15 @@ public class UserScreen extends JPanel {
 				btnCancelBookmark.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnCancelBookmark.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						UserProcess up = new UserProcess();
-						JButton btn = (JButton)e.getSource();
+						int rt = JOptionPane.showConfirmDialog(null, String.format("'%s' 영화를 북마크에서 취소하시겠습니까?", movie.getTitle())
+								, "북마크 삭제 메시지", JOptionPane.YES_NO_OPTION);
 						
-						Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
-						up.deleteBookmark(bookmark, btn);
+						if (rt == JOptionPane.YES_OPTION) {
+							UserProcess up = new UserProcess();
+							JButton btn = (JButton)e.getSource();
+							Bookmark bookmark = new Bookmark(UserMgr.getInstance().getCurUser().getId(), movie.getId());
+							up.deleteBookmark(bookmark, btn);
+						}
 					}
 				});
 				
@@ -306,7 +309,7 @@ public class UserScreen extends JPanel {
 		JLabel lGuide = null;
 		
 		// 리뷰 불러오기
-		HashMap<Integer, Review> mapReview = UserMgr.getInstance().getMapReview();
+		LinkedHashMap<Integer, Review> mapReview = UserMgr.getInstance().getMapReview();
 		if (mapReview != null) {
 			for (int movieId : mapReview.keySet()) {
 				Review review = mapReview.get(movieId);
@@ -340,41 +343,34 @@ public class UserScreen extends JPanel {
 						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE, btn);
 					}				
 				});
-				JButton btnDeleteReview = new JButton(movie.getTitle());
-				btnDeleteReview.setFont(new Font("Arial", Font.BOLD, 24));
+				JButton btnDeleteReview = new JButton();
 				btnDeleteReview.setIcon(new ImageIcon("res/icons/delete.png"));
 				btnDeleteReview.setBorder(BorderFactory.createEmptyBorder());
 				btnDeleteReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnDeleteReview.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// 리뷰 삭제
-						UserProcess up = new UserProcess();
-						JButton btn = (JButton)e.getSource();
-						
-						up.deleteReview(review, btn);
-					}
-				});
-				btnDeleteReview.addMouseListener(new MouseAdapter() {
-					public void mouseEntered(MouseEvent e) {
-						JButton btn = (JButton)e.getSource();
-						btn.setForeground(new Color(71, 143, 250));
-					}
-					
-					public void mouseExited(MouseEvent e) {
-						JButton btn = (JButton)e.getSource();
-						btn.setForeground(new Color(12, 14, 18));
+						int rt = JOptionPane.showConfirmDialog(null, String.format("'%s' 영화에 작성하신 리뷰를 삭제하시겠습니까?", movie.getTitle())
+								, "리뷰 삭제 메시지", JOptionPane.YES_NO_OPTION);
+						if (rt == JOptionPane.YES_OPTION) {
+							UserProcess up = new UserProcess();
+							JButton btn = (JButton)e.getSource();
+							up.deleteReview(review, btn);
+						}
 					}
 				});
 				
-				JLabel lFreshRate = new JLabel("- " + String.valueOf(review.getFreshRate()) + "%");
-				lFreshRate.setFont(new Font("Arial", Font.ITALIC, 22));
-				lFreshRate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+				JLabel lTitle = new JLabel(movie.getTitle());
+				lTitle.setFont(new Font("Arial", Font.BOLD, 21));
+				lTitle.setBorder(BorderFactory.createEmptyBorder());
+				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JTextArea taContent = new JTextArea();
 				taContent.setPreferredSize(new Dimension(300, 200));
 				taContent.setMaximumSize(new Dimension(300, 200));
 				taContent.setBackground(new Color(189, 198, 208));
-				taContent.setText(String.format("%s - %s에 작성됨.", review.getContent(), review.getReviewDate().toString()));
+				taContent.setText(String.format("%s - %s. %s.", review.getContent()
+						, review.getFreshRate(),  review.getReviewDate().toString()));
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
 				taContent.setWrapStyleWord(true);
@@ -385,8 +381,8 @@ public class UserScreen extends JPanel {
 				pBoxHeader.setLayout(new BoxLayout(pBoxHeader, BoxLayout.X_AXIS));
 				pBoxHeader.setBackground(new Color(189, 198, 208));
 				pBoxHeader.add(btnDeleteReview);
-				pBoxHeader.add(Box.createHorizontalStrut(10));
-				pBoxHeader.add(lFreshRate);
+				pBoxHeader.add(Box.createHorizontalStrut(5));
+				pBoxHeader.add(lTitle);
 				
 				JPanel pBoxContents = new JPanel();
 				pBoxContents.setLayout(new BoxLayout(pBoxContents, BoxLayout.Y_AXIS));

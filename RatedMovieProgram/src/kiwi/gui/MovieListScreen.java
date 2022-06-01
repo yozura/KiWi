@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -49,7 +49,7 @@ public class MovieListScreen extends JPanel {
 		JPanel pGridBody = new JPanel(new GridLayout(0, 4, 30, 30));
 		pGridBody.setBackground(new Color(12, 14, 18));
 		
-		HashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
+		LinkedHashMap<Integer, Movie> mapMovie = MovieMgr.getInstance().getMapMovie();
 		if (mapMovie != null) {
 			for (int movieId : mapMovie.keySet()) {
 				Movie movie = mapMovie.get(movieId);

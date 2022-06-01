@@ -56,9 +56,13 @@ public class HomeScreen extends JPanel {
 		tfSearch.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfSearch.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfSearch.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				pBoxSearch.removeAll();
+				pBoxSearch.setVisible(false);
+			}
+			
 			// 영화 타이틀 입력시 이동
 			public void keyPressed(KeyEvent e) {
-				pBoxSearch.removeAll();
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					HomeProcess hp = new HomeProcess();
 					JTextField tf = (JTextField)e.getSource();
