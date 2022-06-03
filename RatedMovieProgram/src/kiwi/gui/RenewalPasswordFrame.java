@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -44,6 +46,7 @@ public class RenewalPasswordFrame extends JFrame {
 				dispose();
 			}
 		});
+		this.setTitle("비밀번호 변경");
 		
 		con = this.getContentPane();
 		
@@ -54,7 +57,7 @@ public class RenewalPasswordFrame extends JFrame {
 		
 		JLabel lWelcome = new JLabel("이메일을 입력하세요.");
 		lWelcome.setForeground(new Color(189, 198, 208));
-		lWelcome.setFont(new Font("Arial", Font.PLAIN, 30));
+		lWelcome.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 30));
 		lWelcome.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
@@ -63,7 +66,7 @@ public class RenewalPasswordFrame extends JFrame {
 		tfEmail.setMaximumSize(new Dimension(280, 30));
 		tfEmail.setBackground(new Color(189, 198, 208));
 		tfEmail.setForeground(new Color(12, 14, 18));
-		tfEmail.setFont(new Font("Arial", Font.PLAIN, 15));
+		tfEmail.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		tfEmail.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfEmail.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfEmail.addKeyListener(new KeyAdapter() {
@@ -76,6 +79,7 @@ public class RenewalPasswordFrame extends JFrame {
 					if (isGood) {
 						lPassword.setVisible(true);
 						pfPassword.setVisible(true);
+						tfEmail.setDisabledTextColor(new Color(12, 14, 18));
 						tfEmail.setEnabled(false);
 					}
 				}
@@ -84,7 +88,7 @@ public class RenewalPasswordFrame extends JFrame {
 		
 		lPassword = new JLabel("<html><hr>변경할 비밀번호를 입력하세요.</html>");
 		lPassword.setForeground(new Color(189, 198, 208));
-		lPassword.setFont(new Font("Arial", Font.PLAIN, 30));
+		lPassword.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 30));
 		lPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 		lPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -127,6 +131,8 @@ public class RenewalPasswordFrame extends JFrame {
 		
 		con.add(pBoxScreen);		
 		
+		Image icon = Toolkit.getDefaultToolkit().getImage("res/images/fresh.png");
+		this.setIconImage(icon);
 		this.setSize(480, 640);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);

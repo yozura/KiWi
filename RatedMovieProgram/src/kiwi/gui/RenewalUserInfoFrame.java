@@ -3,6 +3,8 @@ package kiwi.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -35,6 +37,8 @@ public class RenewalUserInfoFrame extends JFrame {
 				dispose();
 			}
 		});
+		
+		this.setTitle("유저 정보 변경");
 		
 		JPanel pBoxContainer = new JPanel();
 		pBoxContainer.setLayout(new BoxLayout(pBoxContainer, BoxLayout.Y_AXIS));
@@ -103,7 +107,7 @@ public class RenewalUserInfoFrame extends JFrame {
 		
 		lGuide = new JLabel("원하는 행동을 선택해주세요.");
 		lGuide.setForeground(new Color(189, 198, 208));
-		lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+		lGuide.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		lGuide.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 		lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
@@ -123,6 +127,8 @@ public class RenewalUserInfoFrame extends JFrame {
 		
 		this.add(pBoxContainer);
 		
+		Image icon = Toolkit.getDefaultToolkit().getImage("res/images/fresh.png");
+		this.setIconImage(icon);
 		this.setSize(480, 640);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -135,7 +141,7 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfNickname.setMaximumSize(new Dimension(280, 30));
 		tfNickname.setBackground(new Color(189, 198, 208));
 		tfNickname.setForeground(new Color(12, 14, 18));
-		tfNickname.setFont(new Font("Arial", Font.PLAIN, 15));
+		tfNickname.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		tfNickname.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfNickname.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfNickname.addKeyListener(new KeyAdapter() {
@@ -167,7 +173,7 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfEmail.setMaximumSize(new Dimension(280, 30));
 		tfEmail.setBackground(new Color(189, 198, 208));
 		tfEmail.setForeground(new Color(12, 14, 18));
-		tfEmail.setFont(new Font("Arial", Font.PLAIN, 15));
+		tfEmail.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		tfEmail.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfEmail.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfEmail.addKeyListener(new KeyAdapter() {
@@ -199,7 +205,7 @@ public class RenewalUserInfoFrame extends JFrame {
 		tfTel.setMaximumSize(new Dimension(280, 30));
 		tfTel.setBackground(new Color(189, 198, 208));
 		tfTel.setForeground(new Color(12, 14, 18));
-		tfTel.setFont(new Font("Arial", Font.PLAIN, 15));
+		tfTel.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		tfTel.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfTel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfTel.addKeyListener(new KeyAdapter() {

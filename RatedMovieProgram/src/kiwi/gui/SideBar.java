@@ -30,6 +30,7 @@ public class SideBar extends JPanel {
 		this.setBackground(new Color(210, 180, 140));
 		for (int i = 0; i < 4; ++i) {
 			JButton btn = new JButton();
+			btn.setBorder(BorderFactory.createEmptyBorder());
 			btn.setPreferredSize(new Dimension(60, 60));
 			btn.setMaximumSize(new Dimension(60, 60));
 			ImageIcon iconBtn;
@@ -44,7 +45,10 @@ public class SideBar extends JPanel {
 							return;
 						}
 						
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, btn);
+						
+						if (!ScreenMgr.getInstance().checkSameScreen(SCREEN_TYPE.HOME)) {
+							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.HOME, btn);							
+						}
 					}
 				});
 				break;
@@ -58,9 +62,15 @@ public class SideBar extends JPanel {
 							return;
 						}
 						
-						if (UserMgr.getInstance().getUserType().equals(USER_TYPE.ADMIN)) {
+						// 현재 유저의 타입이 어드민일 경우와 현재 창이 어드민이 아닐 경우에만 실행
+						if (UserMgr.getInstance().getUserType().equals(USER_TYPE.ADMIN)
+							&& !ScreenMgr.getInstance().checkSameScreen(SCREEN_TYPE.ADMIN)) {
 							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.ADMIN, btn);
-						} else {
+						}
+						
+						// 현재 유저의 타입이 노말인 경우와 현재 창이 유저가 아닌 경우에만 실행
+						if (UserMgr.getInstance().getUserType().equals(USER_TYPE.NORMAL)
+							&& !ScreenMgr.getInstance().checkSameScreen(SCREEN_TYPE.USER)) {
 							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.USER, btn);
 						}
 					}
@@ -76,7 +86,9 @@ public class SideBar extends JPanel {
 							return;
 						}
 						
-						ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE_LIST, btn);
+						if(!ScreenMgr.getInstance().checkSameScreen(SCREEN_TYPE.MOVIE_LIST)) {
+							ScreenMgr.getInstance().changeCurScreenWithBar(SCREEN_TYPE.MOVIE_LIST, btn);
+						}
 					}
 				});
 				break;
@@ -110,14 +122,14 @@ public class SideBar extends JPanel {
 				iconBtn = null;
 				break;
 			}
-			btn.setBorder(BorderFactory.createEmptyBorder());
 			btn.setIcon(iconBtn);
+			btn.setBackground(new Color(210, 180, 140));
+			btn.setOpaque(true);
 			btn.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e) {
 					// 마우스 들어오면 밝아지기
 					JButton srcBtn = (JButton)e.getSource();
 					srcBtn.setBackground(new Color(241, 249, 209));
-					srcBtn.setOpaque(true);
 				}
 				
 				public void mouseExited(MouseEvent e) {

@@ -131,7 +131,7 @@ public class AdminProcess {
 		}
 
 		// summary
-		if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,'\'\"!@#$:?().]{1,500}$", strings[6])) {
+		if (!Pattern.matches("^[a-zA-Z가-힣0-9\\s,'\"!@#$:?().]{1,500}$", strings[6])) {
 			JOptionPane.showMessageDialog(null, "줄거리는 500자 이내로 입력해야 합니다.");
 			System.out.println("줄거리는 500자 이내로 입력해야 합니다.");
 			return false;

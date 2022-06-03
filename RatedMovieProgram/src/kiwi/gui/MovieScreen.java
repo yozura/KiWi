@@ -73,8 +73,11 @@ public class MovieScreen extends JPanel {
 		} else {
 			btnAddBookmark.setIcon(new ImageIcon("res/icons/bookmark_add.png"));
 		}
-		btnAddBookmark.setFont(new Font("Arial", Font.PLAIN, 24));
+		btnAddBookmark.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 24));
+		btnAddBookmark.setToolTipText(String.format("%s - 클릭 시 북마크에 추가됩니다.", movie.getTitle()));
 		btnAddBookmark.setBorder(BorderFactory.createEmptyBorder());
+		btnAddBookmark.setOpaque(true);
+		btnAddBookmark.setBackground(new Color(189, 198, 208));
 		btnAddBookmark.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 		btnAddBookmark.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -87,7 +90,7 @@ public class MovieScreen extends JPanel {
 				} else {
 					mp.addBookmark(bookmark, btn);
 					btn.setIcon(new ImageIcon("res/icons/bookmark_remove.png"));
-				}
+				}					
 			}
 		});
 		btnAddBookmark.addMouseListener(new MouseAdapter() {
@@ -106,23 +109,30 @@ public class MovieScreen extends JPanel {
 
 		JLabel lNumberInfo = new JLabel(String.format("%d세 관람가 | %s 개봉 | %d분 ", movie.getAgeLimit(),
 				movie.getReleaseDate().toString(), movie.getRunningTime()));
-		lNumberInfo.setFont(new Font("Arial", Font.PLAIN, 15));
+		lNumberInfo.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
+		lNumberInfo.setToolTipText(String.format("%d세 관람가 | %s 개봉 | %d분 ", movie.getAgeLimit(),
+				movie.getReleaseDate().toString(), movie.getRunningTime()));
+		lNumberInfo.setPreferredSize(new Dimension(500, 25));
+		lNumberInfo.setMaximumSize(new Dimension(500, 25));
 		lNumberInfo.setBackground(Color.ORANGE);
 		lNumberInfo.setOpaque(true);
 		lNumberInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
 
 		JLabel lCharInfo = new JLabel(
 				String.format("감독 [%s] | 배우 [%s] | %s", movie.getDirector(), movie.getActors(), movie.getGenre()));
-		lCharInfo.setFont(new Font("Arial", Font.PLAIN, 15));
+		lCharInfo.setPreferredSize(new Dimension(500, 25));
+		lCharInfo.setMaximumSize(new Dimension(500, 25));
+		lCharInfo.setToolTipText(String.format("감독 [%s] | 배우 [%s] | %s", movie.getDirector(), movie.getActors(), movie.getGenre()));
+		lCharInfo.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lCharInfo.setBackground(Color.CYAN);
 		lCharInfo.setOpaque(true);
 		lCharInfo.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-
+		
 		JTextArea taSummary = new JTextArea(" " + movie.getSummary());
 		taSummary.setPreferredSize(new Dimension(500, 200));
 		taSummary.setMaximumSize(new Dimension(500, 200));
 		taSummary.setBackground(new Color(189, 198, 208));
-		taSummary.setFont(new Font("Arial", Font.PLAIN, 15));
+		taSummary.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		taSummary.setEditable(false);
 		taSummary.setLineWrap(true);
 		taSummary.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -157,7 +167,7 @@ public class MovieScreen extends JPanel {
 
 		JLabel lFreshRate = new JLabel(String.format("%d%%", movie.getRate()));
 		lFreshRate.setForeground(new Color(12, 14, 18));
-		lFreshRate.setFont(new Font("Arial", Font.PLAIN, 35));
+		lFreshRate.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 35));
 		lFreshRate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JPanel pBoxRating = new JPanel();
@@ -175,8 +185,8 @@ public class MovieScreen extends JPanel {
 		JPanel pBoxInfo = new JPanel();
 		pBoxInfo.setLayout(new BoxLayout(pBoxInfo, BoxLayout.X_AXIS));
 		pBoxInfo.setBackground(new Color(189, 198, 208));
-		pBoxInfo.setPreferredSize(new Dimension(780, 297));
-		pBoxInfo.setMaximumSize(new Dimension(780, 297));
+		pBoxInfo.setPreferredSize(new Dimension(750, 297));
+		pBoxInfo.setMaximumSize(new Dimension(750, 297));
 		pBoxInfo.add(Box.createHorizontalStrut(20));
 		pBoxInfo.add(pBoxDescription);
 		pBoxInfo.add(Box.createHorizontalStrut(20));
@@ -210,7 +220,7 @@ public class MovieScreen extends JPanel {
 					pReview.setMaximumSize(new Dimension(200, 250));
 					pReview.setBorder(BorderFactory.createTitledBorder(
 							BorderFactory.createEtchedBorder(EtchedBorder.RAISED), "리뷰", TitledBorder.RIGHT,
-							TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
+							TitledBorder.TOP, new Font("ONE 모바일고딕 Regular", Font.ITALIC, 18), Color.RED));
 
 					// 리뷰 콘텐트 + 작성일 + 닉네임 + 점수
 					JTextArea taContent = new JTextArea();
@@ -220,7 +230,7 @@ public class MovieScreen extends JPanel {
 					taContent.setEditable(false);
 					taContent.setLineWrap(true);
 					taContent.setWrapStyleWord(true);
-					taContent.setFont(new Font("Arial", Font.PLAIN, 13));
+					taContent.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 
 					pReview.add(taContent);
 					pGridReview.add(pReview);
@@ -235,7 +245,7 @@ public class MovieScreen extends JPanel {
 		pAddReview.setPreferredSize(new Dimension(200, 250));
 		pAddReview.setMaximumSize(new Dimension(200, 250));
 		pAddReview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED),
-				"리뷰 작성", TitledBorder.RIGHT, TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
+				"리뷰 작성", TitledBorder.RIGHT, TitledBorder.TOP, new Font("ONE 모바일고딕 Regular", Font.ITALIC, 18), Color.RED));
 
 		sFreshRate = new JSlider(0, 100, 50);
 		sFreshRate.setMajorTickSpacing(10);
@@ -246,7 +256,7 @@ public class MovieScreen extends JPanel {
 		taAddContent.setBackground(new Color(12, 14, 18));
 		taAddContent.setForeground(new Color(189, 198, 208));
 		taAddContent.setCaretColor(new Color(189, 198, 208));
-		taAddContent.setFont(new Font("Arial", Font.PLAIN, 13));
+		taAddContent.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 		taAddContent.setLineWrap(true);
 		taAddContent.setWrapStyleWord(true);
 		taAddContent.addKeyListener(new KeyAdapter() {
@@ -266,8 +276,6 @@ public class MovieScreen extends JPanel {
 		btnAddReview.setPreferredSize(new Dimension(260, 25));
 		btnAddReview.setMaximumSize(new Dimension(260, 25));
 		btnAddReview.setForeground(new Color(12, 14, 18));
-		btnAddReview.setBackground(new Color(12, 14, 18));
-		btnAddReview.setOpaque(true);
 		btnAddReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		btnAddReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

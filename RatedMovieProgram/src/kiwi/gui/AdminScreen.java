@@ -34,6 +34,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
@@ -120,7 +121,7 @@ public class AdminScreen extends JPanel {
 
 		lGuide = new JLabel("원하는 행동을 선택해주세요.");
 		lGuide.setForeground(new Color(189, 198, 208));
-		lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+		lGuide.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		lGuide.setHorizontalAlignment(SwingConstants.CENTER);
 		lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
@@ -186,6 +187,7 @@ public class AdminScreen extends JPanel {
 		};
 		tblUser.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		tblUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		tblUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblUser.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JTable tbl = (JTable)e.getSource();
@@ -194,13 +196,14 @@ public class AdminScreen extends JPanel {
 			}
 		});
 		
+		
 		JScrollPane spUser = new JScrollPane(tblUser);
 		spUser.setBackground(new Color(12, 14, 18));
 		spUser.setPreferredSize(new Dimension(800, 500));
 		spUser.setMaximumSize(new Dimension(800, 500));
 		spUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
-		JButton btnDeleteReview = new JButton("선택한 유저 삭제하기");
+		JButton btnDeleteReview = new JButton("선택한 회원 삭제하기");
 		btnDeleteReview.setPreferredSize(new Dimension(410, 25));
 		btnDeleteReview.setMaximumSize(new Dimension(410, 25));
 		btnDeleteReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -231,6 +234,7 @@ public class AdminScreen extends JPanel {
 		pBoxReview.setBackground(new Color(12, 14, 18));
 		pBoxReview.setVisible(false);
 
+		ReviewMgr.getInstance().reloadReview();
 		LinkedHashMap<Integer, Vector<Review>> mapReview = ReviewMgr.getInstance().getMapReview();
 		if (mapReview == null) {
 			return pBoxReview;
@@ -238,7 +242,7 @@ public class AdminScreen extends JPanel {
 
 		Vector<String> vecHeaders = new Vector<String>();
 		Vector<Vector<String>> vecContents = new Vector<Vector<String>>();
-
+				
 		for (int movieId : mapReview.keySet()) {
 			Vector<Review> vecReview = mapReview.get(movieId);
 			for (Review review : vecReview) {
@@ -265,6 +269,7 @@ public class AdminScreen extends JPanel {
 		};
 		tblUser.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		tblUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+		tblUser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tblUser.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				JTable tbl = (JTable) e.getSource();
@@ -307,6 +312,8 @@ public class AdminScreen extends JPanel {
 	public JPanel getDeleteMovie() {
 		JPanel pFlowBody = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pFlowBody.setBackground(new Color(12, 14, 18));
+		pFlowBody.setPreferredSize(new Dimension(1080, 700));
+		pFlowBody.setMaximumSize(new Dimension(1080, 700));
 		pFlowBody.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		Vector<String> vecMovieTitles = MovieMgr.getInstance().getVecMovieTitles();
@@ -317,19 +324,21 @@ public class AdminScreen extends JPanel {
 		for (String title : vecMovieTitles) {
 			JButton btnTitle = new JButton(String.format("#%s", title));
 			btnTitle.setName(title);
-			btnTitle.setFont(new Font("Arial", Font.PLAIN, 13));
+			btnTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 			btnTitle.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			btnTitle.setOpaque(true);
+			btnTitle.setBackground(new Color(12, 14, 18));
 			btnTitle.setForeground(new Color(71, 143, 250));
 			btnTitle.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e) {
 					// Brighting in focus
-					btnTitle.setFont(new Font("Arial", Font.BOLD, 16));
+					btnTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 16));
 					btnTitle.setForeground(btnTitle.getForeground().brighter());
 				}
 
 				public void mouseExited(MouseEvent e) {
 					// Return default color out focus
-					btnTitle.setFont(new Font("Arial", Font.PLAIN, 13));
+					btnTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 					btnTitle.setForeground(new Color(71, 143, 250));
 				}
 			});
@@ -355,51 +364,51 @@ public class AdminScreen extends JPanel {
 	public JPanel getAddMovie() {
 		JLabel lTitle = new JLabel("영화 제목");
 		lTitle.setForeground(new Color(189, 198, 208));
-		lTitle.setFont(new Font("Arial", Font.PLAIN, 15));
+		lTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lDirector = new JLabel("감독");
 		lDirector.setForeground(new Color(189, 198, 208));
-		lDirector.setFont(new Font("Arial", Font.PLAIN, 15));
+		lDirector.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lDirector.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lActors = new JLabel("배우");
 		lActors.setForeground(new Color(189, 198, 208));
-		lActors.setFont(new Font("Arial", Font.PLAIN, 15));
+		lActors.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lActors.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lGenre = new JLabel("장르");
 		lGenre.setForeground(new Color(189, 198, 208));
-		lGenre.setFont(new Font("Arial", Font.PLAIN, 15));
+		lGenre.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lGenre.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lReleaseDate = new JLabel("개봉일");
 		lReleaseDate.setForeground(new Color(189, 198, 208));
-		lReleaseDate.setFont(new Font("Arial", Font.PLAIN, 15));
+		lReleaseDate.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lReleaseDate.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		lReleaseDate.setToolTipText("개봉일은 yyyy-mm-dd의 형식으로 작성되야 합니다.");
 
 		JLabel lRunningTime = new JLabel("상영 시간(분)");
 		lRunningTime.setForeground(new Color(189, 198, 208));
-		lRunningTime.setFont(new Font("Arial", Font.PLAIN, 15));
+		lRunningTime.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lRunningTime.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lAgeLimit = new JLabel("연령 제한");
 		lAgeLimit.setForeground(new Color(189, 198, 208));
-		lAgeLimit.setFont(new Font("Arial", Font.PLAIN, 15));
+		lAgeLimit.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lAgeLimit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
 		JLabel lPoster = new JLabel("포스터");
 		lPoster.setForeground(new Color(189, 198, 208));
-		lPoster.setFont(new Font("Arial", Font.PLAIN, 15));
+		lPoster.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		lPoster.setToolTipText("포스터의 크기는 16MB 이하의 .jpg, .png, .jpeg 파일 이어야 합니다.");
 
 		JLabel lSummary = new JLabel("줄거리");
-		lSummary.setPreferredSize(new Dimension(40, 100));
-		lSummary.setMaximumSize(new Dimension(40, 100));
+		lSummary.setPreferredSize(new Dimension(50, 100));
+		lSummary.setMaximumSize(new Dimension(50, 100));
 		lSummary.setForeground(new Color(189, 198, 208));
-		lSummary.setFont(new Font("Arial", Font.PLAIN, 15));
+		lSummary.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lSummary.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		lSummary.setToolTipText("줄거리는 500자 이내로 작성할 수 있습니다.");
 
@@ -572,7 +581,7 @@ public class AdminScreen extends JPanel {
 				tfReleaseDate.setText("");
 				tfRunningTime.setText("");
 				cbAge.setSelectedItem(0);
-				lPoster.setText("");
+				lPosterPath.setText("");
 				taSummary.setText("");
 				poster = null;
 			}

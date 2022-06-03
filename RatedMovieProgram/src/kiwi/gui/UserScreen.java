@@ -104,7 +104,7 @@ public class UserScreen extends JPanel {
 		
 		lGuide = new JLabel("원하는 행동을 선택해주세요.");
 		lGuide.setForeground(new Color(189, 198, 208));
-		lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+		lGuide.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		lGuide.setHorizontalAlignment(SwingConstants.CENTER);
 		lGuide.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
@@ -138,9 +138,9 @@ public class UserScreen extends JPanel {
 
 			public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int columnIndex) {
 				if (columnIndex == 1) {
-					setFont(new Font("Arial", Font.PLAIN, 13));
+					setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 				} else {
-					setFont(new Font("Arial", Font.BOLD, 13));
+					setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 13));
 				}
 				
 				return super.prepareRenderer(renderer, rowIndex, columnIndex);
@@ -224,6 +224,8 @@ public class UserScreen extends JPanel {
 				btnPoster.setName(String.valueOf(movie.getId()));
 				btnPoster.setIcon(new ImageIcon(posterImg));
 				btnPoster.setBorder(BorderFactory.createEmptyBorder());
+				btnPoster.setOpaque(true);
+				btnPoster.setBackground(new Color(12, 14, 18));
 				btnPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnPoster.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -237,12 +239,12 @@ public class UserScreen extends JPanel {
 				
 				JLabel lTitle = new JLabel(movie.getTitle());
 				lTitle.setForeground(new Color(189, 198, 208));
-				lTitle.setFont(new Font("Arial", Font.BOLD, 15));
+				lTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 15));
 				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JLabel lGrade = new JLabel(String.format("신선도 %d%%", (movie.getRate())));
 				lGrade.setForeground(new Color(189, 198, 208));
-				lGrade.setFont(new Font("Arial", Font.BOLD, 15));
+				lGrade.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 15));
 				lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JButton btnCancelBookmark = new JButton("북마크 해제");
@@ -279,7 +281,7 @@ public class UserScreen extends JPanel {
 			lGuide.setForeground(new Color(12, 14, 18));
 			lGuide.setBackground(Color.ORANGE);
 			lGuide.setOpaque(true);
-			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+			lGuide.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		}
 		
 		JScrollPane spReview = new JScrollPane(pGridBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -302,10 +304,6 @@ public class UserScreen extends JPanel {
 	}
 	
 	public JPanel getReviewBody() {
-		// 전체 패널 밑에 리뷰 패널 밑에 포스터 옆에 - 타이틀 / 리뷰 콘텐츠 패널
-//		JPanel pBoxReview = new JPanel();
-//		pBoxReview.setLayout(new BoxLayout(pBoxReview, BoxLayout.Y_AXIS));
-//		pBoxReview.setBackground(new Color(12, 14, 18));
 		JPanel pGridReview = new JPanel(new GridLayout(0, 2, 10, 10));
 		pGridReview.setBackground(new Color(12, 14, 18));
 		
@@ -333,6 +331,8 @@ public class UserScreen extends JPanel {
 				JButton btnPoster = new JButton();
 				btnPoster.setName(String.valueOf(movie.getId()));
 				btnPoster.setIcon(new ImageIcon(posterImg));
+				btnPoster.setOpaque(true);
+				btnPoster.setBackground(new Color(12, 14, 18));
 				btnPoster.setBorder(BorderFactory.createEmptyBorder());
 				btnPoster.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnPoster.addActionListener(new ActionListener() {
@@ -346,6 +346,8 @@ public class UserScreen extends JPanel {
 				});
 				JButton btnDeleteReview = new JButton();
 				btnDeleteReview.setIcon(new ImageIcon("res/icons/delete.png"));
+				btnDeleteReview.setOpaque(true);
+				btnDeleteReview.setBackground(new Color(255, 250, 250));
 				btnDeleteReview.setBorder(BorderFactory.createEmptyBorder());
 				btnDeleteReview.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				btnDeleteReview.addActionListener(new ActionListener() {
@@ -362,7 +364,7 @@ public class UserScreen extends JPanel {
 				});
 				
 				JLabel lTitle = new JLabel(String.format("%s", movie.getTitle()));
-				lTitle.setFont(new Font("Arial", Font.BOLD, 18));
+				lTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 18));
 				lTitle.setBorder(BorderFactory.createEmptyBorder());
 				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
@@ -375,7 +377,7 @@ public class UserScreen extends JPanel {
 				taContent.setEditable(false);
 				taContent.setLineWrap(true);
 				taContent.setWrapStyleWord(true);
-				taContent.setFont(new Font("Arial", Font.PLAIN, 13));
+				taContent.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 13));
 				taContent.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JPanel pBoxHeader = new JPanel();
@@ -392,7 +394,7 @@ public class UserScreen extends JPanel {
 				pBoxContents.setBackground(new Color(255, 250, 250));
 				pBoxContents.setBorder(BorderFactory.createTitledBorder(
 						BorderFactory.createEtchedBorder(EtchedBorder.RAISED), "리뷰",
-						TitledBorder.RIGHT, TitledBorder.TOP, new Font("Arial", Font.ITALIC, 18), Color.RED));
+						TitledBorder.RIGHT, TitledBorder.TOP, new Font("ONE 모바일고딕 Regular", Font.ITALIC, 18), Color.RED));
 				pBoxContents.add(pBoxHeader);
 				pBoxContents.add(taContent);
 
@@ -410,7 +412,7 @@ public class UserScreen extends JPanel {
 			lGuide.setForeground(new Color(12, 14, 18));
 			lGuide.setBackground(Color.ORANGE);
 			lGuide.setOpaque(true);
-			lGuide.setFont(new Font("Arial", Font.PLAIN, 32));
+			lGuide.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		}
 	
 		JScrollPane spReview = new JScrollPane(pGridReview, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,

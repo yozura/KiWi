@@ -52,15 +52,10 @@ public class HomeScreen extends JPanel {
 		tfSearch.setMaximumSize(new Dimension(280, 30));
 		tfSearch.setBackground(new Color(189, 198, 208));
 		tfSearch.setForeground(new Color(12, 14, 18));
-		tfSearch.setFont(new Font("Arial", Font.PLAIN, 15));
+		tfSearch.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		tfSearch.setBorder(BorderFactory.createLineBorder(new Color(26, 30, 35), 3));
 		tfSearch.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		tfSearch.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				pBoxSearch.removeAll();
-				pBoxSearch.setVisible(false);
-			}
-			
 			// 영화 타이틀 입력시 이동
 			public void keyPressed(KeyEvent e) {
 				pBoxSearch.removeAll();
@@ -76,6 +71,8 @@ public class HomeScreen extends JPanel {
 			
 			// 추천 검색어 보여주기
 			public void keyReleased(KeyEvent e) {
+				pBoxSearch.removeAll();
+				pBoxSearch.setVisible(false);
 				HomeProcess hp = new HomeProcess();
 				JTextField tf = (JTextField)e.getSource();
 				String str = tf.getText();
@@ -93,7 +90,7 @@ public class HomeScreen extends JPanel {
 					btnSearch.setForeground(new Color(12, 14, 18));
 					btnSearch.setBackground(new Color(189, 198, 208));
 					btnSearch.setOpaque(true);
-					btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
+					btnSearch.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 					btnSearch.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							MovieMgr.getInstance().setCurMovie(pair.second);
@@ -102,11 +99,11 @@ public class HomeScreen extends JPanel {
 					});
 					btnSearch.addMouseListener(new MouseAdapter() {
 						public void mouseEntered(MouseEvent e) {
-							btnSearch.setFont(new Font("Arial", Font.BOLD, 15));
+							btnSearch.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 15));
 						}
 						
 						public void mouseExited(MouseEvent e) {
-							btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
+							btnSearch.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 						}
 					});
 					

@@ -73,6 +73,10 @@ public class ScreenMgr {
 		rootFrame.revalidateScreen();
 	}
 	
+	public boolean checkSameScreen(SCREEN_TYPE eType) {
+		return curScreenType == eType;
+	}
+	
 	public JPanel getCurScreen() {
 		return pCurScreen;
 	}

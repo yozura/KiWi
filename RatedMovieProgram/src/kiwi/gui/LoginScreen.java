@@ -49,7 +49,7 @@ public class LoginScreen extends JPanel {
 		JLabel lWelcome = new JLabel("Login to KiWi");
 		lWelcome.setBorder(new EmptyBorder(15, 0, 15, 0));
 		lWelcome.setForeground(new Color(189, 198, 208));
-		lWelcome.setFont(new Font("Arial", Font.PLAIN, 20));
+		lWelcome.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 20));
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		
 		JPanel pPaddingBox = new JPanel();
@@ -68,7 +68,7 @@ public class LoginScreen extends JPanel {
 		lID.setPreferredSize(new Dimension(280, 25));
 		lID.setMaximumSize(new Dimension(280, 25));
 		lID.setForeground(new Color(189, 198, 208));
-		lID.setFont(new Font("Arial", Font.PLAIN, 15));
+		lID.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lID.setBorder(new EmptyBorder(15, 5, 10, 0));
 		lID.setHorizontalAlignment(SwingConstants.LEFT);
 		lID.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -92,7 +92,7 @@ public class LoginScreen extends JPanel {
 		lPassword.setPreferredSize(new Dimension(280, 25));
 		lPassword.setMaximumSize(new Dimension(280, 25));
 		lPassword.setForeground(new Color(189, 198, 208));
-		lPassword.setFont(new Font("Arial", Font.PLAIN, 15));
+		lPassword.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 15));
 		lPassword.setBorder(new EmptyBorder(15, 5, 10, 0));
 		lPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		lPassword.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -147,6 +147,8 @@ public class LoginScreen extends JPanel {
 		pFlowBtns.setBackground(new Color(12, 14, 18));
 
 		JButton btnForgotPassword = new JButton("Forgot Password?");
+		btnForgotPassword.setOpaque(true);
+		btnForgotPassword.setBackground(new Color(12, 14, 18));
 		btnForgotPassword.setForeground(new Color(71, 143, 250));
 		btnForgotPassword.setBorder(BorderFactory.createEmptyBorder());
 		btnForgotPassword.addActionListener(new ActionListener() {
@@ -167,6 +169,8 @@ public class LoginScreen extends JPanel {
 		});
 		
 		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp.setOpaque(true);
+		btnSignUp.setBackground(new Color(12, 14, 18));
 		btnSignUp.setForeground(new Color(71, 143, 250));
 		btnSignUp.setBorder(BorderFactory.createEmptyBorder());
 		btnSignUp.addActionListener(new ActionListener() {

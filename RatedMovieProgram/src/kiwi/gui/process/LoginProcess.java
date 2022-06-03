@@ -13,6 +13,8 @@ import kiwi.dto.Review;
 import kiwi.dto.User;
 import kiwi.header.Define.SCREEN_TYPE;
 import kiwi.header.Define.USER_TYPE;
+import kiwi.mgr.MovieMgr;
+import kiwi.mgr.ReviewMgr;
 import kiwi.mgr.ScreenMgr;
 import kiwi.mgr.UserMgr;
 
@@ -32,6 +34,8 @@ public class LoginProcess {
 			return;
 		}
 		
+		MovieMgr.getInstance().reloadMovie();
+		ReviewMgr.getInstance().reloadReview();
 		LinkedHashMap<Integer, Movie> mapBookmark = uDAO.selectMapBookmarkByUserId(id);
 		LinkedHashMap<Integer, Review> mapReview = rDAO.selectMapReviewByUserId(id);
 		UserMgr.getInstance().enter(user, mapBookmark, mapReview, (id.equals("administrator")) ? USER_TYPE.ADMIN : USER_TYPE.NORMAL);

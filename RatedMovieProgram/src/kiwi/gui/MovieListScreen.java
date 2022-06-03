@@ -39,7 +39,7 @@ public class MovieListScreen extends JPanel {
 		
 		JLabel lWelcome = new JLabel("영화 목록");
 		lWelcome.setForeground(new Color(189, 198, 208));
-		lWelcome.setFont(new Font("Arial", Font.PLAIN, 32));
+		lWelcome.setFont(new Font("ONE 모바일고딕 Regular", Font.PLAIN, 32));
 		lWelcome.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
 		lWelcome.setHorizontalAlignment(SwingConstants.CENTER);
 		lWelcome.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -84,12 +84,12 @@ public class MovieListScreen extends JPanel {
 				
 				JLabel lTitle = new JLabel(movie.getTitle());
 				lTitle.setForeground(new Color(189, 198, 208));
-				lTitle.setFont(new Font("Arial", Font.BOLD, 15));
+				lTitle.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 15));
 				lTitle.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				JLabel lGrade = new JLabel(String.format("신선도 %d%%", movie.getRate()));
 				lGrade.setForeground(new Color(189, 198, 208));
-				lGrade.setFont(new Font("Arial", Font.BOLD, 15));
+				lGrade.setFont(new Font("ONE 모바일고딕 Regular", Font.BOLD, 15));
 				lGrade.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 				
 				pMovie.add(lPoster);
