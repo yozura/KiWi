@@ -125,6 +125,9 @@ public class LoginScreen extends JPanel {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setPreferredSize(new Dimension(280, 40));
 		btnLogin.setMaximumSize(new Dimension(280, 40));
+//		btnLogin.setBackground(Color.ORANGE);
+//		btnLogin.setOpaque(true);
+//		btnLogin.setBorder(BorderFactory.createEmptyBorder());
 		btnLogin.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

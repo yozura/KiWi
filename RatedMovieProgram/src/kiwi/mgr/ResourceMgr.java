@@ -13,6 +13,7 @@ public class ResourceMgr {
 		return instance;
 	}
 	
+	// 이미지 리사이즈
 	public BufferedImage resizeImage(BufferedImage originImg, int width, int height) throws IOException {
 		Image resizedPoster = originImg.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		BufferedImage outputPoster = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -20,6 +21,7 @@ public class ResourceMgr {
 		return outputPoster;
 	}
 	
+	// 아이콘 리사이즈
 	public ImageIcon resizeImageIcon(String path, int width, int height) {
 		ImageIcon iconLogo = new ImageIcon(path);
 		Image img = iconLogo.getImage();

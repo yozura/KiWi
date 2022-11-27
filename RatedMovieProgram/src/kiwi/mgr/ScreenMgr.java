@@ -14,6 +14,7 @@ import kiwi.gui.SignUpScreen;
 import kiwi.gui.UserScreen;
 import kiwi.header.Define.SCREEN_TYPE;
 
+// 이동 가능한 모든 스크린을 제어하는 매니저 클래스
 public class ScreenMgr {
 	private static ScreenMgr instance = new ScreenMgr();
 	private JPanel pCurScreen;

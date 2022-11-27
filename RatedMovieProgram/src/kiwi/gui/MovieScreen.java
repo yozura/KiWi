@@ -175,8 +175,8 @@ public class MovieScreen extends JPanel {
 		JPanel pBoxInfo = new JPanel();
 		pBoxInfo.setLayout(new BoxLayout(pBoxInfo, BoxLayout.X_AXIS));
 		pBoxInfo.setBackground(new Color(189, 198, 208));
-		pBoxInfo.setPreferredSize(new Dimension(780, 297));
-		pBoxInfo.setMaximumSize(new Dimension(780, 297));
+		pBoxInfo.setPreferredSize(new Dimension(750, 297));
+		pBoxInfo.setMaximumSize(new Dimension(750, 297));
 		pBoxInfo.add(Box.createHorizontalStrut(20));
 		pBoxInfo.add(pBoxDescription);
 		pBoxInfo.add(Box.createHorizontalStrut(20));

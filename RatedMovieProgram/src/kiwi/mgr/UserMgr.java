@@ -20,6 +20,7 @@ public class UserMgr {
 		return instance;
 	}
 	
+	// 접속 시 수행
 	public void enter(User user, LinkedHashMap<Integer, Movie> mapBookmark, LinkedHashMap<Integer, Review> mapReview, USER_TYPE uType) {
 		this.curUser = user;
 		this.mapBookmark = mapBookmark;
@@ -33,6 +34,7 @@ public class UserMgr {
 		this.uType = uType;
 	}
 	
+	// 퇴장 시 수행
 	public void exit() {
 		curUser = null;
 		
@@ -41,11 +43,12 @@ public class UserMgr {
 		}
 	}
 	
+	// 업데이트 시 다시 불러오기
 	public void reloadUserInfo() {
 		UserDAO uDAO = new UserDAO();
 		curUser = uDAO.findUser(curUser.getId(), curUser.getPassword());
 	}
-	
+
 	public void reloadReview() {
 		ReviewDAO rDAO = new ReviewDAO();
 		mapReview = rDAO.selectMapReviewByUserId(curUser.getId());
@@ -56,6 +59,7 @@ public class UserMgr {
 		mapBookmark = uDAO.selectMapBookmarkByUserId(curUser.getId());
 	}
 	
+	// 유저 아이디로 닉네임 찾기
 	public String findNicknameByUserId(String userId) {
 		UserDAO uDAO = new UserDAO();
 		String nickname = uDAO.selectNickname(userId);

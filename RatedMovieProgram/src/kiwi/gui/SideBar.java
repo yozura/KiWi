@@ -111,6 +111,8 @@ public class SideBar extends JPanel {
 				break;
 			}
 			btn.setBorder(BorderFactory.createEmptyBorder());
+			btn.setOpaque(true);
+			btn.setBackground(new Color(210, 180, 140));
 			btn.setIcon(iconBtn);
 			btn.addMouseListener(new MouseAdapter() {
 				public void mouseEntered(MouseEvent e) {
