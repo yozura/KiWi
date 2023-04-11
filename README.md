@@ -19,6 +19,6 @@ __영화 평점 관리 응용 프로그램__
 * [Data Access Objects](/RatedMovieProgram/src/kiwi/dao)  
 * [Data Transfer Objects](/RatedMovieProgram/src/kiwi/dto)  
 * [GUI Composition Code](/RatedMovieProgram/src/kiwi/gui)  
-* [GUI Process Code](/RatedMovieProgram/src/gui/process)  
+* [GUI Process Code](/RatedMovieProgram/src/kiwi/gui/process)  
 * [Managers](/RatedMovieProgram/src/kiwi/mgr)  
 
